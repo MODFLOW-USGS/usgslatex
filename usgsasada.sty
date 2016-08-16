@@ -238,13 +238,11 @@
 % Note that \renew balpage is commented out---I need to
 % ascertain whether a \provideenvironment like command exits.
 \providecommand{\makefrontmatter}{}
-\providecommand{\makefrontmatterabv}{}
 \providecommand{\makefrontcover}{}
 \providecommand{\makebackcover}{}
 
 \ifthenelse{\boolean{asada}}%
 {\renewcommand{\makefrontmatter}{}
- \renewcommand{\makefrontmatterabv}{}
  \renewcommand{\makefrontcover}{}
  \renewcommand{\makebackcover}{}
  %\renewenvironment{balpage}{}{}
