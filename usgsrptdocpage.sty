@@ -1,0 +1,276 @@
+% Auxillary package for usgs reports by William H. Asquith
+%------------------------ indentifcation ------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{usgsrptdocpage}[2008/07/18]
+%------------------------ initial code --------------------
+\RequirePackage{usgstable} % need \setunitcolumnwidth
+\RequirePackage{usgsnullpages} % need \myemptypage
+\RequirePackage{ragged2e} % for \RaggedRight in Cell 16.
+\RequirePackage{calc}
+\RequirePackage{array} % needed but can not remember why
+%------------------------ declaration of options ----------
+%------------------------ execution of options
+\ProcessOptions \relax
+%------------------------ package loading -----------------
+%------------------------ main code -----------------------
+\typeout{COMMANDS RELATED TO THE TECH. REPORT DOC PAGE IN SOME REPORTS}
+
+\newcommand{\DPtext}[1] % Font for the table contents
+{{\sffamily\fontsize{8.5pt}{11pt}\selectfont #1}}
+
+\newcommand{\DPtitletext} % Font for the table title
+{\normalsize \sffamily}
+
+% Several corrections to the first entry of two embedded
+% tabular environments are needed.  I've tried work arounds
+% but have not come up with a better solution.
+\newlength{\itemTenPrecorrection}
+\setlength{\itemTenPrecorrection}{-1\baselineskip}
+\newlength{\itemThirteenPrecorrection}
+\setlength{\itemThirteenPrecorrection}{-1\baselineskip}
+\newlength{\itemTenPostcorrection}
+\setlength{\itemTenPostcorrection}{-.5\baselineskip}
+\newlength{\itemThirteenPostcorrection}
+\setlength{\itemThirteenPostcorrection}{-.5\baselineskip}
+% choosen about right for four line addresses
+% in items Nine and Twelve
+
+% The \CP@###Cell contains the contents to set each cell
+% in the table. \DP@### contains the user defined portion,
+% which is set by the \rptdocpage### commands.
+
+\newcommand{\CP@OneCell}
+{\DPtext{1.~Report No.} \newline \DP@One}
+\newcommand{\CP@TwoCell}
+{\DPtext{2.~Government Accession No.} \newline \DP@Two}
+\newcommand{\CP@ThreeCell}
+{\DPtext{3.~Recipient's Catalog No.} \newline \DP@Three}
+\newcommand{\CP@FourCell}
+{\DPtext{4.~Title and Subtitle} \hfill \newline \DP@Four}
+\newcommand{\CP@FiveCell}
+{\DPtext{5.~Report Date} \newline \DP@Five}
+\newcommand{\CP@SixCell}
+{\DPtext{6.~Performing Organization Code} \newline \DP@Six}
+\newcommand{\CP@SevenCell}
+{\DPtext{7.~Authors(s)} \newline \DP@Seven}
+\newcommand{\CP@EightCell}
+{\DPtext{8.~Performing Organization Report No.} \newline \DP@Eight}
+\newcommand{\CP@NineCell}
+{\DPtext{9.~Performing Organization Name and Address} \newline \DP@Nine}
+\newcommand{\CP@TenCell}
+{\vspace*{\itemTenPrecorrection}
+ \DPtext{10.~Work Unit No. (TRAIS)} \newline \DP@Ten
+ \vspace*{\itemTenPostcorrection}}
+\newcommand{\CP@ElevenCell}
+{\DPtext{11.~Contract or Grant No.} \newline \DP@Eleven}
+\newcommand{\CP@TwelveCell}
+{\DPtext{12.~Sponsoring Agency Name and Address} \newline \DP@Twelve}
+\newcommand{\CP@ThirteenCell}
+{\vspace*{\itemThirteenPrecorrection}
+ \DPtext{13.~Type of Report and Period Covered} \newline \DP@Thirteen
+ \vspace*{\itemThirteenPostcorrection}}
+\newcommand{\CP@FourteenCell}
+{\DPtext{14.~Sponsoring Agency Code} \newline \DP@Fourteen}
+\newcommand{\CP@FifteenCell}
+{\DPtext{15.~Supplementary Notes} \newline \DP@Fifteen}
+\newcommand{\CP@SixteenCell}
+{\DPtext{16.~Abstract} \newline \DP@Sixteen}
+\newcommand{\CP@SeventeenCell}
+{\DPtext{17.~Key Words} \newline \DP@Seventeen}
+\newcommand{\CP@EighteenCell}
+{\DPtext{18.~Distribution Statement} \newline \DP@Eighteen}
+\newcommand{\CP@NineteenCell}
+{\DPtext{19.~Security Classif. (of report)} \newline \DP@Nineteen}
+\newcommand{\CP@TwentyCell}
+{\DPtext{20.~Security Classif. (of this page)} \newline \DP@Twenty}
+\newcommand{\CP@TwentyoneCell}
+{\DPtext{21.~No. of Pages} \newline \DP@Twentyone}
+\newcommand{\CP@TwentytwoCell}
+{\DPtext{22.~Price} \newline \DP@Twentytwo}
+
+
+
+\newcommand{\DP@One}{}
+\newcommand{\DP@Two}{}
+\newcommand{\DP@Three}{}
+\newcommand{\DP@Four}{}
+\newcommand{\DP@Five}{}
+\newcommand{\DP@Six}{}
+\newcommand{\DP@Seven}{}
+\newcommand{\DP@Eight}{}
+\newcommand{\DP@Nine}{}
+\newcommand{\DP@Ten}{}
+\newcommand{\DP@Eleven}{}
+\newcommand{\DP@Twelve}{}
+\newcommand{\DP@Thirteen}{}
+\newcommand{\DP@Fourteen}{}
+\newcommand{\DP@Fifteen}{}
+\newcommand{\DP@Sixteen}{}
+\newcommand{\DP@Seventeen}{}
+\newcommand{\DP@Eighteen}{}
+\newcommand{\DP@Nineteen}{}
+\newcommand{\DP@Twenty}{}
+\newcommand{\DP@Twentyone}{}
+\newcommand{\DP@Twentytwo}{}
+
+
+\newcommand{\rptdocpageOne}[1]
+{\renewcommand{\DP@One}{#1}}
+\newcommand{\rptdocpageTwo}[1]
+{\renewcommand{\DP@Two}{#1}}
+\newcommand{\rptdocpageThree}[1]
+{\renewcommand{\DP@Three}{#1}}
+\newcommand{\rptdocpageFour}[1]
+{\renewcommand{\DP@Four}{#1}}
+\newcommand{\rptdocpageFive}[1]
+{\renewcommand{\DP@Five}{#1}}
+\newcommand{\rptdocpageSix}[1]
+{\renewcommand{\DP@Six}{#1}}
+\newcommand{\rptdocpageSeven}[1]
+{\renewcommand{\DP@Seven}{#1}}
+\newcommand{\rptdocpageEight}[1]
+{\renewcommand{\DP@Eight}{#1}}
+\newcommand{\rptdocpageNine}[1]
+{\renewcommand{\DP@Nine}{#1}}
+\newcommand{\rptdocpageTen}[1]
+{\renewcommand{\DP@Ten}{#1}}
+\newcommand{\rptdocpageEleven}[1]
+{\renewcommand{\DP@Eleven}{#1}}
+\newcommand{\rptdocpageTwelve}[1]
+{\renewcommand{\DP@Twelve}{#1}}
+\newcommand{\rptdocpageThirteen}[1]
+{\renewcommand{\DP@Thirteen}{#1}}
+\newcommand{\rptdocpageFourteen}[1]
+{\renewcommand{\DP@Fourteen}{#1}}
+\newcommand{\rptdocpageFifteen}[1]
+{\renewcommand{\DP@Fifteen}{#1}}
+\newcommand{\rptdocpageSixteen}[1]
+{\renewcommand{\DP@Sixteen}{#1}}
+\newcommand{\rptdocpageSeventeen}[1]
+{\renewcommand{\DP@Seventeen}{#1}}
+\newcommand{\rptdocpageEighteen}[1]
+{\renewcommand{\DP@Eighteen}{#1}}
+\newcommand{\rptdocpageNineteen}[1]
+{\renewcommand{\DP@Nineteen}{#1}}
+\newcommand{\rptdocpageTwenty}[1]
+{\renewcommand{\DP@Twenty}{#1}}
+\newcommand{\rptdocpageTwentyone}[1]
+{\renewcommand{\DP@Twentyone}{#1}}
+\newcommand{\rptdocpageTwentytwo}[1]
+{\renewcommand{\DP@Twentytwo}{#1}}
+
+% The following are provided in case this package file
+% is independently loaded into another type of report
+% class? Permits smooth construction of some of the
+% \rptdocpage# commands.
+\providecommand{\theauthors}{}
+\providecommand{\reportitle}{}
+\providecommand{\reportseries}{}
+\providecommand{\reportyear}{}
+\providecommand{\reportnumber}{}
+
+% The following are handy starting points for a typical
+% USGS report to Texas Department of Transportation
+\rptdocpageFour{\reporttitle}
+\rptdocpageSeven{\theauthors}
+\rptdocpageEight{\textsc{USGS}\ \reportseries\ \reportyear--\reportnumber}
+\rptdocpageEighteen{No restrictions}
+\rptdocpageNineteen{Unclassified}
+\rptdocpageTwenty{Unclassified}
+
+
+\newlength{\restore@rulewidth} % means to save setting for rule width
+% we are going to make the technical report documentation page set
+% in a heavier than normal width.
+\newlength{\DPrulewidth}
+\setlength{\DPrulewidth}{0.65pt}
+
+
+% set the font size for the body text of the doc page
+% the footnote size is about right for a 11pt body font
+% of the report, but need to be increased for 10pt body font
+\newcommand{\DPbodyfont}
+{\fontsize{8.75pt}{10.5pt}\selectfont}
+
+
+% This command sets material after the page, because we
+% typically build for twosided, let us insert a blank page.
+\newcommand{\DeclareRptDocPageTerminalHook}
+{
+\pagestyle{empty} % \myemptypage provides for the empty pagestyle
+% but in usage after \makefrontmatter, we still get a errant page
+% number at the bottom of page 4 (page before the right paged,
+% title page), therefore declaration is used prior to \myemptypage.
+\myemptypage
+\normalsize % restore to normal, the table set in a smaller font
+}
+
+
+
+% This is the primary user command.
+\newcommand{\rptdocpage}{
+
+% preserve and ultimate restore the arrayrulewidth
+% this permits the table herein to typeset with different
+% rule thickness
+\setlength{\restore@rulewidth}{\arrayrulewidth}
+\setlength{\arrayrulewidth}{\DPrulewidth}
+
+
+
+{\centering\DPtitletext ---\thinspace Technical Report Documentation Page\thinspace---\par}
+\vspace{-1.5\baselineskip}
+\DPbodyfont
+\setunitcolumnwidth{6}% to set unicolwid
+\begin{center}
+\noindent\begin{tabular}{p{\unicolwid}p{\unicolwid}p{\unicolwid}p{\unicolwid+\the\arrayrulewidth}p{\unicolwid}p{\unicolwid+\the\arrayrulewidth}|}
+ &  &  & \multicolumn{1}{p{1\unicolwid}}{} \\
+\hline
+\multicolumn{2}{|p{2\unicolwid}|}{\CP@OneCell} &
+\multicolumn{2}{p{2\unicolwid}|}{\CP@TwoCell} & 
+\multicolumn{2}{p{2\unicolwid}|}{\CP@ThreeCell} \\
+\hline
+\multicolumn{4}{|p{4\unicolwid}|}{\RaggedRight \CP@FourCell} &
+\multicolumn{2}{p{2\unicolwid}|}{\CP@FiveCell} \\
+\hline
+\multicolumn{4}{|p{4\unicolwid}|}{\CP@SevenCell} & \multicolumn{2}{>{\raggedright}p{2\unicolwid}|}{\CP@EightCell} \\
+\hline
+\multicolumn{4}{|p{4\unicolwid}|}%
+{\hspace*{-\tabcolsep}
+\begin{tabular}{p{4\unicolwid}}\CP@NineCell\end{tabular}} & 
+\multicolumn{2}{p{2\unicolwid}|}{\hspace*{-\tabcolsep}\begin{tabular}{p{2\unicolwid}}\CP@TenCell \\[.6\baselineskip] \hline \CP@ElevenCell \end{tabular}} \\
+\hline
+\multicolumn{4}{|p{4\unicolwid}|}%
+{\hspace*{-\tabcolsep}\begin{tabular}{p{4\unicolwid}}\CP@TwelveCell\end{tabular}} &
+\multicolumn{2}{p{2\unicolwid}|}{\hspace*{-\tabcolsep}\begin{tabular}{p{2\unicolwid}} \CP@ThirteenCell \\[.6\baselineskip] \hline \CP@FourteenCell \end{tabular}} \\
+\hline
+\multicolumn{6}{|p{6.65\unicolwid}|}{\RaggedRight \CP@FifteenCell} \\
+\hline
+\multicolumn{6}{|p{6.65\unicolwid}|}{\RaggedRight \CP@SixteenCell} \\
+\hline
+\multicolumn{3}{|p{3\unicolwid}|}{\CP@SeventeenCell} & 
+\multicolumn{3}{p{3\unicolwid}|}{\CP@EighteenCell} \\
+\hline
+\multicolumn{6}{p{6\unicolwid}|}%
+{\hspace*{-\tabcolsep}\begin{tabular}{*{2}{|p{2\unicolwid}}*{2}{|p{1\unicolwid}}}
+\CP@NineteenCell & \CP@TwentyCell &
+\CP@TwentyoneCell & \CP@TwentytwoCell 
+\end{tabular}} \\
+\hline
+\end{tabular}
+\smallskip
+% the adjustments to the makebox width are dependent on rulewidth, 
+% font size, and other? Manual hacking might be needed, but since
+% this page is supposed to be a one-off product mainly for me,
+% I've stopped.
+\rule{0pt}{8pt}\noindent\makebox[6\unicolwid+11\tabcolsep-6\arrayrulewidth]{\textsf{\fontseries{l}\selectfont\small Form DOT F 1700.7 (8-72)\hfill Reproduction of complete page authorized}}
+\end{center}
+\setlength{\arrayrulewidth}{\restore@rulewidth}
+
+\DeclareRptDocPageTerminalHook
+
+}
+
+
+
+\endinput

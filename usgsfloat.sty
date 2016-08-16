@@ -1,0 +1,29 @@
+% Auxillary package for usgs reports by William H. Asquith
+%------------------------ indentifcation ------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{usgsfloat}[2007/01/20]
+%------------------------ initial code --------------------
+%------------------------ declaration of options ----------
+%------------------------ execution of options
+\ProcessOptions \relax
+%------------------------ package loading -----------------
+%------------------------ main code -----------------------
+\typeout{COMMANDS CONTROLLING FLOAT PARAMETERS IN USGS REPORTS}
+
+\renewcommand{\topfraction}{0.7}    % default value anyway
+\renewcommand{\bottomfraction}{0.6} % much larger than default
+% but a little smaller than \topfraction to give a slight bias
+% towards large floats being placed at the top of the page.
+
+% Default LaTeX uses a 20pt plus some rubber--too much for a 
+% USGS report. Contract to about half a baseline skip with some
+% rubber space.
+\setlength{\textfloatsep}{6pt plus 1pt minus 2pt}
+\setlength{\dbltextfloatsep}{6pt plus 1pt minus 2pt}
+
+% Default LaTeX uses 12pt plus 2pt minus 2pt
+% \the\intextsep
+% Let us tightening this up a bit.
+\setlength{\intextsep}{8pt plus 2pt minus 2pt}
+
+\endinput

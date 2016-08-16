@@ -1,0 +1,191 @@
+% Auxillary package for usgs reports by William H. Asquith
+%------------------------ indentifcation ------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{usgsgloss}[2007/09/03]
+%------------------------ initial code --------------------
+\RequirePackage{multicol}
+\newboolean{resettwocolglo}
+%------------------------ declaration of options ----------
+%------------------------ execution of options
+\ProcessOptions \relax
+%------------------------ package loading -----------------
+%------------------------ main code -----------------------
+\typeout{COMMANDS CONTROLLING THE GLOSSARY IN USGS REPORTS}
+
+% Define the name of the Glossary
+%\glossaryname contains 'Glossary' in English--we'll use this
+% preprogrammed text. However, testing indicates that \glossaryname
+% might not be provided by some systems(???), so we \providecommand
+% to avoid an error.
+\providecommand{\glossaryname}{Glossary}
+
+% What is the item going to look like?
+\newcommand{\glossitemformat}[1]{\textbf{#1}}
+
+% What will follow the item--the \@glossitemseparator,
+% but trickery needed to support subsection titling in the 
+% glossary.
+
+% BEGIN content related to the material to typeset after the
+% entry but before the definition.
+
+% the command (content) actually used in the typesetting
+\newcommand{\@glossitemseparator}{}
+\newcommand{\@trueglossitemseparator}{}
+
+\newcommand{\glossitemseparator}[1]%
+{\renewcommand{\@glossitemseparator}{#1}
+ \renewcommand{\@trueglossitemseparator}{#1}
+}
+% default medium series em dash with bounding thin spaces
+% This is the user level command to set the style of the 
+% item separator so that internal @ values can be locked in
+% for support of the subsection headings within the appendix.
+\glossitemseparator{\textmd{\thinspace---\thinspace}}
+
+
+% Some complex glossaries might need subsections, such as
+% an Acronym subsection, a Greek subsection, etc. This command
+% places the subsection title trailing an empty \item. We need
+% too use an empty item so that we can begin the glossary with
+% a subsection heading (the list environment requires the leading
+% \item).  We default shift the title up a \baselineskip.
+\newcommand{\glosssubsection}[2][\vspace*{-1\baselineskip}]%
+{\renewcommand{\@glossitemseparator}{} % define away
+
+ \item[]{\ } % empty item, the braces and lone space appear fairly
+ % important for proper vertical and horizontal alignment of the
+ % titles
+ 
+ #1 % typeset the negative vertical space
+ \hspace*{-\leftmargin}\textsf{\textbf{#2}}\par % typeset title
+ 
+ % finally restore the trueglossitemseparator back for the list
+ \renewcommand{\@glossitemseparator}{\@trueglossitemseparator} 
+}
+% END the glossitemseparator material.
+
+% Rulers above and below the glossary entries
+\newcommand{\glosstoprule}{} % no rule above the glossary
+\newcommand{\glossbotrule}{\nointerlineskip
+\noindent \rule{\linewidth}{\rulewidth}\par}
+% The default is to build a rule as this rule represents the
+% final end of the report--set it in the samewidth as the
+% heading rule \rulewidth is set in the usgshdr.sty package
+
+% this length is a hack to REMOVE a space between the em-dash 
+% and the beginning of the description.
+\newlength{\glosslabelsep}
+\setlength{\glosslabelsep}{0pt}
+
+\newcommand{\glossdescriptionlabel}[1]{\hspace{\labelsep}
+\glossitemformat{#1\@glossitemseparator}}
+
+% \myblankpage is provided by the usgsnullpages.sty package
+% which must be loaded first (see usgsreporta.sty)
+\newcommand{\glossaryTOoddpage}{\myblankpage}
+
+
+\newcommand{\usgsglosspostamble}
+{}
+
+
+\newcommand{\glossbeforesep}[1][-\baselineskip]
+{\strut \vspace*{#1}}
+
+% Define the command setting the Glossary section heading
+\newcommand{\glosssection}
+{\glossbeforesep
+ \SECTION{\glossaryname}}
+
+% How many columns will the glossary have
+\newcommand{\numglosscols}{1}
+
+% Note the \strut is used along with a \strut with the Index
+% so the the vertical page position of the section titles for
+% each environment start at the same location.
+
+% The negative vspace backs use up. This negative baselineskip
+% is also used in the usgsenotes.sty and usgsidx.sty packages
+% in a similar construct with the strut.
+
+% The glossary begins by starting the section, which could 
+% possibly have been cleared to an odd page using the 
+% \glossaryTOoddpage command
+% An optional rule with \glosstoprule is made. Finally the
+% list environment is adjusted to basically match default 
+% description environment. The glossary terminates with an
+% optional rule and \clearpage.
+\newenvironment{usgsglossary}
+{\ifthenelse{\boolean{@twocolumn}}{\setboolean{resettwocolglo}{true}}%
+                                  {\setboolean{resettwocolglo}{false}}
+ \onecolumn
+ \glossaryTOoddpage
+ \pagestyle{body} % need this so that the rightmark can get
+ % picked up when it is set by the \SECTION command, normally
+ % body would already by the style of choice, but should the
+ % style be other, say for a massive loading of figures through
+ % a custom \include, then this resetting is a good idea
+ 
+ \ifthenelse{\numglosscols > 1}%
+    {\begin{multicols}{\numglosscols}[\glosssection \glosstoprule]}%
+    {\glosssection \glosstoprule}
+    \begin{list}{}{\setlength{\labelsep}{\glosslabelsep}%
+                   \setlength{\labelwidth}{\labelsep}%
+                   \setlength{\itemindent}{-\leftmargin}%
+                   \let\makelabel\glossdescriptionlabel}}
+{\end{list}
+ \ifthenelse{\numglosscols > 1}{\end{multicols}}{}
+ \glossbotrule
+ 
+ \noindent\usgsglosspostamble
+ 
+ \ifthenelse{\boolean{resettwocolglo}}{\twocolumn}{\onecolumn}}
+% PS: I think the trailing % are needed in this context according
+% to an example in The Latex Companion
+
+
+\endinput
+% EXAMPLE
+% \begin{usgsglossary}
+% \item[First entry]The first entry of the glossary contains a
+% single line that should extend on to two different lines of
+% text. Isn't this cool!
+%\item[hyetograph]A hyetograph is the temporal distribution. 
+%
+% Further description of hyetograph in separate pargraph.
+%
+%\item[$\sqrt{(\pi)}$]Goofy equation
+%\item[$\sum^{n}_{i=0}x^i$]The sum of self-powered data?
+%That was a meaningless equation.
+% \end{usgsglossary}
+
+% EXAMPLE WITH SUBSECTIONS
+%\renewcommand{\numglosscols}{2}
+%\renewcommand{\rightmark}{Glossary}
+%\begin{usgsglossary}
+%% ACRONYMS
+%\glosssubsection{Acronyms}
+
+%\item[{\mdseries \AIC}]Akaike Information Criterion is a measure of information content of a regression model in which a trade off between number of parameters and the fit of the model is made.
+
+%\item[{\mdseries \GLD}]The generalized lambda distribution.
+
+%\item[{\mdseries \GUH}]The gamma unit hydrograph as generally specified by equation~\ref{eq:GUHdefined} and particularly defined by $K{^\binampersand}T_p$ equations.
+
+%\item[{\mdseries \GUHAS}]The Gamma Unit Hydrograph Analysis System: Custom-built and analyst-directed software \citep{Asquith2005} for estimation of $K$ and $T_p$ values the from observed rainfall and runoff data.
+
+%\item[{\mdseries \PRESS}]The \textsc{PRE}diction \textsc{S}um of \textsc{S}quares statistic for a regression, which is regarded as a measure of performance when a regression equation is used to predict new data.
+
+%% SYMBOLS
+%\glosssubsection{Symbols}
+
+%\item[{\small $\oplus$}]A symbol representing the {\small $\oplus$}-vector of the watershed characteristics or regressor variables used to make a prediction for a given regression equation.
+
+%% GREEK
+%\glosssubsection{Hebrew and Greek Alphabet}
+
+%\item[$\aleph$]A quantity defined in item~\ref{item:deltaaleph} on page~\pageref{item:deltaaleph} for the algorithm to compensate for the influence of modeling time step that begins on page~\pageref{page:algorithmfortimestep}.
+
+%\end{usgsglossary}
+

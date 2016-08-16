@@ -1,0 +1,26 @@
+% Auxillary package for usgs reports by William H. Asquith
+%------------------------ indentifcation ------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{usgsref}[2008/04/03]
+%------------------------ initial code --------------------
+%------------------------ declaration of options ----------
+%------------------------ execution of options
+\ProcessOptions \relax
+%------------------------ package loading -----------------
+
+
+%------------------------ main code -----------------------
+% Handy USGS specific symbols, abbreviations etc
+\typeout{COMMANDS OF SPECIFIC EQ/FIG/TAB REFERENCES IN USGS REPORTS}
+
+\newcommand{\usgseqref}[2][eq.~]%
+{#1\ref{#2}}
+
+\newcommand{\usgsfigref}[2][figure~]%
+{#1\ref{#2}}
+
+\newcommand{\usgstabref}[2][table~]%
+{#1\ref{#2}}
+
+
+\endinput

@@ -1,0 +1,333 @@
+% Auxillary package for usgs reports by William H. Asquith
+%------------------------ indentifcation ------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{usgsdvtable}[2007/05/22]
+%------------------------ initial code --------------------
+\RequirePackage{usgstable}
+\RequirePackage{usgssym}
+\RequirePackage{dcolumn}
+\RequirePackage{calc}
+%------------------------ declaration of options ----------
+%------------------------ execution of options
+\ProcessOptions \relax
+%------------------------ package loading -----------------
+%------------------------ main code -----------------------
+% Handy USGS specific table tools
+\typeout{COMMANDS RELATED TO DAILY VALUE TABLES IN USGS REPORTS}
+
+\newcommand{\DV@station}{}
+\newcommand{\DVstation}[1]{\renewcommand\DV@station{#1}}
+
+\newcommand{\DVthelocation}{}
+\newcommand{\DVlocation}[1]{\renewcommand\DVthelocation{#1}}
+
+\newcommand{\DVthepor}{}
+\newcommand{\DVpor}[1]{\renewcommand\DVthepor{#1}}
+
+\newcommand{\DVtheremarks}{}
+\newcommand{\DVremarks}[1]{\renewcommand\DVtheremarks{#1}}
+
+
+\newcommand{\DVtheinstrumentation}{}
+\newcommand{\DVinstrumentation}[1]{\renewcommand\DVtheinstrumentation{#1}}
+
+\newcommand{\DVthecontents}{}
+\newcommand{\DVcontents}[1]{\renewcommand\DVthecontents{#1}}
+
+
+\newcommand{\DV@year}{}
+\newcommand{\DVyear}[1]{\renewcommand\DV@year{#1}}
+
+\newcommand{\DV@yeartype}{}
+\newcommand{\DVyeartype}[1]{\renewcommand\DV@yeartype{#1}}
+
+\newcolumntype{n}{D{.}{.}{2}}
+
+\newcommand{\DVtabhdr}{\tabhdr \DVtabhdrfontsize}
+\newcommand{\DVtablefamily}{\sffamily}
+\newcommand{\DVtabhdrcor}{}
+
+\newlength{\DV@reservesep}
+
+\newlength{\DVtabcolsep}
+\setlength{\DVtabcolsep}{.1pt}
+ 
+\newcommand{\DVsitefontsize}{\small} % for the centered station num/name
+\newcommand{\DVsiteseries}{\mdseries} % and the weight of the station num/name
+\newcommand{\DVnotefontsize}{\small} % for the stuff above table
+\newcommand{\DVtabfontsize}{\fontsize{7.45pt}{7.7pt}\selectfont} % for table itself
+\newcommand{\DVtabhdrfontsize}{\fontsize{7pt}{7.7pt}\selectfont} % for table header
+
+
+\newcommand{\DVtablepreamble}
+{\clearpage
+%\noindent\rule{\textwidth}{2pt} % uncomment for testing of 
+% width computations for the optimal \DVtabcolsep value
+}
+\newcommand{\DVtablepostamble}
+{}
+
+\newlength{\DVdaywidth}
+\newlength{\DVcolwidth}
+\settowidth{\DVdaywidth}{\DVtabhdrfontsize \DVtabhdr \ \ DAY\ \ }
+\settowidth{\DVcolwidth}{\DVtabfontsize $^\mathrm{E}999,999.00$}
+
+
+\newcommand{\DVinWY}{
+\multicolumn{1}{c}{\DVtabhdr DAY} &
+\multicolumn{1}{p{\DVcolwidth}}{\centering \DVtabhdr OCT\DVtabhdrcor} &
+\multicolumn{1}{p{\DVcolwidth}}{\centering \DVtabhdr NOV\DVtabhdrcor} &
+\multicolumn{1}{p{\DVcolwidth}}{\centering \DVtabhdr DEC\DVtabhdrcor} &
+\multicolumn{1}{p{\DVcolwidth}}{\centering \DVtabhdr JAN\DVtabhdrcor} &
+\multicolumn{1}{p{\DVcolwidth}}{\centering \DVtabhdr FEB\DVtabhdrcor} &
+\multicolumn{1}{p{\DVcolwidth}}{\centering \DVtabhdr MAR\DVtabhdrcor} &
+\multicolumn{1}{p{\DVcolwidth}}{\centering \DVtabhdr APR\DVtabhdrcor} &
+\multicolumn{1}{p{\DVcolwidth}}{\centering \DVtabhdr MAY\DVtabhdrcor} &
+\multicolumn{1}{p{\DVcolwidth}}{\centering \DVtabhdr JUN\DVtabhdrcor} &
+\multicolumn{1}{p{\DVcolwidth}}{\centering \DVtabhdr JUL\DVtabhdrcor} &
+\multicolumn{1}{p{\DVcolwidth}}{\centering \DVtabhdr AUG\DVtabhdrcor} &
+\multicolumn{1}{p{\DVcolwidth}}{\centering \DVtabhdr SEP\DVtabhdrcor} }
+
+\newcommand{\DVinCY}{
+\multicolumn{1}{p{\DVdaywidth}}{\centering \DVtabhdr DAY} &
+\multicolumn{1}{p{\DVcolwidth}}{\centering \DVtabhdr JAN\DVtabhdrcor} &
+\multicolumn{1}{p{\DVcolwidth}}{\centering \DVtabhdr FEB\DVtabhdrcor} &
+\multicolumn{1}{p{\DVcolwidth}}{\centering \DVtabhdr MAR\DVtabhdrcor} &
+\multicolumn{1}{p{\DVcolwidth}}{\centering \DVtabhdr APR\DVtabhdrcor} &
+\multicolumn{1}{p{\DVcolwidth}}{\centering \DVtabhdr MAY\DVtabhdrcor} &
+\multicolumn{1}{p{\DVcolwidth}}{\centering \DVtabhdr JUN\DVtabhdrcor} &
+\multicolumn{1}{p{\DVcolwidth}}{\centering \DVtabhdr JUL\DVtabhdrcor} &
+\multicolumn{1}{p{\DVcolwidth}}{\centering \DVtabhdr AUG\DVtabhdrcor} &
+\multicolumn{1}{p{\DVcolwidth}}{\centering \DVtabhdr SEP\DVtabhdrcor} &
+\multicolumn{1}{p{\DVcolwidth}}{\centering \DVtabhdr OCT\DVtabhdrcor} &
+\multicolumn{1}{p{\DVcolwidth}}{\centering \DVtabhdr NOV\DVtabhdrcor} &
+\multicolumn{1}{p{\DVcolwidth}}{\centering \DVtabhdr DEC\DVtabhdrcor} }
+
+\newcommand{\DV@monthheader}{}
+\newcommand{\DVmonthheader}[1]{\renewcommand\DV@monthheader{#1}}
+
+
+\DVmonthheader{\DVinWY}
+\DVyeartype{WATER YEAR}
+
+\newcommand{\DVtabnotematerial}
+{\noindent \textsc{location}---\DVthelocation\par
+\noindent \textsc{period of record}---\DVthepor\par
+\noindent \textsc{instrumentation}---\DVtheinstrumentation\par
+\noindent \textsc{remarks}---\DVtheremarks\par
+\noindent \textsc{table values}---\DVthecontents\par
+}
+
+
+\newenvironment{DVtable}
+{\DVtablepreamble
+
+
+\setlength{\DV@reservesep}{\tabcolsep}
+\setlength{\tabcolsep}{\DVtabcolsep}
+\settowidth{\DVdaywidth}{\DVtabhdrfontsize \DVtabhdr \ \ DAY\ \ }
+\settowidth{\DVcolwidth}{\DVtabfontsize $^\mathrm{E}999,999.00$}
+
+{\DVtablefamily \DVsiteseries \DVsitefontsize \centering
+\DV@station\par}
+
+\DVnotefontsize
+\DVtabnotematerial
+
+% Begin the table 
+\smallskip
+\DVtabfontsize
+
+\noindent \begin{tabular}{p{\DVdaywidth}nnnnnnnnnnnn}
+\hline
+& \multicolumn{12}{c}{\DVtabhdr \DV@yeartype\ \DV@year} \\
+\DV@monthheader \\[1pt]
+\hline
+\multicolumn{1}{c}{1} & \DV@i
+\multicolumn{1}{c}{2} & \DV@ii
+\multicolumn{1}{c}{3} & \DV@iii
+\multicolumn{1}{c}{4} & \DV@iv
+\multicolumn{1}{c}{5} & \DV@v
+\multicolumn{1}{c}{6} & \DV@vi
+\multicolumn{1}{c}{7} & \DV@vii
+\multicolumn{1}{c}{8} & \DV@viii
+\multicolumn{1}{c}{9} & \DV@ix
+\multicolumn{1}{c}{10} & \DV@x
+\multicolumn{1}{c}{11} & \DV@xi
+\multicolumn{1}{c}{12} & \DV@xii
+\multicolumn{1}{c}{13} & \DV@xiii
+\multicolumn{1}{c}{14} & \DV@xiv
+\multicolumn{1}{c}{15} & \DV@xv
+\multicolumn{1}{c}{16} & \DV@xvi
+\multicolumn{1}{c}{17} & \DV@xvii
+\multicolumn{1}{c}{18} & \DV@xviii
+\multicolumn{1}{c}{19} & \DV@xix
+\multicolumn{1}{c}{20} & \DV@xx
+\multicolumn{1}{c}{21} & \DV@xxi
+\multicolumn{1}{c}{22} & \DV@xxii
+\multicolumn{1}{c}{23} & \DV@xxiii
+\multicolumn{1}{c}{24} & \DV@xxiv
+\multicolumn{1}{c}{25} & \DV@xxv
+\multicolumn{1}{c}{26} & \DV@xxvi
+\multicolumn{1}{c}{27} & \DV@xxvii
+\multicolumn{1}{c}{28} & \DV@xxviii
+\multicolumn{1}{c}{29} & \DV@xxix
+\multicolumn{1}{c}{30} & \DV@xxx
+\multicolumn{1}{c}{31} & \DV@xxxi
+\hline}
+{\end{tabular}
+\DVtablepostamble
+\normalsize
+\setlength{\tabcolsep}{\DV@reservesep}}
+
+
+
+% Commands for setting the statistics rows.
+\newlength{\DVstathang}
+\setlength{\DVstathang}{0em}
+\newlength{\DVstatprotrude}
+\setlength{\DVstatprotrude}{0em - \DVdaywidth}
+
+\newcommand{\DVstatlineUNITS}[2]
+{\multicolumn{1}{>{\hangpara{\DVstathang}{1}}m{\DVdaywidth}}{\raggedleft #1~in\newline #2}}
+
+\newcommand{\DVstatline}[1]
+{\multicolumn{1}{>{\hspace*{\DVstatprotrude}\hangpara{\DVstathang}{1}}p{\DVdaywidth}}{\raggedleft #1}}
+
+
+
+
+% Commands for setting the 31 rows
+\newlength{\DVrowsep}
+\setlength{\DVrowsep}{1pt}
+
+\newcommand{\DVrowdefault}%
+{\doubledash & \doubledash & \doubledash & \doubledash &
+\doubledash & \doubledash & \doubledash & \doubledash &
+\doubledash & \doubledash & \doubledash & \doubledash}
+
+\newcommand{\DV@i}{}
+\newcommand{\DVi}[1]{\renewcommand\DV@i{#1 \\[\DVrowsep]}}
+\DVi{\DVrowdefault}
+
+\newcommand{\DV@ii}{}
+\newcommand{\DVii}[1]{\renewcommand\DV@ii{#1 \\[\DVrowsep]}}
+\DVii{\DVrowdefault}
+
+\newcommand{\DV@iii}{}
+\newcommand{\DViii}[1]{\renewcommand\DV@iii{#1 \\[\DVrowsep]}}
+\DViii{\DVrowdefault}
+
+\newcommand{\DV@iv}{}
+\newcommand{\DViv}[1]{\renewcommand\DV@iv{#1 \\[\DVrowsep]}}
+\DViv{\DVrowdefault}
+
+\newcommand{\DV@v}{}
+\newcommand{\DVv}[1]{\renewcommand\DV@v{#1 \\[\DVrowsep]}}
+\DVv{\DVrowdefault}
+
+\newcommand{\DV@vi}{}
+\newcommand{\DVvi}[1]{\renewcommand\DV@vi{#1 \\[\DVrowsep]}}
+\DVvi{\DVrowdefault}
+
+\newcommand{\DV@vii}{}
+\newcommand{\DVvii}[1]{\renewcommand\DV@vii{#1 \\[\DVrowsep]}}
+\DVvii{\DVrowdefault}
+
+\newcommand{\DV@viii}{}
+\newcommand{\DVviii}[1]{\renewcommand\DV@viii{#1 \\[\DVrowsep]}}
+\DVviii{\DVrowdefault}
+
+\newcommand{\DV@ix}{}
+\newcommand{\DVix}[1]{\renewcommand\DV@ix{#1 \\[\DVrowsep]}}
+\DVix{\DVrowdefault}
+
+\newcommand{\DV@x}{}
+\newcommand{\DVx}[1]{\renewcommand\DV@x{#1 \\[\DVrowsep]}}
+\DVx{\DVrowdefault}
+
+\newcommand{\DV@xi}{}
+\newcommand{\DVxi}[1]{\renewcommand\DV@xi{#1 \\[\DVrowsep]}}
+\DVxi{\DVrowdefault}
+
+\newcommand{\DV@xii}{}
+\newcommand{\DVxii}[1]{\renewcommand\DV@xii{#1 \\[\DVrowsep]}}
+\DVxii{\DVrowdefault}
+
+\newcommand{\DV@xiii}{}
+\newcommand{\DVxiii}[1]{\renewcommand\DV@xiii{#1 \\[\DVrowsep]}}
+\DVxiii{\DVrowdefault}
+
+\newcommand{\DV@xiv}{}
+\newcommand{\DVxiv}[1]{\renewcommand\DV@xiv{#1 \\[\DVrowsep]}}
+\DVxiv{\DVrowdefault}
+
+\newcommand{\DV@xv}{}
+\newcommand{\DVxv}[1]{\renewcommand\DV@xv{#1 \\[\DVrowsep]}}
+\DVxv{\DVrowdefault}
+
+\newcommand{\DV@xvi}{}
+\newcommand{\DVxvi}[1]{\renewcommand\DV@xvi{#1 \\[\DVrowsep]}}
+\DVxvi{\DVrowdefault}
+
+\newcommand{\DV@xvii}{}
+\newcommand{\DVxvii}[1]{\renewcommand\DV@xvii{#1 \\[\DVrowsep]}}
+\DVxvii{\DVrowdefault}
+
+\newcommand{\DV@xviii}{}
+\newcommand{\DVxviii}[1]{\renewcommand\DV@xviii{#1 \\[\DVrowsep]}}
+\DVxviii{\DVrowdefault}
+
+\newcommand{\DV@xix}{}
+\newcommand{\DVxix}[1]{\renewcommand\DV@xix{#1 \\[\DVrowsep]}}
+\DVxix{\DVrowdefault}
+
+\newcommand{\DV@xx}{}
+\newcommand{\DVxx}[1]{\renewcommand\DV@xx{#1 \\[\DVrowsep]}}
+\DVxx{\DVrowdefault}
+
+\newcommand{\DV@xxi}{}
+\newcommand{\DVxxi}[1]{\renewcommand\DV@xxi{#1 \\[\DVrowsep]}}
+\DVxxi{\DVrowdefault}
+
+\newcommand{\DV@xxii}{}
+\newcommand{\DVxxii}[1]{\renewcommand\DV@xxii{#1 \\[\DVrowsep]}}
+\DVxxii{\DVrowdefault}
+
+\newcommand{\DV@xxiii}{}
+\newcommand{\DVxxiii}[1]{\renewcommand\DV@xxiii{#1 \\[\DVrowsep]}}
+\DVxxiii{\DVrowdefault}
+
+\newcommand{\DV@xxiv}{}
+\newcommand{\DVxxiv}[1]{\renewcommand\DV@xxiv{#1 \\[\DVrowsep]}}
+\DVxxiv{\DVrowdefault}
+
+\newcommand{\DV@xxv}{}
+\newcommand{\DVxxv}[1]{\renewcommand\DV@xxv{#1 \\[\DVrowsep]}}
+\DVxxv{\DVrowdefault}
+
+\newcommand{\DV@xxvi}{}
+\newcommand{\DVxxvi}[1]{\renewcommand\DV@xxvi{#1 \\[\DVrowsep]}}
+\DVxxvi{\DVrowdefault}
+
+\newcommand{\DV@xxvii}{}
+\newcommand{\DVxxvii}[1]{\renewcommand\DV@xxvii{#1 \\[\DVrowsep]}}
+\DVxxvii{\DVrowdefault}
+
+\newcommand{\DV@xxviii}{}
+\newcommand{\DVxxviii}[1]{\renewcommand\DV@xxviii{#1 \\[\DVrowsep]}}
+\DVxxviii{\DVrowdefault}
+
+\newcommand{\DV@xxix}{}
+\newcommand{\DVxxix}[1]{\renewcommand\DV@xxix{#1 \\[\DVrowsep]}}
+\DVxxix{\DVrowdefault}
+
+\newcommand{\DV@xxx}{}
+\newcommand{\DVxxx}[1]{\renewcommand\DV@xxx{#1 \\[\DVrowsep]}}
+\DVxxx{\DVrowdefault}
+
+\newcommand{\DV@xxxi}{}
+\newcommand{\DVxxxi}[1]{\renewcommand\DV@xxxi{#1 \\[\DVrowsep]}}
+\DVxxxi{\DVrowdefault}
+
+\endinput
