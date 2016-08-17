@@ -40,7 +40,9 @@
 \RequirePackage{fancybox} % for the \fancyput as part of the draft
 % option of the usgsreporta package. This command places the 
 % 'watermark' like text at bottom of cover and report body containing
-% the Date of the typesetting and the USGS provisional message
+% the Date of the typesetting and the USGS provisional message     
+
+\RequirePackage{eso-pic}
 
 % Loading in the series of support packages for the usgs template.
 \RequirePackage{usgsattr} % this needs to come first
@@ -304,6 +306,22 @@
    \ifthenelse{\boolean{draft}}{\DoDraftElementsMainMatter}{}
 }
 
+\newcommand{\makefirstpagetopalt}
+{  \thispagestyle{plain}
+   \fancypagestyle{plain}{\pagestyle{bodyplain}}
+   \setcounter{page}{1} % ensure that page numbering begins
+   \pagenumbering{arabic} % finally switch over to arabic
+   % numbering with reset and the user can begin with an Abstract
+   % section
+
+   \normalsize % ensure that we are in normal size text
+   \rmfamily   % and the we are setting in roman
+   
+   % Finally if in draft mode toggle remainder of the 
+   % body of the manuscript
+   \ifthenelse{\boolean{draft}}{\DoDraftElementsMainMatter}{}
+}
+
 
 \newlength{\firstpageskipTOtitle}
 \setlength{\firstpageskipTOtitle}{0.5in}
@@ -345,10 +363,6 @@
    \makefirstpagetop % finally initate main body startup sequence
 }
 
-\typeout{--USGS, defining the makefrontmatterabv command}
-% Build the front matter, by using the
-%\tableofcontents, \listoffigures, \myfirstpage
-% and \byauthors commands
 \newcommand{\makefrontmatterabv}{
    % the title page and the fly are hardwired for single line
    % spacing even though the doucment might be built as double
@@ -361,8 +375,8 @@
       \fancypagestyle{plain}{\pagestyle{title}}
       % cast as title page to remove numbers
 
-%      \maketitle % make the title page from usgstitlepage.sty
-%      \makefly   % make the inside fly page usgstitlepage.sty
+      %\maketitle % make the title page from usgstitlepage.sty
+      %\makefly   % make the inside fly page usgstitlepage.sty
    \end{spacing}
      
    \maketoc % make the table of contents for the report
@@ -370,11 +384,10 @@
    %\conversionpage % make the request for setting the conversionpage
    % this command might produce nothing
    
-   %\myblankpage % insert a potential blank page before body begins.
+   \myblankpage % insert a potential blank page before body begins.
 
-   \makefirstpagetop % finally initate main body startup sequence
+   \makefirstpagetopalt % finally initate main body startup sequence
 }
-
 
 \typeout{--USGS, COVER PAGE DEFINITIONS}
 % BEGIN COVER
@@ -486,6 +499,115 @@
          } % end the parbox
       } % end of the put
    \end{picture}
+   \clearpage
+    
+   % now typeset the back of the front cover page
+   \pagestyle{title}
+   \onecolumn
+   \insertextrabackoffrontcover
+   \vspace*{\fill}
+   \noindent
+   \begin{picture}(0,0)
+      \put(0,0){\noindent
+         \mbox{\sffamily \footnotesize \textbf{Cover.}}\ 
+         \parbox[t]{0.6\textwidth}
+            {\raggedright \sffamily \footnotesize \GSphotocredit}
+      } % end of the put
+   \end{picture}
+   \clearpage
+   \pagecolor{white}
+  \end{spacing}
+}
+
+\newcommand\BackgroundPic{
+    \put(-3,0){
+    \parbox[b][\paperheight]{\paperwidth}{%
+    \vfill
+    \centering
+    \includegraphics[width=\paperwidth,height=\paperheight]{\coverphoto}
+    \vfill
+    }}}
+
+\typeout{--USGS, defining the makefrontcoveralt command}
+\newcommand{\makefrontcoveralt}{ % MAKE THE FRONT COVER PAGE
+  \begin{spacing}{1}
+   \pagestyle{title}
+   
+   % Finally if in draft mode toggle the action for cover
+   \ifthenelse{\boolean{draft}}{\DoDraftElementsCover}{}
+
+   %\bannercolor % set color of the banner that is drawn by
+   % the command \coverruleevenpage
+   %\covercolor % set color of the cover page--typically not white
+   
+   \AddToShipoutPictureBG*{\BackgroundPic}
+    
+   \noindent
+   \begin{picture}(0,0)
+      %\put(0,0){\pictureorigin} % the origin
+      \coverruleoddpage % banner across the top
+      \visidcolor
+      \put(-25,37){ 
+         \fbox{\includegraphics[height=0.5in,
+                trim=1.37in 4.535in 1.437in 4.323in,
+                clip]{\USGSvisidname}}
+         } % end of the framebox
+   \end{picture}
+
+   \color{white} % regardless of color setting--go to black
+
+   \rule[0in]{0in}{0.125in}
+
+   \noindent
+   \begin{picture}(0,0)
+      \put(-25,13){\noindent 
+         \parbox[b]{\textwidth}
+         {\normalsize \bfseries \sffamily
+           \cooperationwith
+         } \hspace*{\fill} % end the parbox
+      } % end of the put
+   \end{picture}
+   
+   \rule[0in]{0in}{0.25in}
+
+   \noindent
+   \begin{picture}(0,0)
+      \put(-25,-75){\noindent
+         \parbox[t]{\textwidth}
+            {\noindent
+             \parbox{\textwidth}
+                {\raggedright \Huge \bfseries
+                 \textsf{\coverreporttitle} \hspace*{\fill}
+                } % end the inner parbox
+         } % end of the outer parbox
+      } % end of the put
+   \end{picture}
+        
+   \color{white}
+   \vspace*{\fill} % rubber space to fill in the setup
+     
+   \noindent
+   \begin{picture}(0,0)
+      \put(-25,0){\noindent
+         \parbox[b]{\textwidth}
+            {\noindent
+             \parbox{\textwidth}
+                {\LARGE
+                 \textsf{\reportseries\ \reportnumber 
+                         \cooperatorreportseries } \hspace*{\fill}
+                }
+                
+             %\fbox{\rule[0in]{0cm}{\coopTOseries}}
+             \rule[0in]{0cm}{2\seriesTOdoi}
+
+             \noindent
+             \parbox{\textwidth}
+                {\large \bfseries \textsf{\doi \\ \textusgs} }
+                
+         } % end the parbox
+      } % end of the put
+   \end{picture}
+   \color{black}
    \clearpage
     
    % now typeset the back of the front cover page
