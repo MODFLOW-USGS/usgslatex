@@ -536,7 +536,7 @@
    % Finally if in draft mode toggle the action for cover
    \ifthenelse{\boolean{draft}}{\DoDraftElementsCover}{}
 
-   %\bannercolor % set color of the banner that is drawn by
+   \bannercolor % set color of the banner that is drawn by
    % the command \coverruleevenpage
    %\covercolor % set color of the cover page--typically not white
    
@@ -594,7 +594,7 @@
              \parbox{\textwidth}
                 {\LARGE
                  \textsf{\reportseries\ \reportnumber 
-                         \cooperatorreportseries } \hspace*{\fill}
+                         \cooperatorreportseries \\ \reportversion} \hspace*{\fill}
                 }
                 
              %\fbox{\rule[0in]{0cm}{\coopTOseries}}
