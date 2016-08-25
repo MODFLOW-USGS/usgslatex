@@ -43,6 +43,7 @@
 % the Date of the typesetting and the USGS provisional message     
 
 \RequirePackage{eso-pic}
+\RequirePackage{wallpaper}
 
 % Loading in the series of support packages for the usgs template.
 \RequirePackage{usgsattr} % this needs to come first
@@ -119,6 +120,13 @@
       \makebox[\width][c]%
       {\Large \mdseries \ttfamily
        \textcolor{red}{\DraftMessage}}}
+}
+
+\newcommand{\DoDraftElementsFullCover}{
+   \fancyput(0.7in,-9.5in){
+      \makebox[\width][c]%
+      {\Large \mdseries \ttfamily
+       \textcolor{white}{\DraftMessage}}}
 }
 
 \newcommand{\DoDraftElementsMainMatter}{
@@ -520,7 +528,7 @@
 }
 
 \newcommand\BackgroundPic{
-    \put(-3,0){
+    \put(0,0){
     \parbox[b][\paperheight]{\paperwidth}{%
     \vfill
     \centering
@@ -530,17 +538,19 @@
 
 \typeout{--USGS, defining the makefrontcoveralt command}
 \newcommand{\makefrontcoveralt}{ % MAKE THE FRONT COVER PAGE
+
   \begin{spacing}{1}
    \pagestyle{title}
-   
-   % Finally if in draft mode toggle the action for cover
-   \ifthenelse{\boolean{draft}}{\DoDraftElementsCover}{}
+
+   %% Finally if in draft mode toggle the action for cover
+   %\ifthenelse{\boolean{draft}}{\DoDraftElementsFullCover}{}
 
    \bannercolor % set color of the banner that is drawn by
    % the command \coverruleevenpage
    %\covercolor % set color of the cover page--typically not white
    
-   \AddToShipoutPictureBG*{\BackgroundPic}
+   %\AddToShipoutPictureBG*{\BackgroundPic}
+   \ThisTileWallPaper{\paperwidth}{\paperheight}{\coverphoto}
     
    \noindent
    \begin{picture}(0,0)
@@ -607,6 +617,7 @@
          } % end the parbox
       } % end of the put
    \end{picture}
+   
    \color{black}
    \clearpage
     
