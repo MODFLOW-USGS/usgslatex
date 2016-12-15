@@ -68,6 +68,7 @@
 \RequirePackage{usgstable}
 \RequirePackage{usgstoc}
 \RequirePackage{usgstocconvert}
+\RequirePackage{usgspreface}
 
 \RequirePackage{usgstitlepage} % to renew the \maketitle command
 \RequirePackage{usgsflypage} % to new the \makefly command
@@ -387,7 +388,9 @@
       %\maketitle % make the title page from usgstitlepage.sty
       %\makefly   % make the inside fly page usgstitlepage.sty
    \end{spacing}
-     
+   
+   \makepreface
+        
    \maketoc % make the table of contents for the report
    
    %\conversionpage % make the request for setting the conversionpage
