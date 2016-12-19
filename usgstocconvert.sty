@@ -12,6 +12,9 @@
 %------------------------ main code -----------------------
 \typeout{COMMANDS RELATED TO THE CONVERSION TABLE IN USGS REPORTS}
 %
+% Add command to turn off
+\newcommand{\addconversionpage}{true}
+%
 %
 % DATUMS
 % 
@@ -229,12 +232,23 @@
 % This is the command to actually typeset the conversion table
 % and is called/used by the usgsreporta.sty package
 \newcommand{\conversionpage}
-{\conversionTOnewpage
- \theconversions
- \nopagebreak[4]
- \thedatums
- \nopagebreak[4]
- \theconventions
+{
+  %\ifthenelse{\equal{\addconversionpage}{true}}
+  \ifthenelse{\boolean{\addconversionpage}}
+  {
+     \conversionTOnewpage
+     \theconversions
+     \nopagebreak[4]
+     \thedatums
+     \nopagebreak[4]
+     \theconventions
+  }{}
+% \conversionTOnewpage
+% \theconversions
+% \nopagebreak[4]
+% \thedatums
+% \nopagebreak[4]
+% \theconventions
 }
 
 %=======================================================
