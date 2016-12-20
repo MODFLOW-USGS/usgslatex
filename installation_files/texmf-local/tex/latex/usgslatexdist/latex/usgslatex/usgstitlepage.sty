@@ -1,0 +1,84 @@
+%------------------------ indentifcation ------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{usgstitlepage}[2008/07/18]
+%------------------------ initial code --------------------
+\RequirePackage{usgsattr} % this needs to come first
+% as numerous text definitions are made that are used by one or
+% more of the following packages.
+\RequirePackage{usgshdr} % for the fly pagestyle
+
+%------------------------ declaration of options ----------
+%------------------------ execution of options
+\ProcessOptions \relax
+%------------------------ package loading -----------------
+%------------------------ main code -----------------------
+
+\typeout{--USGS, renewing the maketitle command}
+\newlength{\titlepagehspace}
+\setlength{\titlepagehspace}{-0.25in}
+% 1 inch left margin, but only need 0.75 inch
+
+\newlength{\titlepagewidth}
+\setlength{\titlepagewidth}{\textwidth}
+\addtolength{\titlepagewidth}{-\titlepagehspace}
+
+\newlength{\titlepageskipTOauthors}
+\setlength{\titlepageskipTOauthors}{0.2775in}
+
+\newcommand{\titlefontfamilyA}
+{\sffamily}
+
+\newcommand{\titlefontfamilyB}
+{\sffamily \fontseries{l}\selectfont}
+
+\newcommand{\titlefonthuge}
+{\fontsize{22pt}{24pt}\selectfont}
+
+\newcommand{\titlefontLarge}
+{\fontsize{16pt}{18pt}\selectfont}
+
+\newcommand{\titlefontlarge}
+{\fontsize{12pt}{14pt}\selectfont}
+
+\newcommand{\titlefontnormalsize}
+{\normalsize}
+
+\renewcommand{\maketitle}{
+
+   \setlength{\unitlength}{0.001in} % sets the unit lengths for the
+                                    % picture environment
+
+   \onecolumn
+   \thispagestyle{plain}
+   \fancypagestyle{plain}{\pagestyle{title}}
+   
+   {\titlefontfamilyA
+   
+   \noindent \begin{picture}(0,0)
+      \put(0,-600){\noindent \hspace*{\titlepagehspace}
+         \parbox[t]{\titlepagewidth}
+                   {\raggedright \titlefonthuge \bfseries
+                    \pagereporttitle \\[\titlepageskipTOauthors]
+                   {\mdseries \titlefontlarge By \theauthors}}}
+
+      \put(0,-6345){\noindent \hspace*{\titlepagehspace}
+         \parbox[t]{\titlepagewidth}
+                   {\titlefontlarge \cooperationwith}}
+              
+    \put(0,-8205){\noindent  \hspace*{\titlepagehspace}
+      \parbox[b]{\titlepagewidth}
+             {\titlefontfamilyB \titlefontLarge
+               \reportseries\ \reportnumber \\ 
+               \cooperatorreportseries}}
+
+     \put(0,-9115){\noindent \hspace*{\titlepagehspace}
+           \parbox[b]{\titlepagewidth}
+                     {\titlefontlarge \bfseries \doi \\ \textusgs}}
+      \end{picture}
+   }
+}
+
+
+\endinput
+
+

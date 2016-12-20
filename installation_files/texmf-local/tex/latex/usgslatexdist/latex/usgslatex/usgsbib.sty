@@ -1,0 +1,143 @@
+% Auxillary package for usgs reports by William H. Asquith
+%------------------------ indentifcation ------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{usgsbib}[2008/07/29]
+%------------------------ initial code --------------------
+% for natural sciences style citations
+\RequirePackage{natbib}
+\RequirePackage{color}
+\RequirePackage{url}
+%------------------------ declaration of options ----------
+%------------------------ execution of options
+\ProcessOptions \relax
+%------------------------ package loading -----------------
+%------------------------ main code -----------------------
+\typeout{COMMANDS CONTROLLING THE REFERENCES SECTION IN USGS REPORTS}
+
+\newcommand{\reportrefname}{\refname} % contains 'References'
+
+\renewcommand{\bibsection}{} % make this operation null and
+% force user to use the REFSECTION so that the \SECTION command
+% can get called so that the \rightmark can get populated.
+% Apparently we can not implement such behavior within the definition
+% of \bibsection, so I have nullified it, in favor of \REFSECTION
+
+% like the \bibpreamble apparently supported by natbib package,
+% but does not seem to work for me. At any rate USGS, uses References
+% so we have a \refpreamble that is inserted as regular text following
+% the heading. This might be useful in some circumstances.
+\newcommand{\refpreamble}{}
+
+\newcommand{\REFSECTION}
+{\SECTION{\reportrefname}
+ \refpreamble}
+% Often USGS reports have 'Selected References'
+% Therefore, redefinition of \reportrefname in the preamble 
+% to 'Selected References' would be required.
+
+\setlength\bibsep{2pt} % separation space between each reference,
+
+% ============== REFERENCE NOTES ===========================
+
+% DECLARE A POTENTIALLY USEFUL LABEL FOR SPECIAL IDENTIFICATION
+% OF SOME ENTRIES IN THE REFERENCES SECTION---This is nonstandard
+% USGS practice, but might be useful to have some things prebuilt
+% for the power typesetter who might extent \refnotelabel into
+% hyperlinks with the hyperref package.
+%
+% Just because, we can, and might want to identify those reports
+% or citations that can be downloaded from the Internet, lets
+% declare commands to facilitate the labeling on the far right
+% of the last line of a reference a note or symbol
+\newcommand{\refnotetext}{Available Online}
+\newcommand{\refnotelabel}{\refnotetext} % the actual symbol
+% now define the note, we fill to the right then make a box having
+% the same width as the text in \refnotelabel and left justify it.
+\newcommand{\refnotefont}{\slshape \sffamily \footnotesize}
+\newcommand{\refnotecolor}{\color[cmyk]{1,0,0,0}}
+\newcommand{\refnote}
+{\hfill \makebox[\refnotewidth][\refnotejustify]%
+                {{\refnotefont \refnotecolor \refnotelabel}}
+}
+
+% The hyperref package defines the \href command, however, in case
+% that package is not loaded or is crashing (remember, it must be
+% the last package loaded) in the preamble, then the following command
+% command is redefined. If on the other hand, this package is loaded
+% after hyperref the \providecommand does not renew the \href out from
+% underneath us.
+\providecommand{\href}[2]{\refnotetext}    
+\newcommand{\hyperrefmarlabel}{} % perhaps $\Leftarrow$ ???            
+\newcommand{\hyperrefnote}[1]
+{\hfill \makebox[\refnotewidth][\refnotejustify]%
+                {{\refnotefont \refnotecolor
+                   \href{#1}{\refnotetext}}\hyperrefmarlabel}
+}
+
+
+% Perhaps you want the actual url address? Use the \hyperrefnoteurl
+% command. The same color is used by the \refnotecolor and the
+% bounding [  ] provide the USGS style of extra information in a 
+% reference. The user is responsible for adding a \linebreak at the tail
+% of the reference (see the example below)
+
+% The \refnoteurlfont size provide separate control for the font
+% or material as provided or rendered by the \url{} command provided
+% by the url package.
+\newcommand{\refnoteurlfontsize}{\small}
+\newcommand{\refnoteurlcolor}{\refnotecolor}
+\newlength{\refnoteurlwidth}
+\setlength{\refnoteurlwidth}{0.9\columnwidth}
+
+% The sbox is needed to keep color from escaping from the
+% rendering by \url as well as making multiple lines of material
+% from \url in the \refnoteurlcolor
+\newsavebox{\@refnoteurl}
+
+\newcommand{\hyperrefnoteurl}[1]
+{\sbox{\@refnoteurl}
+{\parbox{\refnoteurlwidth}{[\hspace{.25ex}\nolinebreak[4]{%
+                           \refnotecolor
+                           \refnoteurlfontsize
+                           \url{#1}}\nolinebreak[4]\hspace{.25ex}]}}
+ \usebox{\@refnoteurl}
+}
+                
+   
+\newcommand{\refnotejustify}{l} % will have no visible effect
+% unless width is other than \width
+\newcommand{\refnotewidth}{\width} % \width is the width of the text
+
+\endinput
+
+% See the \refnote
+% See the \hyperrefnote
+% See the \hyperrefnoteurl
+
+
+% Example
+%\REFSECTION
+%\begin{thebibliography}{9}
+
+% \bibitem[Asquith and Roussel(2004)]{AR2004}
+%Asquith, W.H., and Roussel, M.C., 2004, Atlas of depth-duration frequency
+% of precipitation annual maxima for Texas: U.S. Geological Survey Scientific
+% Investigations Report 2004--5041, 106~p. \linebreak
+% \hyperrefnoteurl{http://pubs.usgs.gov/sir/2004/5041/}
+
+%\bibitem[Asquith, Roussel, and others(2004)]{Hyeto04}
+%Asquith, W.H., Roussel, M.C., Thompson, D.B., Cleveland, T.G., and Fang,
+% Xing, 2004, Summary of dimensionless Texas hyetographs and distribution of
+% storm depth developed for Texas Department of Transportation Research
+% Project 0--4194: Texas Department of Transportation Research Report
+%0--4194--4, Center for Transportation Research, University of Texas at
+%Austin, 68~p. \refnote
+
+
+%\bibitem[Asquith, Thompson, and others(2004)]{Data04}
+%Asquith, W.H., Thompson, D.B., Cleveland, T.G., and Fang, Xing, 2004,
+%Synthesis of rainfall and runoff data used for Texas Department of
+%Transportation Research Projects 0--4193 and 0--4194: U.S. Geological
+%Survey Open-File Report 2004--1035, 1,049~p.
+%\hyperrefnote{http://pubs.usgs.gov/of/2004/1035/}
+%\end{thebibliography}

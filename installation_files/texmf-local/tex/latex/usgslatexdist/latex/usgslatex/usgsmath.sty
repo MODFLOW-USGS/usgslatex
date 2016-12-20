@@ -1,0 +1,44 @@
+% Auxillary package for usgs reports by William H. Asquith
+%------------------------ indentifcation ------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{usgsmath}[2007/02/26]
+%------------------------ initial code --------------------
+\RequirePackage[fleqn,reqno,tbtags]{amsmath}
+% fleqn--align equation \mathindent on the left
+% reqno--number equations on the right regardless of document
+% class specifications
+% tbtags--tag is aligned with last line of the split env.
+% when the tag is on the right and first line when tag is on
+% the left.
+
+%------------------------ declaration of options ----------
+%------------------------ execution of options
+\ProcessOptions \relax
+%------------------------ package loading -----------------
+%------------------------ main code -----------------------
+\typeout{COMMANDS CONTROLLING THE MATH STYLE IN USGS REPORTS}
+
+\setlength{\mathindent}{2pc}
+
+% see example 8.2.9 on p. 474 of The Latex Companion
+% this way one can used the split env. to split a single
+% equation across multiple lines
+\newcommand{\relphantom}[1]{\mathrel{\phantom{#1}}}
+%\begin{equation}
+%\begin{split}
+% f &= line1 
+%   &\relphantom{=} {} + LINE2
+%\end{split}
+%\end{equation}
+
+%\newcommand{\textfrac}[2]
+%{\hspace{0.1em}\raisebox{0.4ex}{\footnotesize #1}\hspace*{-0.05em}/\hspace*{-0.05em}\raisebox{-0.05ex}{\footnotesize #2}}
+
+\newcommand{\textfrac}[2]
+{{\small #1}/{\small #2}}
+
+
+\endinput
+
+
+%\def\frac#1/#2{\leavevmode\kern0.1em\raise.5ex\hbox{\the\scriptfont0 #1}\kern-.1em/\kern-0.15em\lower.025ex\hbox{\the\scriptfont0 #2}}

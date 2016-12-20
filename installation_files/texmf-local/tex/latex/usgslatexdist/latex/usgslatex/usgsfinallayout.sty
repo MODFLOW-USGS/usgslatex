@@ -1,0 +1,57 @@
+% Auxillary package for usgs reports by William H. Asquith
+%------------------------ indentifcation ------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{usgsfinallayout}[2007/12/24]
+%------------------------ initial code --------------------
+%------------------------ declaration of options ----------
+%------------------------ execution of options
+\ProcessOptions \relax
+%------------------------ package loading -----------------
+%------------------------ main code -----------------------
+% Handy USGS specific symbols, abbreviations etc
+\typeout{COMMANDS TO ASSIST FINAL LAYOUT COMMON IN USGS REPORTS}
+
+
+
+% Copied this from the hanging.idx package from the CTAN.
+% \hangpara{1em}{1}This is my paragraph that will look
+% something like this
+% This is my paragraph that
+%   will look something like this.
+\newcommand{\hangpara}[2]{\hangindent#1\hangafter#2\noindent}
+
+
+
+% The following can be useful in setting up for a balpage environment by explicitly changing the parfillskip length
+\newlength{\@defaultparfillskip} % to pickup default
+\setlength{\@defaultparfillskip}{\parfillskip}
+
+\newcommand{\setparfillskip}[1][\@defaultparfillskip]
+{\setlength{\parfillskip}{#1}}
+
+% '\setparfillskip' to set to default
+% '\setparfillskip[0pt]' to set to zero
+
+
+% Visual Formating---late in the production process
+\newcommand{\longpage}[1][1]{\enlargethispage{#1\baselineskip}}
+\newcommand{\shortpage}[1][1]{\enlargethispage{-#1\baselineskip}}
+% If you want to enlarge or reduce the size of some pages by one
+% (or more) additional lines of text, use these commands between
+% two paragraphs on the pages in question.
+
+% Gem from Karl Berry, TUGboat, Vol 26(2005)no.3, p. 258
+% Force a page or column break in the middle of a paragraph.
+% This function appears to work as a true \pagebreak in a multicol
+% environment so it does not function as a \columnbreak of the
+% multicols package.
+\newcommand{\paragraphpagebreak}
+{\ifthenelse{\boolean{doublespace}}%
+ {}%
+ {{\parfillskip=0pt\par}\vfill\penalty-10000{\everypar={}\noindent}}%
+}
+
+
+
+
+\endinput

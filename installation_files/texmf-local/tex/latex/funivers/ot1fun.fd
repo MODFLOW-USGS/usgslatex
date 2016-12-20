@@ -1,0 +1,56 @@
+%Filename: ot1fun.fd
+%Created by: tex fun-drv
+%Created using fontinst v1.929
+
+%THIS FILE SHOULD BE PUT IN A TEX INPUTS DIRECTORY
+
+\ProvidesFile{ot1fun.fd}
+   [2006/11/15 Fontinst v1.929 font definitions for OT1/fun.]
+
+\DeclareFontFamily{OT1}{fun}{}
+
+\DeclareFontShape{OT1}{fun}{m}{n}{
+   <-> funr7t
+}{}
+
+\DeclareFontShape{OT1}{fun}{m}{sc}{
+   <-> funrc7t
+}{}
+
+\DeclareFontShape{OT1}{fun}{m}{sl}{
+   <-> funro7t
+}{}
+
+\DeclareFontShape{OT1}{fun}{b}{n}{
+   <-> funb7t
+}{}
+
+\DeclareFontShape{OT1}{fun}{b}{sc}{
+   <-> funbc7t
+}{}
+
+\DeclareFontShape{OT1}{fun}{b}{sl}{
+   <-> funbo7t
+}{}
+
+\DeclareFontShape{OT1}{fun}{l}{n}{
+   <-> funl7t
+}{}
+
+\DeclareFontShape{OT1}{fun}{l}{sc}{
+   <-> funlc7t
+}{}
+
+\DeclareFontShape{OT1}{fun}{l}{sl}{
+   <-> funlo7t
+}{}
+
+\DeclareFontShape{OT1}{fun}{m}{it}{<->ssub * fun/m/sl}{}
+\DeclareFontShape{OT1}{fun}{bx}{n}{<->ssub * fun/b/n}{}
+\DeclareFontShape{OT1}{fun}{bx}{sc}{<->ssub * fun/b/sc}{}
+\DeclareFontShape{OT1}{fun}{bx}{sl}{<->ssub * fun/b/sl}{}
+\DeclareFontShape{OT1}{fun}{b}{it}{<->ssub * fun/b/sl}{}
+\DeclareFontShape{OT1}{fun}{bx}{it}{<->ssub * fun/b/it}{}
+\DeclareFontShape{OT1}{fun}{l}{it}{<->ssub * fun/l/sl}{}
+
+\endinput

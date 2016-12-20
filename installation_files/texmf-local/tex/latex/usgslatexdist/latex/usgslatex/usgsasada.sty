@@ -1,0 +1,257 @@
+% Auxillary package for usgs reports by William H. Asquith
+%------------------------ indentifcation ------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{usgsasada}[2007/04/23]
+%------------------------ initial code --------------------
+\RequirePackage{color}
+\RequirePackage{ifthen}
+
+\RequirePackage{listings}
+\lstloadlanguages{tex}
+
+\newboolean{asada}
+\setboolean{asada}{false}
+%------------------------ declaration of options ----------
+\DeclareOption{asada}{\setboolean{asada}{true}}
+%------------------------ execution of options
+\ProcessOptions \relax
+%------------------------ package loading -----------------
+%------------------------ main code -----------------------
+\typeout{COMMANDS CONTROLLING ADA SECTION 508 IN USGS REPORTS}
+
+\newcommand{\ADAcolor}
+{\color{red}} % color of the asada text
+\newcommand{\ADAfont}
+{\small\ttfamily} % default font for asada text
+
+% configure the listings settings for asada text
+\newcommand{\ADAlstset}
+{\lstset{language=tex,
+         breakatwhitespace=true,
+         keywordstyle={},
+         basicstyle=\ADAfont\ADAcolor,
+         breaklines=true}}
+
+
+% =======================================
+% BEGINNING OF THE ADA COMMANDS
+% You have to put a backslash in front of each of the following four 
+% characters: \{}%  (see page. 45 of the listings documentation)
+% for \ADAmath mode to work.
+\newcommand{\ADAmath}[2][-liningmath-]%
+{\ifthenelse{\boolean{asada}}%
+ {\ADAlstset\lstinline|$#1$|}%
+ {#2}}
+% \ADAmath[\\xi]{$\xi$} % as en example
+
+% =======================================
+% A HOOK TO IN PLACE ADDITIONAL TEXT
+% THAT ONLY SHOWS IF asada IS TRUE
+% =======================================
+\newcommand{\ADAbeginText}
+{ALTEXT:}
+\newcommand{\ADAendText}
+{:ALTEXT}
+
+% Note that math inside the \ADAtext should still be
+% treated with the \ADAmath command---see the example.
+% Now why would someone use the \ADAtext to in turn
+% use the \ADAmath?  Well, I don't know. The original
+% intent of the \ADAtext is to be inserted within one
+% of the ADA environments and not stand alone.  Thus, 
+% one would literally see \ADAtext{} as part of the 
+% content of one of those environments---not real slick
+% but permits some flexibility in providing additional
+% content to visually disabled folks.
+\newcommand{\ADAtext}[1]
+{{\ADAcolor\ADAfont\ADAbeginText#1 \ADAendText}}
+%\ADAtext{\ADAmath[F]{}, \ADAmath[\\xi]{} is a location
+% parameter with the same units as \ADAmath[x]{},}
+% END OF THE ADA COMMANDS
+% =======================================
+
+
+\newlength{\ADAmessagehspace} % how much hspace to offset
+% protrude about one character into the left margin
+\setlength{\ADAmessagehspace}{-.5em}
+
+
+\newlength{\ADAdisplayvspace} % vspace correction
+\setlength{\ADAdisplayvspace}{-0.5\baselineskip}
+% causing engine to backup a bit when setting the
+% introductory material around the leading and
+% trailing environmental messages
+
+% The following text commands contain the lead and trail
+% of blocks of asada environments. Environments for 
+% numbered equations, display math, figures, and tables
+% are provided.
+\newcommand{\ADAbeginEquation}
+{BEGIN EQUATION}
+\newcommand{\ADAendEquation}
+{END EQUATION}
+
+\newcommand{\ADAbeginDisplayMath}
+{BEGIN DISPLAYMATH}
+\newcommand{\ADAendDisplayMath}
+{END DISPLAYMATH}
+
+\newcommand{\ADAbeginFigure}
+{BEGIN FIGURE}
+\newcommand{\ADAendFigure}
+{END FIGURE}
+
+\newcommand{\ADAbeginTable}
+{BEGIN TABLE}
+\newcommand{\ADAendTable}
+{END TABLE}
+
+% =======================================
+% The actual text commands
+% =======================================
+%    for equations
+\newcommand{\ADAequationMessageBegin}
+{\mbox{}\newline
+ \hspace*{\ADAmessagehspace}%
+ {\ADAcolor\ADAfont \ADAbeginEquation~\theequation}
+ \vspace{\ADAdisplayvspace}}
+
+\newcommand{\ADAequationMessageEnd}
+{\vspace{\ADAdisplayvspace}
+ \noindent\hspace*{\ADAmessagehspace}%
+ {\ADAcolor\ADAfont \ADAendEquation~\theequation\newline}}
+
+%    for displaymath's
+\newcommand{\ADAdisplaymathMessageBegin}
+{\mbox{}\newline
+ \hspace*{\ADAmessagehspace}%
+ {\ADAcolor\ADAfont \ADAbeginDisplayMath}
+ \vspace{\ADAdisplayvspace}}
+
+\newcommand{\ADAdisplaymathMessageEnd}
+{\vspace{\ADAdisplayvspace}
+ \noindent\hspace*{\ADAmessagehspace}%
+ {\ADAcolor\ADAfont \ADAendDisplayMath}\newline}
+
+%    for figures
+\newcommand{\ADAfigureMessageBegin}
+{\mbox{}\newline
+ \hspace*{\ADAmessagehspace}%
+ {\ADAcolor\ADAfont \ADAbeginFigure~\thefigure}
+ \vspace{\ADAdisplayvspace}}
+
+\newcommand{\ADAfigureMessageEnd}
+{\vspace{\ADAdisplayvspace}
+ \noindent\hspace*{\ADAmessagehspace}%
+ {\ADAcolor\ADAfont \ADAendFigure~\thefigure}\newline}
+
+%    for tables
+\newcommand{\ADAtableMessageBegin}
+{\mbox{}\newline
+ \hspace*{\ADAmessagehspace}%
+ {\ADAcolor\ADAfont \ADAbeginTable~\thetable}
+ \vspace{\ADAdisplayvspace}}
+
+\newcommand{\ADAtableMessageEnd}
+{\vspace{\ADAdisplayvspace}
+ \noindent\hspace*{\ADAmessagehspace}%
+ {\ADAcolor\ADAfont \ADAendTable~\thetable}\newline}
+
+% =======================================
+% BUILD THE LIST ENVIRONMENTS
+% =======================================
+\lstnewenvironment{ADAequation}[1][]
+{\refstepcounter{equation}\label{#1}
+ \ADAequationMessageBegin
+ \ADAlstset}
+{\ADAequationMessageEnd}
+  %\begin{ADAequation}[eq:gld1]
+  %\begin{equation}
+  %  x(F) = \xi+\alpha[F^\kappa-(1-F)^h]\mbox{,} \label{eq:gld}
+  %\end{equation}
+  %\end{ADAequation}
+
+\lstnewenvironment{ADAdisplaymath}
+{\ADAdisplaymathMessageBegin
+ \ADAlstset}
+{\ADAdisplaymathMessageEnd}
+  %\begin{ADAdisplaymath}
+  %\begin{displaymath}
+  %% Here is a comment
+  %G = a \times b
+  %\end{displaymath}
+  %\end{ADAdisplaymath}
+
+\lstnewenvironment{ADAfigure}[1][]
+{\refstepcounter{figure}\label{#1}
+ \ADAfigureMessageBegin
+ \ADAlstset}
+{\ADAfigureMessageEnd}
+  %\begin{ADAfigure}
+  %\begin{figure}
+  %\ADAtext{This figure contains METAPOST output.}
+  %\includegraphics{afigure}
+  %\caption{Example of MPOST output.}
+  %\end{figure}
+  %\end{ADAfigure}
+
+\lstnewenvironment{ADAtable}[1][]
+{\refstepcounter{table}\label{#1}
+ \ADAtableMessageBegin
+ \ADAlstset}
+{\ADAtableMessageEnd}
+  %\begin{ADAtable}[table]
+  %\begin{table}
+  %\caption{Example of a table} \label{table}
+  %\begin{tabular}{ll}
+  %\hline
+  %Heading & Heading \\
+  %\hline
+  %Body11 & Body12 \\
+  %Body21 & Body22 \\
+  %\hline
+  %\end{tabular}
+  %\end{table}
+  %\end{ADAtable}
+
+
+% =======================================
+% REDEFINE THE ENVIRONMENTS AWAY
+% Unless asada?
+% Now that all the commands and
+% environments are built---get rid of
+% them unless they are desired by truth
+% of the asada package option.
+% Be careful to mimic the argument count
+% and use of optional argument
+%
+% If asada?
+% We define away the cover and frontmatter.
+% We get rid of balpage environment so
+% that appropriate flow of text in a
+% onecolumn global layout works.
+% =======================================
+
+% This package is intended to operate with usgsreporta
+% or others that make use of these commands. However, we
+% define those away for when the asada switch is thrown.
+% Note that \renew balpage is commented out---I need to
+% ascertain whether a \provideenvironment like command exits.
+\providecommand{\makefrontmatter}{}
+\providecommand{\makefrontcover}{}
+\providecommand{\makebackcover}{}
+
+\ifthenelse{\boolean{asada}}%
+{\renewcommand{\makefrontmatter}{}
+ \renewcommand{\makefrontcover}{}
+ \renewcommand{\makebackcover}{}
+ %\renewenvironment{balpage}{}{}
+}
+{\renewenvironment{ADAequation}[1][]{}{}
+ \renewenvironment{ADAdisplaymath}{}{}
+ \renewenvironment{ADAfigure}[1][]{}{}
+ \renewenvironment{ADAtable}[1][]{}{}
+ \renewcommand{\ADAtext}[1]{}
+}
+
+\endinput

@@ -1,0 +1,34 @@
+% Auxillary package for usgs reports by William H. Asquith
+%------------------------ indentifcation ------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{usgsftnote}[2007/01/10]
+%------------------------ initial code --------------------
+%------------------------ declaration of options ----------
+%------------------------ execution of options
+\ProcessOptions \relax
+%------------------------ package loading -----------------
+%------------------------ main code -----------------------
+\typeout{COMMANDS CONTROLLING THE FOOTNOTES IN USGS REPORTS}
+
+% this is the distance between the text and the start of the 
+% footnotes. Make it have a little rubber space.
+\setlength{\skip\footins}{0.5\baselineskip plus .5ex}
+
+% USGS reports look like they are using a scriptsize and not
+% the default footnotesize foots for the size of the actual
+% notes.
+\renewcommand{\footnotesize}{\scriptsize}
+
+% Redefine the mark in the within the notes
+%\renewcommand\@makefntext[1]%
+%{\noindent\makebox[1.8em][r]{\@thefnmark.\ }#1}
+
+% the zero height horizontal rule
+% 0.36pt is USGS thickness
+% 1in wide is USGS width
+\renewcommand{\footnoterule}
+{\vspace*{-3pt}%
+ \hrule width 1in height 0.36pt
+ \vspace*{2.64pt}}
+
+\endinput

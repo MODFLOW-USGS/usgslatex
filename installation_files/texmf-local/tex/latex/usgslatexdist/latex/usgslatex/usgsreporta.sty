@@ -1,0 +1,566 @@
+% U.S. Geological Survey Report LaTeX style file
+% to be used as part of a twosided, twocolumn Article document class
+% Author: William H. Asquith, Austin, Texas
+%
+%
+%
+%------------------------ indentifcation ------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{usgsreporta}[2008/07/18]
+%------------------------ initial code --------------------
+\RequirePackage{ifthen} % for ifthenelse constructs
+
+\RequirePackage{setspace} % for line spacing control
+% the spacing environment, \singlespacing, and \doublespacing
+% commands--which can be toggled by the doublespace option of
+% the usgsreporta.sty package
+
+\RequirePackage{indentfirst} % indent first line of regular
+% paragraphs, which is against American typographic tradition and 
+% default LaTeX.
+
+\RequirePackage{epic} % for the picture environ. for the cover work
+\RequirePackage{graphicx} % for importing PDF or Postscript graphics
+% declare paths to search for graphics, my model of operation is that
+% the usgslatexdist will be in the current directory of the working
+% document, each path needs {}
+\graphicspath{{usgslatexdist/visid_graphics/}}
+
+\RequirePackage{url} % for url mark up---such as in the References
+
+% Defunct line numbering material---has not been well received.
+%\RequirePackage[switch,pagewise]{lineno}
+%\setlength{\linenumbersep}{1em}
+%\renewcommand{\linenumberfont}{\tiny \mdseries  \ttfamily}
+% if ttfamily is used, we must have the medium series to disable
+% a bold font context (perhaps line nos. next to a heading)
+% so that a Font Substitution warning messages does not show up.
+
+
+\RequirePackage{fancybox} % for the \fancyput as part of the draft
+% option of the usgsreporta package. This command places the 
+% 'watermark' like text at bottom of cover and report body containing
+% the Date of the typesetting and the USGS provisional message
+
+% Loading in the series of support packages for the usgs template.
+\RequirePackage{usgsattr} % this needs to come first
+% as numerous text definitions are made that are used by one or
+% more of the following packages.
+\RequirePackage{usgsack}
+\RequirePackage{usgsbalpage}
+\RequirePackage{usgsbib}
+\RequirePackage{usgscaption}
+\RequirePackage{usgscolor}
+\RequirePackage{usgsfinallayout}
+\RequirePackage{usgsfloat}
+\RequirePackage{usgsftnote}
+\RequirePackage{usgshdr}
+\RequirePackage{usgsgloss}
+\RequirePackage{usgsmath}
+\RequirePackage{usgsnullpages}
+\RequirePackage{usgsref}
+\RequirePackage{usgssec}
+\RequirePackage{usgssym}
+\RequirePackage{usgstable}
+\RequirePackage{usgstoc}
+\RequirePackage{usgstocconvert}
+
+\RequirePackage{usgstitlepage} % to renew the \maketitle command
+\RequirePackage{usgsflypage} % to new the \makefly command
+
+% Yes/No switches for the usgsreporta.sty package
+\newboolean{figuretoc}   % if true then list of figures is needed
+\newboolean{tabletoc}    % if true then list of tables is needed
+\newboolean{doublespace} % if true then set linespread to 2
+% the spacing of the title page and the fly are wrapped in a
+% spacing{1} environment
+% the spacing of the table of contents is wired with a spacing{0.8}
+% environment because why double space the contents when it is built
+% automatically.
+\newboolean{draft} % if true then toggle a few features for
+% production of things to aid in the colleague review process
+% \linenumbers are turned on AFTER the frontmatter
+\newboolean{beforeset} % if true then toggle a few features for
+% production of things to aid in tuning the typesetting
+% Overfullrule width is toggled to 5pt so we can see those boxes.
+% One can increase \hfuzz from 0.1pt to larger to ignore
+% select Overfullbox warnings/errors.
+
+%------------------------ declaration of options ----------
+\DeclareOption{figuretoc}{\setboolean{figuretoc}{true}}
+\DeclareOption{tabletoc}{\setboolean{tabletoc}{true}}
+\DeclareOption{doublespace}{\setboolean{doublespace}{true}}
+\DeclareOption{draft}{\setboolean{draft}{true}}
+\DeclareOption{beforeset}{\setboolean{beforeset}{true}}
+%------------------------ execution of options
+\ProcessOptions \relax
+%------------------------ package loading -----------------
+%------------------------ main code -----------------------
+
+\righthyphenmin=3 % Gail Sladek (EPN) does not like two letter
+\lefthyphenmin=3  % leading hyphenations, to go from 2 to 3
+% the lefthyphenmin is defaulted to 3 anyway
+
+
+
+% the doublespacing and singlespacing commands are derived from
+% the setspace package.
+\ifthenelse{\boolean{doublespace}}{\doublespacing}{\singlespacing}
+
+% Do we need to toggle some pretype setting features?
+\ifthenelse{\boolean{beforeset}}{\setlength{\overfullrule}{5pt}}{}
+
+% Now define two commands for placing line numbers and a the
+% red draft material at the bottom of the cover and body pages
+\newcommand{\DoDraftElementsCover}{
+   \fancyput(0.7in,-9.5in){
+      \makebox[\width][c]%
+      {\Large \mdseries \ttfamily
+       \textcolor{red}{\DraftMessage}}}
+}
+
+\newcommand{\DoDraftElementsMainMatter}{
+  \fancyput(0.7in,-9.5in){
+     \makebox[\width][c]%
+     {\Large \mdseries \ttfamily
+      \textcolor{red}{\DraftMessage}}}
+}
+
+
+
+
+%================================================================
+% \hfuzz
+% \looseness=1  % add one line to a paragraph
+% \looseness=-2 % short paragraph by two lines
+% \tolerance=100 % typeset very tight
+% \tolerance=9999 % typeset as loose as possible
+
+% The \hfuzz can be used to ignore the Overfull warnings
+% of which there are many in the setting of the figures in
+% the table of contents
+%\setlength{\hfuzz}{12pt}
+%\makefrontmatter
+%\setlength{\hfuzz}{0.1pt} % back to default (TLCp.939)
+
+
+
+% The true line spacing is \baselineskip*\baselinestretch
+% a change in font size is required to make the adjustment
+% take effect. LaTeX2e provides the \linespread declaration
+% \linespread{1.5}\selectfont (see TLC p. 107)
+% \stretchbaseline returns use to regular line spacing
+% \stretchbaseline[1.07] might stretch the text two lines in a 
+% single column--don't forget to switch back to \stretchbaseline
+% AS SOON AS YOU DON'T NEED THE INCREASED SPACING
+% Because the \doublespacing command provided by the setspace package
+% uses the \baselineskip, we need to have \stretchbaseline do NOTHING
+% if doublespacing is requested, otherwise use the users change
+\newcommand{\stretchbaseline}[1][1]%
+{\ifthenelse{\boolean{doublespace}}{}{\linespread{#1}\selectfont}}
+
+% adds vertical space of this length unless the vertical length
+% is already at least this big. A \my... is defined so that it
+% can be toggled off without disrupting \addvspace commands
+% should they be needed. We turn this feature off for doublespacing
+\newcommand{\myaddvspace}[1]%
+{\ifthenelse{\boolean{doublespace}}{}{\addvspace{#1}}}
+
+
+%================================================================
+
+
+\newlength{\@coresecbeforesep}
+\newlength{\@coresecaftersep}
+\newlength{\contentsbeforesep}
+\setlength{\contentsbeforesep}{0.305in}
+\newlength{\contentsaftersep}
+\setlength{\contentsaftersep}{0.2in}
+%----------
+%   |   1.5 inches
+%   V
+% Contents
+%       5/16 inch
+% Abstract
+
+% Also TOC commands defined in usgstoc.sty, we'll define
+% the actual build toc command here--users might want to redefine
+% with same structure and basic contents, but with changes in the
+% TeX tolerances
+\newcommand{\maketoc}{
+  \setlength{\@coresecbeforesep}{\secbeforesep}
+  \setlength{\@coresecaftersep}{\secaftersep}
+  \setlength{\secbeforesep}{0pt}
+  \setlength{\secaftersep}{\contentsaftersep}
+  
+  \vspace*{\contentsbeforesep}
+  
+  \tableofcontents
+  %\rule{1pt}{0.3125in} used to page measure the 
+  %needed offset between Contents and Abstract
+  %as actually controlled by the \contentsaftersep
+
+  \setlength{\secbeforesep}{\@coresecbeforesep}
+  \setlength{\secaftersep}{\@coresecaftersep}
+
+  \pagestyle{toc}
+  %\tolerance=700 % diverage the interword spacing to 
+  % higher for loose typesetting--this helps to get
+  % the dots after the contents to fill correctly
+  % when the contents fully fits the justified paragraph
+  \ifthenelse{\boolean{figuretoc}}{\listoffigures}{}
+  \ifthenelse{\boolean{tabletoc}}{\listoftables}{}
+  %\tolerance=200
+  % The conversion page would follow say with a 
+  % \conversionpage command, but that page is distinctly
+  % different from the list like pages of shown here.
+  % See the \makefrontmatter command for the conversions and
+  % other neat things.
+}
+
+%===== SET UP
+%\newlength{\titleTOauthors} % Gaps for title page
+%\setlength{\titleTOauthors}{0.4375in} % Gap for title page, 7/16"
+%\newlength{\coopTOseries} % Gaps for the cover and title pages
+%\setlength{\coopTOseries}{0.5in} % Gaps for the cover and title pages
+%\newlength{\usgsTOmargin}
+%\setlength{\usgsTOmargin}{0.0in}
+
+
+% visid_invert.pdf is a white on transparent version of VID
+% visid.pdf is a black on transparent version of VID
+\newcommand{\USGSvisidname}{visid}
+% pick one as needed with the color scheme
+
+
+% Set the gap between the report title and photo/cover art.
+\newlength{\GSphotogap}
+\setlength{\GSphotogap}{0.4in}
+
+
+% define a horizontal separation distance on the left of the 
+% cover photograph
+\newlength{\GSphotohsep}
+\setlength{\GSphotohsep}{0in}
+
+% Set the height that the photo/cover art should be.
+\newlength{\GSphotosize}
+\setlength{\GSphotosize}{3.75in}
+
+\newlength{\GSphotorule} % border thickness on the cover photo
+\newlength{\GSphotosep}  % border separation on the cover photo
+\setlength{\GSphotorule}{2pt}
+\setlength{\GSphotosep}{1pt}
+
+
+
+
+\typeout{--USGS, FRONTMATTER DEFINITIONS}
+
+
+\newcommand{\titleonfirstpagelinespacing}{1}
+
+\newcommand{\titleonfirstpage}{
+   \noindent
+   \parbox{\textwidth}{
+      \begin{spacing}{\titleonfirstpagelinespacing}
+         \raggedright \huge
+         \noindent {\bfseries \textsf \pagereporttitle}
+      \end{spacing}
+   }
+   \normalsize
+}
+\newcommand{\byauthors}{
+   \begin{sloppypar}
+      \noindent {\normalsize \textsf{By \thetitlepageauthors}}
+   \end{sloppypar}
+}
+
+\newcommand{\topfirstpage}
+{\rule[0in]{0in}{\firstpageskipTOtitle} \par
+ \noindent \parbox{\textwidth}{
+           \titleonfirstpage
+           \rule[0in]{0in}{\firstpageskipTOauthors}
+           \byauthors
+           \rule[0in]{0in}{\firstpageskipTOtext}}
+}
+
+\newcommand{\makefirstpagetop}
+{ \twocolumn[\topfirstpage] % begin the mainmatter with 
+   % the column spanning title of report and the authors
+
+   \thispagestyle{plain}
+   \fancypagestyle{plain}{\pagestyle{bodyplain}}
+   \setcounter{page}{1} % ensure that page numbering begins
+   \pagenumbering{arabic} % finally switch over to arabic
+   % numbering with reset and the user can begin with an Abstract
+   % section
+
+   \normalsize % ensure that we are in normal size text
+   \rmfamily   % and the we are setting in roman
+   
+   % Finally if in draft mode toggle remainder of the 
+   % body of the manuscript
+   \ifthenelse{\boolean{draft}}{\DoDraftElementsMainMatter}{}
+}
+
+
+\newlength{\firstpageskipTOtitle}
+\setlength{\firstpageskipTOtitle}{0.5in}
+
+\newlength{\firstpageskipTOauthors}
+\setlength{\firstpageskipTOauthors}{.125in}
+% supposed to be 1/2 inch, but requires fine tuning
+
+\newlength{\firstpageskipTOtext}
+\setlength{\firstpageskipTOtext}{0.5in}
+
+\typeout{--USGS, defining the makefrontmatter command}
+% Build the front matter, by using the
+%\maketitle, \makefly, \tableofcontents, \listoffigures, \myfirstpage
+% and \byauthors commands
+\newcommand{\makefrontmatter}{
+   % the title page and the fly are hardwired for single line
+   % spacing even though the doucment might be built as double
+   % spaced for review purposes
+   \begin{spacing}{1} % begin single spacing environment
+      \onecolumn % initiate one column production
+      \pagenumbering{roman} % roman numerical numbering
+
+      \thispagestyle{plain}
+      \fancypagestyle{plain}{\pagestyle{title}}
+      % cast as title page to remove numbers
+
+      \maketitle % make the title page from usgstitlepage.sty
+      \makefly   % make the inside fly page usgstitlepage.sty
+   \end{spacing}
+     
+   \maketoc % make the table of contents for the report
+   
+   \conversionpage % make the request for setting the conversionpage
+   % this command might produce nothing
+   
+   \myblankpage % insert a potential blank page before body begins.
+
+   \makefirstpagetop % finally initate main body startup sequence
+}
+
+
+\typeout{--USGS, COVER PAGE DEFINITIONS}
+% BEGIN COVER
+
+\newlength{\seriesTOdoi} % Gaps for the cover and title pages
+\setlength{\seriesTOdoi}{0.50in} % Gaps for the cover and title pages
+
+\setlength\fboxsep{0pt} % fboxes are used in the cover and colophon rendering
+\setlength\fboxrule{0pt} % but want to hide the rules, desire fboxes to help in layout
+\setlength{\unitlength}{0.01in} % sets the unit lengths for the
+% picture environment
+\newcommand{\pictureorigin}{\makebox(0,0){\tiny $\bullet$}} % a dot if 
+% origin needs to be seen, this is not a command for final production,
+% but is a helpful tool when working with the picture environment
+
+% following two commands set the banner across top of cover pages
+\newcommand{\coverruleoddpage}{\put(-100,25){\rule{\paperwidth}{1in}}}
+\newcommand{\coverruleevenpage}{\put(-77,25){\rule{\paperwidth}{1in}}}
+
+\newcommand{\insertcoverphoto}
+{\includegraphics[height=\GSphotosize]{\coverphoto}}
+
+\typeout{--USGS, defining the makefrontcover command}
+\newcommand{\makefrontcover}{ % MAKE THE FRONT COVER PAGE
+  \begin{spacing}{1}
+   \pagestyle{title}
+   % Finally if in draft mode toggle the action for cover
+   \ifthenelse{\boolean{draft}}{\DoDraftElementsCover}{}
+
+   \bannercolor % set color of the banner that is drawn by
+   % the command \coverruleevenpage
+   \covercolor % set color of the cover page--typically not white
+    
+   \noindent
+   \begin{picture}(0,0)
+      %\put(0,0){\pictureorigin} % the origin
+      \coverruleoddpage % banner across the top
+      \visidcolor
+      \put(-25,37){ 
+         \fbox{\includegraphics[height=0.5in,
+                trim=1.37in 4.535in 1.437in 4.323in,
+                clip]{\USGSvisidname}}
+         } % end of the framebox
+   \end{picture}
+
+   \color{black} % regardless of color setting--go to black
+
+   \rule[0in]{0in}{0.125in}
+
+   \noindent
+   \begin{picture}(0,0)
+      \put(-25,13){\noindent 
+         \parbox[b]{\textwidth}
+         {\normalsize \bfseries \sffamily
+           \cooperationwith
+         } \hspace*{\fill} % end the parbox
+      } % end of the put
+   \end{picture}
+   
+   \rule[0in]{0in}{0.25in}
+
+   \noindent
+   \begin{picture}(0,0)
+      \put(-25,-75){\noindent
+         \parbox[t]{\textwidth}
+            {\noindent
+             \parbox{\textwidth}
+                {\raggedright \Huge \bfseries
+                 \textsf{\coverreporttitle} \hspace*{\fill}
+                } % end the inner parbox
+         } % end of the outer parbox
+      } % end of the put
+   \end{picture}
+        
+   \vspace*{\GSphotogap}
+
+   {\setlength\fboxrule{\GSphotorule} \setlength\fboxsep{\GSphotosep}
+       % see how the rules are locally changed
+    \bannercolor % border the photo in the same color as the banner
+    \noindent \hspace*{\GSphotohsep}
+    \begin{picture}(0,0)
+       \put(-25,-500){
+          \fbox{\insertcoverphoto}
+       }
+    \end{picture}
+    \color{black}
+   }  
+   \color{black}
+   \vspace*{\fill} % rubber space to fill in the setup
+     
+   \noindent
+   \begin{picture}(0,0)
+      \put(-25,0){\noindent
+         \parbox[b]{\textwidth}
+            {\noindent
+             \parbox{\textwidth}
+                {\LARGE
+                 \textsf{\reportseries\ \reportnumber 
+                         \cooperatorreportseries } \hspace*{\fill}
+                }
+                
+             %\fbox{\rule[0in]{0cm}{\coopTOseries}}
+             \rule[0in]{0cm}{2\seriesTOdoi}
+
+             \noindent
+             \parbox{\textwidth}
+                {\large \bfseries \textsf{\doi \\ \textusgs} }
+                
+         } % end the parbox
+      } % end of the put
+   \end{picture}
+   \clearpage
+    
+   % now typeset the back of the front cover page
+   \pagestyle{title}
+   \onecolumn
+   \insertextrabackoffrontcover
+   \vspace*{\fill}
+   \noindent
+   \begin{picture}(0,0)
+      \put(0,0){\noindent
+         \mbox{\sffamily \footnotesize \textbf{Cover.}}\ 
+         \parbox[t]{0.6\textwidth}
+            {\raggedright \sffamily \footnotesize \GSphotocredit}
+      } % end of the put
+   \end{picture}
+   \clearpage
+   \pagecolor{white}
+  \end{spacing}
+}
+
+\newcommand{\insertextrabackoffrontcover}{}
+
+\typeout{--USGS, defining the makecolophon command}
+%================== COLOPHON =========================
+% The colophon simply contains production notes--it is currently
+% configured to be set on an odd or right page and the cover follows
+% See the \isodd query for insertion of an empty page
+\newcommand{\colophontextsize}{\scriptsize}
+\newcommand{\makecolophon}{
+   \onecolumn
+   % switch into single column--should be harmless if already there
+
+   \vspace*{\fill} % fill down to place the \picture near the bottom
+
+   \noindent
+   \begin{picture}(0,0)
+      %\put(0,0){\pictureorigin} % the origin
+      \put(-25,0){\noindent
+         \parbox[b]{0.9\textwidth}
+            {\colophontextsize \sffamily
+             \productionstaff \\
+             \colophoninfo    \\ \\ 
+             \theoffice       \\
+             \theofficewebsite
+            } % end of the parbox
+      } % end of the put
+   \end{picture}
+   \covercolor % set color of the cover page--typically not white
+   \clearpage
+}
+%=== END COLOPHON ====================================
+
+
+
+\typeout{--USGS, defining the makebackcover command}
+\newlength{\backcoveroffset}
+\setlength{\backcoveroffset}{\textwidth}
+\addtolength{\backcoveroffset}{1.25\marginparwidth}
+
+\newlength{\backcovertitlelength}
+\setlength{\backcovertitlelength}{7in}
+
+\newcommand\makebackcover{
+   \myemptypage % clears with empty pages to an odd page number
+
+   \thispagestyle{plain}
+   \fancypagestyle{plain}{\pagestyle{title}}
+   \begin{spacing}{1}
+      \makecolophon
+      \bannercolor
+      \covercolor
+      \thispagestyle{plain}
+      \fancypagestyle{plain}{\pagestyle{title}}
+      \noindent
+      \begin{picture}(0,0)
+         %\put(0,0){\pictureorigin} % the origin
+         \coverruleevenpage
+         \visidcolor
+         \put(-118,25){\rule{\paperwidth}{0in} 
+            \fbox{\rotatebox[y=.3825in]{270}{
+               \includegraphics[width=.5in,
+                  trim=1.37in 5.05in 1.437in 4.323in,
+                  clip]{\USGSvisidname}}
+            } % end of the fbox
+         } % end of the put
+      \end{picture} \hspace*{\fill}
+    
+      \vspace{0.5in}
+    
+      \noindent
+      \makebox[\backcoveroffset][r]{\noindent
+         \rotatebox[origin=c]{270}{\noindent
+            \fbox{\noindent
+               \parbox{\backcovertitlelength}
+                      {\scriptsize \sffamily \backcoverlabel}
+            } % end of the fbox
+         } % end of the rotatebox
+      } % end of the makebox
+    
+      \vspace*{\fill}
+      \clearpage
+   \end{spacing}
+}
+%%%%%%%% END COVER
+
+
+\endinput
+

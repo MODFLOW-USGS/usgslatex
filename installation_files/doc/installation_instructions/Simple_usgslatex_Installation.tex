@@ -1,0 +1,122 @@
+\documentclass[11pt]{article}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{parskip}
+\parskip=0.75\baselineskip \advance\parskip by 0pt plus 2pt
+\newcommand{\MacOSX}{\mbox{MacOSX}}
+\usepackage[OT1]{fontenc}
+\begin{document}
+\renewcommand\sfdefault{fun}
+
+
+\begin{centering}
+\noindent \textsf{\bfseries \Large Installation of Univers Condensed Font Library \\ and USGS Style Files for} \TeX/\LaTeX \\
+\normalsize  \textsf{\bfseries \today \\}
+\end{centering}
+
+\addvspace{\baselineskip}
+
+William H. Asquith in the Texas Water Science Center developed the USGS Style files and instructions for install the Univers Condensed Font library. These instructions are boiled down to a barebones description. Refer to Bill's original documents for more details on the Univers Condensed Font Library (\texttt{doc/README\_FontLibraryInstallation.pdf}).
+
+\section*{\textsf{Installation Location}}
+
+If you installed \TeX/\LaTeX \hspace{1pt} using a standard installation of the \TeX Live distribution your local \TeX \hspace{1pt} tree is located at:
+
+\begin{verbatim}
+  Windows
+    $TEXROOT=C:/texlive/texmf-local
+
+  MacOSX - may vary slightly
+    $TEXROOT=/sw/share/tex-local
+                OR
+    $TEXROOT=/usr/local/texlive/tex-local
+
+  Redhat and openSUSE Linux                          
+    $TEXROOT=/usr/share/texmf
+\end{verbatim}
+
+\section*{\textsf{Installation Process}}
+
+Unzip the \texttt{usgslatex.zip} archive file to a location of your choice. You will copy the subdirectories in the unzipped \texttt{texmf-local} directory to the directories with the same name in \texttt{\$TEXROOT}. To start the process open a terminal in the unzipped \texttt{texmf-local} directory and type the following commands (use \texttt{xcopy} on Windows if you do not have access to UNIX command line tools):
+
+\begin{verbatim}
+  cp -R fonts $TEXROOT/. 
+         OR 
+  xcopy fonts /t /e $TEXROOT/fonts/
+
+  cp -R tex $TEXROOT/.
+         OR 
+  xcopy tex /t /e $TEXROOT/tex/
+\end{verbatim}
+
+If the \texttt{\$TEXROOT/dvips} directory exists type the following command: 
+
+\begin{verbatim}
+  cp -R dvips $TEXROOT/dvips/.  
+         OR
+  xcopy dvips /t /e $TEXROOT/dvips/
+\end{verbatim}
+
+Otherwise type the following command:
+
+\begin{verbatim}
+  cp -R dvips $TEXROOT/.
+         OR
+  xcopy dvips /t /e $TEXROOT/
+\end{verbatim}
+
+Basically, the map file is copied to some sort of \texttt{dvips} directory. The exact location is not critical since you will tell \TeX\ how to find it. Finally, rebuild the hash tables for the file locations using the following program as \texttt{ROOT} (on MacOSX and Linux).
+
+Open another terminal in \texttt{\$TEXROOT/dvips/funivers/} and type:
+
+\begin{verbatim}
+  texhash
+\end{verbatim}
+
+\noindent and then enable \texttt{dvips} to see the \texttt{funivers.map} file by typing:
+\begin{verbatim}
+  updmap --enable Map=funivers.map
+\end{verbatim}
+
+and then type:
+
+\begin{verbatim}
+  updmap-sys
+\end{verbatim}
+
+
+\section*{\textsf{Testing}}
+
+The directory \texttt{test} contains \texttt{testunivers.tex} and \texttt{USGSLaTex.tex} test \TeX \hspace{1pt} files. 
+
+The file \texttt{testunivers.tex} is self contained in its definition of the Univers family, and does not use a separate package file. Try running \texttt{testunivers.tex} file through \LaTeX\ by typing \texttt{pdflatex testunivers.tex} in a terminal (or your preferred method of compiling  \TeX \hspace{1pt} files). Inspect the \texttt{testunivers.pdf} file. Compare the content of the generated \textsf{pdf} file to \texttt{testuniversPROOF.pdf}. If these two \textsf{pdf} files appear different the Univers font family was not installed correctly. You might have forgotten to copy some of the file types or \LaTeX\ otherwise does not know how to file them. Confirm that you completed the installation process again. If you forgot a step, you will have to rerun \texttt{texhash} before things will work.
+
+The file \texttt{USGSLaTex.tex} is a test of successful installation of the USGS Style files. Try running \texttt{USGSLaTex.tex} file through \LaTeX\ using your preferred method of compiling  \TeX \hspace{1pt} files. Inspect the \texttt{USGSLaTex.pdf} file. Compare the content of the generated \textsf{pdf} file to \texttt{USGSLaTexPROOF.pdf}. If these two \textsf{pdf} files then there is a problem with your installation. Confirm that the USGS style files (in the \texttt{\$TEXROOT/tex/latex/usgslatexdist}) subdirectory. The \texttt{\$TEXROOT/tex/latex/usgslatexdist} subdirectory should include a \texttt{latex} and \texttt{visid\_graphics} subdirectories. You will have to rerun \texttt{texhash} if you modify the location of the USGS style files.
+
+\section*{\textsf{Using the USGS Style Files}}
+A simple example for using the \LaTeX\ \hspace{1pt} USGS style files is included in \texttt{doc/README\_USGSstyFILES.pdf}. Individual style files in the package are also listed and described in \texttt{doc/README\_USGSstyFILES.pdf}.
+
+\section*{\textsf{Updating an existing installation}}
+On \texttt{MacOSX}, an existing installation can be updated by:
+
+\begin{enumerate}
+	\item Moving the existing installation (for example, texttt{/usr/local/texlive/2014/}) to the trash.
+	\item Move all existing \LaTeX\ software (for example, \texttt{TeXShop}) to the trash.
+	\item Empty trash
+	\item Install the new distribution
+	\item Open the \TeX Live Utility and
+	\begin{enumerate}
+		\item Update the \TeX Live Utility and allow any infrastructure updates
+		\item Install the \texttt{graphics-def} package if it is not installed
+		\item Update all installed packages
+	\end{enumerate}
+	\item Open a terminal in \texttt{\$TEXROOT/dvips/funivers/} and type the following with \texttt{ROOT} privileges to allow the new version of \LaTeX\ to access the Univers Condensed Font library
+	\begin{enumerate}
+		\item \texttt{texhash}
+		\item \texttt{updmap --enable Map=funivers.map}
+		\item \texttt{updmap-sys}
+	\end{enumerate}
+	
+	
+\end{enumerate}
+
+\end{document}

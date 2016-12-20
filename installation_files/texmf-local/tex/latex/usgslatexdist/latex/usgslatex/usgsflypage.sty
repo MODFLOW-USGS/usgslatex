@@ -1,0 +1,125 @@
+%------------------------ indentifcation ------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{usgsflypage}[2009/03/05]
+%------------------------ initial code --------------------
+\RequirePackage{usgsattr} % this needs to come first
+% as numerous text definitions are made that are used by one or
+% more of the following packages.
+\RequirePackage{usgshdr} % for the fly pagestyle
+%------------------------ declaration of options ----------
+%------------------------ execution of options
+\ProcessOptions \relax
+%------------------------ package loading -----------------
+%------------------------ main code -----------------------
+
+\typeout{--USGS, defining the makefly command}
+\newlength{\flyhspace} % a horizontal offset
+\setlength{\flyhspace}{1.566in} % official is 2.333in, but we have
+                                % the margin 0.767in already.
+\newlength{\flywidth}
+\setlength{\flywidth}{5.3333in} % official page width
+
+
+
+\newcommand{\flyfontfamilyA}
+{\sffamily}
+
+\newcommand{\flyfontfamilyB}
+{\sffamily \fontseries{l}\selectfont}
+
+\newcommand{\flyfontLARGE}
+{\fontsize{14pt}{16pt}\selectfont}
+
+\newcommand{\flyfontlarge}
+{\fontsize{12pt}{13pt}\selectfont}
+
+\newcommand{\flyfontsmall}
+{\fontsize{9pt}{11pt}\selectfont}
+
+\newcommand{\makefly}{
+
+   \setlength{\unitlength}{0.001in} % sets the unit lengths for the
+                                    % picture environment
+                                    
+   \newpage
+   \pagestyle{fly}
+   
+   {\flyfontfamilyA
+   
+   \noindent \begin{picture}(0,0)
+     \put(0,-530){\noindent \hspace*{\flyhspace}
+                \parbox[t]{\flywidth}
+                    {\flyfontLARGE \textbf{\doi} \\
+                     \flyfontLARGE \MakeUppercase{\doisecretary},
+                      Secretary \\[\baselineskip]
+                     \flyfontLARGE \textbf{\textusgs} \\
+                     \flyfontLARGE \usgsdirector, Director}}
+   \end{picture}
+          
+   \noindent \begin{picture}(0,0)
+     \put(0,-2015){\noindent \hspace*{\flyhspace}
+      \parbox[t]{\flywidth}
+             {\flyfontlarge
+              \textusgs, Reston, Virginia \reportyear \\ 
+              \flyfontsmall}}
+%mnf deprecated              \ReportForSale}}
+    \end{picture}
+    }
+    
+    {\flyfontfamilyB
+             
+    \noindent \begin{picture}(0,0)
+      \put(0,-3060){\noindent \hspace*{\flyhspace}
+         \parbox[t]{\flywidth}{\raggedright \flyfontsmall
+                               \usgsinfoproduct
+                               
+                               \medskip
+                               
+                               \usgsinfo}}
+    \end{picture}
+
+
+ \noindent \begin{picture}(0,0)
+      \put(0,-5000){\noindent \hspace*{\flyhspace} 
+        \parbox[t]{\flywidth}{\flyfontsmall \ReportCitation}}
+    \end{picture}
+
+
+
+    \noindent \begin{picture}(0,0)
+      \put(0,-5750){\noindent \hspace*{\flyhspace}
+         \parbox[t]{\flywidth}{\raggedright \flyfontsmall
+                               \usgsdisclaimer
+
+                               \medskip
+          
+                               \usgscopyright}}
+    \end{picture}
+
+
+   
+    }
+
+% LEGACY ITEM (see usgsattr.sty) for a LEGACY definition
+% of \ReportWebSite
+%    \begin{picture}(0,0)
+%      \put(0,0){\sffamily \noindent \hspace*{\flyhspace}
+%          \parbox{\flywidth}{\flyfontsmall \ReportWebSite}}
+%    \end{picture}
+     
+     \vfill
+     
+     \dateoftypeset
+     
+     % this reversion back to medium is for safety. The
+     % light declaration (\fontseries{l}\selectfont) placed
+     % in the code blocks above has lexical scope
+     \fontseries{m}\selectfont % not really needed, but
+     % to keep Font Substitution warnings from showing up
+     % because we have been use the \fontseries{l}.
+
+     \newpage
+}
+
+\endinput
+

@@ -1,0 +1,44 @@
+% Auxillary package for usgs reports by William H. Asquith
+%------------------------ indentifcation ------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{usgslatlong}[2009/03/17]
+%------------------------ initial code --------------------
+%------------------------ declaration of options ----------
+%------------------------ execution of options
+\ProcessOptions \relax
+%------------------------ package loading -----------------
+\RequirePackage{textcomp}
+%------------------------ main code -----------------------
+% Handy USGS specific symbols, abbreviations etc
+\typeout{COMMANDS FOR LAT/LONG IN USGS REPORTS}
+
+\newlength{\latlongDEGkern}
+\setlength{\latlongDEGkern}{0.06em}
+\newlength{\latlongMMkern}
+\setlength{\latlongMMkern}{0.09em}
+
+\newcommand{\latlongMarkDEG}{\textdegree}
+\newcommand{\latlongMarkMM}{\textquotesingle}
+\newcommand{\latlonfMarkSS}{\textquotedbl}
+
+\newcommand{\latlong}[3]%
+{\latlongDEGMMSS{#1}{#2}{#3}}
+
+
+%\latlong{30}{03}{30} produces
+%    30deg03'30" where deg is the degree symbol
+% Note the addition of kerning between the degree and minute and 
+% minute and second
+
+\newcommand{\latlongDEGMMSS}[3]%
+{\mbox{#1\latlongMarkDEG\hspace{\latlongDEGkern}#2\latlongMarkMM\hspace{\latlongMMkern}#3\textquotedbl}}
+
+
+\newcommand{\latlongDEGMM}[2]%
+{\mbox{#1\latlongMarkDEG\hspace{\latlongDEGkern}#2\latlongMarkMM}}
+
+\newcommand{\latlongDEG}[1]%
+{\mbox{#1\latlongMarkDEG}}
+
+
+\endinput

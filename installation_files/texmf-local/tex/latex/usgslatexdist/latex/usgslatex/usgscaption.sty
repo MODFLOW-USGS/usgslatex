@@ -1,0 +1,54 @@
+% Auxillary package for usgs reports by William H. Asquith
+%------------------------ indentifcation ------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{usgscaption}[2007/07/23]
+%------------------------ initial code --------------------
+\RequirePackage{ragged2e}
+\RequirePackage[font={small},
+                labelfont={sf,bf},
+                textfont={sf},
+                singlelinecheck=false,
+                labelsep=none,
+                justification=RaggedRight,
+                aboveskip=5pt,
+                belowskip=7pt plus 1pt minus 1pt,
+                textformat=period]{caption}[2008/03/27]
+% We are going to use a san sarif (sf) font for label and the text.
+% Drop size to (small) for standard Univers Condensed.
+% The label is in bold face (bf).
+% The label is followed by a period.
+% USGS style is for the text of the caption to end in a period.
+%  The author of caption has added the textformat option at my
+%  request.  Thanks. This features ends to more natural code.
+
+% Gail Sladek (July 23, 2007) indicates on markup camera ready
+% that we should have left justified, so singlelinecheck=false
+% is technically correct.  Although I dislike the optics\
+% for small captions on a full page.
+
+%------------------------ declaration of options ----------
+%------------------------ execution of options
+\ProcessOptions \relax
+%------------------------ package loading -----------------
+%------------------------ main code -----------------------
+\typeout{COMMANDS CONTROLLING THE CAPTIONS IN USGS REPORTS}
+
+
+\DeclareCaptionTextFormat{plain}{#1}
+\DeclareCaptionTextFormat{periodfill}{#1.\hspace*{\fill}}
+
+\DeclareCaptionLabelSeparator{usgsstyle}{.\quad}
+\captionsetup{labelsep=usgsstyle}
+
+\DeclareCaptionFont{usgsfont}{\fontsize{9.5}{12}\selectfont}
+\captionsetup{font={usgsfont}}
+
+
+\endinput
+
+% In email, Axel shows that we actually have more control of the
+% textformat. See below---these would be placed in the preamble.
+%\DeclareCaptionTextFormat{alternativetoperiod}
+%{#1---{\rmfamily (Thanks Axel Sommerfeldt)}}
+%
+%\captionsetup{textformat=alternativetoperiod}               

@@ -1,0 +1,13 @@
+%Filename: 8rfun.fd
+%Created by: tex fun-drv
+%Created using fontinst v1.929
+
+%THIS FILE SHOULD BE PUT IN A TEX INPUTS DIRECTORY
+
+\ProvidesFile{8rfun.fd}
+   [2006/11/15 Fontinst v1.929 font definitions for 8r/fun.]
+
+\DeclareFontFamily{8r}{fun}{}
+
+
+\endinput

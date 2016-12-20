@@ -1,0 +1,345 @@
+% Auxillary package for usgs reports by William H. Asquith
+%------------------------ indentifcation ------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{usgstocconvert}[2009/06/08]
+%------------------------ initial code --------------------
+\RequirePackage{dcolumn}
+\RequirePackage{array}
+%------------------------ declaration of options ----------
+%------------------------ execution of options
+\ProcessOptions \relax
+%------------------------ package loading -----------------
+%------------------------ main code -----------------------
+\typeout{COMMANDS RELATED TO THE CONVERSION TABLE IN USGS REPORTS}
+%
+%
+% DATUMS
+% 
+%
+% Set up the vertical datum description, which trails the
+% conversion table
+\newcommand{\vertdatumintro}
+{Vertical coordinate information is referenced to the }
+\newcommand{\vertdatumwhich}
+{North American Vertical Datum of 1988 (NAVD 88).}
+
+\newcommand{\datumfont}{\sffamily \normalsize}
+
+% declare the command to actually typeset the datum explanation
+\newcommand{\vertdatum}
+{{\datumfont \vertdatumintro \vertdatumwhich }\\}
+
+% Set up the horizontal datum description, which trails the
+% conversion table
+\newcommand{\horzdatumintro}
+{Horizontal coordinate information is referenced to the }
+\newcommand{\horzdatumwhich}
+{North American Datum of 1983 (NAD 83).}
+
+% declare the command to actually typeset the datum explanation
+\newcommand{\horzdatum}
+{{\datumfont \horzdatumintro \horzdatumwhich }\\}
+
+\newcommand{\datumtitle}{Datum}
+
+% Use this as the standard vertical space before the sectioning
+% of the conversions, datums, or conventions. This ensures that
+% exact same space is used and matches the initial space used in
+% the index, glossary, and usgsenote environments
+\newcommand{\convertvspace}{\strut \vspace*{-\baselineskip}}
+
+% Contents for typesetting the datums
+\newcommand{\thedatums}
+{\convertvspace
+ \section*{\datumtitle}
+ \noindent \horzdatum
+ \noindent \vertdatum
+ \vspace{\datumaftersep}}
+
+
+%
+%
+% CONVENTIONS
+% 
+%
+% Add a note about the conventions, most will renew this content
+% away, but this is a useful reminder.
+\newcommand{\someconventiontext}
+{Insert discussion concerning conventions used in the text here by
+ renewing \texttt{theconventions} command. The command
+ \texttt{usgsenotesFORconvent} contains an example statement for use 
+ of endnotes via the \texttt{usgsenote.sty} package. If you do not 
+ have use for conventions, you can simply \texttt{renewcommand} the
+ \texttt{theconventions} to nothing.}
+
+% The command that actually typesets the Conventions the whatever
+% material is specified by \someconventiontext. \theconventions
+% takes one optional argument so that the command could readily
+% be turned into an Abbreviations section:
+%  \renwcommand{\someconventiontext}
+%  {\textbf{USGS}---U.S. Geological Survey\\
+%   \textbf{STATION}---USGS Streamflow-Gaging Station}
+%  \theconventions{Abbreviations}
+\newcommand{\theconventions}[1][Conventions]
+{\convertvspace
+ \section*{#1}
+ \someconventiontext}
+
+
+
+%
+%
+% CONVERSIONS
+% 
+%
+% the label line for the conversion table
+\newcommand{\convertlabel}
+{\textsf{\bfseries Multiply} &
+ \textsf{\bfseries \makebox[0in][l]{By}} &
+ \textsf{\bfseries To obtain} \\ }
+
+\newcolumntype{.}{D{.}{.}{5}} % for decimal alignment in the table
+
+\newcommand{\conversiontitle}{Conversion Factors}
+
+\newlength{\conversioncolwidth}
+\setlength{\conversioncolwidth}{2in}
+
+% separation distance following the conversion table
+\newlength{\conversionaftersep}
+\setlength{\conversionaftersep}{\baselineskip}
+
+% separation distance following the datums
+\newlength{\datumaftersep}
+\setlength{\datumaftersep}{0pt}
+
+
+% added for some further flexibility
+\newcommand{\convertprevspace}{\convertvspace}
+
+% This is the major user interface here. Given a series of
+% commands specifying each line, the user can combine them
+% to accomodate the specific units for the report.
+\newcommand{\convertlist}{\convertfoot \convertgpm \convertcfs}
+\newcommand{\convertlistSI}{\convertfootSI \convertcfsSI}
+
+\newcommand{\theconversionsubtitleIPtoSI}[1][Inch\slash Pound to SI]
+{{\large \sffamily \bfseries \noindent #1} \medskip}
+\newcommand{\theconversionsubtitleSItoIP}[1][SI to Inch\slash Pound]
+{{\large \sffamily \bfseries \noindent #1} \medskip}
+
+\newlength{\conversionsrulewidth}
+\setlength{\conversionsrulewidth}{1pt} % mimic'ing SIR 2006-5299
+
+\newlength{\@conversionsrulewidth}
+
+\setlength{\extrarowheight}{2pt}
+\newcommand{\theconversionsOneSystem}
+{\setlength{\@conversionsrulewidth}{\arrayrulewidth}
+ \setlength{\arrayrulewidth}{\conversionsrulewidth}
+
+ \convertprevspace
+
+ \section*{\conversiontitle}
+
+ \small
+
+ \noindent\begin{tabular}{p{\conversioncolwidth}.
+                 @{\rule[0in]{1in}{0in}}
+                 p{\conversioncolwidth}}
+   \hline
+     \convertlabel
+   \hline
+     \convertlist
+   \hline
+ \end{tabular}
+
+ \vspace{\conversionaftersep} % trailing vertical space
+ \setlength{\arrayrulewidth}{\@conversionsrulewidth}
+}
+
+\newcommand{\theconversionsTwoSystem}
+{\setlength{\@conversionsrulewidth}{\arrayrulewidth}
+ \setlength{\arrayrulewidth}{\conversionsrulewidth}
+
+ \convertprevspace
+
+ \section*{\conversiontitle}
+
+ \small
+
+ \theconversionsubtitleIPtoSI
+
+ \noindent\begin{tabular}{p{\conversioncolwidth}.
+                 @{\rule[0in]{1in}{0in}}
+                 p{\conversioncolwidth}}
+   \hline
+     \convertlabel
+   \hline
+     \convertlist
+   \hline
+ \end{tabular}
+ 
+ \vspace{\conversionaftersep} % trailing vertical space
+ 
+ \theconversionsubtitleSItoIP
+
+ \noindent\begin{tabular}{p{\conversioncolwidth}.
+                 @{\rule[0in]{1in}{0in}}
+                 p{\conversioncolwidth}}
+   \hline
+     \convertlabel
+   \hline
+     \convertlistSI
+   \hline
+ \end{tabular}
+
+
+ \vspace{\conversionaftersep} % trailing vertical space
+ \setlength{\arrayrulewidth}{\@conversionsrulewidth}
+}
+
+\newcommand{\temperatureConversion}
+{\vspace*{-.75\baselineskip}
+ \noindent\ \textsf{Temperature in degrees Fahrenheit ($^\circ\mathrm{F}$) may be converted to degrees Celsius ($^\circ\mathrm{C}$) as follows:}\par
+ {\centering $^\circ$C = ($^\circ\mathrm{F} - 32)/1.8$ \par}}
+
+\newcommand{\temperatureConversionSI}
+{\vspace*{-.75\baselineskip}
+ \noindent\ Temperature in degrees Celsius ($^\circ\mathrm{C}$) may be converted to degrees Fahrenheit ($^\circ\mathrm{F}$) as follows:\par
+ {\centering $^\circ$F = 1.8\thinspace$^\circ\mathrm{C} + 32$ \par}}
+
+\newcommand{\theconversions}
+{\theconversionsOneSystem
+ \temperatureConversion}
+
+%\renewcommand{\theconversions}
+%{\theconversionsTwoSystem
+% \temperatureConversionSI}
+
+
+% Call to \conversionpage (see usgsreporta.sty \makefrontmatter)
+% redefine this command away if you need the conversion to typeset
+% immediately after the table of contents. This command is 
+% manual because the size of the conversion page with conversions,
+% datums, and conventions could be too large and splitting this
+% material might not be a visually pleasing thing.
+\newcommand{\conversionTOnewpage}{\vspace*{\fill}\pagebreak}
+
+% This is the command to actually typeset the conversion table
+% and is called/used by the usgsreporta.sty package
+\newcommand{\conversionpage}
+{\conversionTOnewpage
+ \theconversions
+ \nopagebreak[4]
+ \thedatums
+ \nopagebreak[4]
+ \theconventions
+}
+
+%=======================================================
+%   CCCC   OOOO   N     N V     V EEEEE RRRR   TTTTTTT
+%  C      O    O  N N   N  V   V  E     R   R     T
+%  C      O    O  N  N  N   V V   EEE   RRRR      T
+%  C      O    O  N   N N   V V   E     R R       T
+%   CCCC   OOOO   N     N    V    EEEEE R   R     T
+%=======================================================
+% Declare the various conversion commands, each of which 
+% provides a line in the table--don't forget the \\ when
+% declaring your own custom ones
+
+% Some conversion tables in USGS reports denote the type of conversion that
+% follows, such as Length, Area, Flow, Pressure, etc. . .
+% User's can conveniently incorporate such a practice with this command
+% \converttype{Length}
+% \renewcommand{\convertlist}{\converttype{Length} \convertfoot
+%                             \converttype{Flow} \convertcfs}
+% For short conversion tables, I think this is a bad practice, but for
+% long tables this is not a bad idea.
+\newlength{\convertypehoffset}
+\setlength{\convertypehoffset}{23pt}
+\newcommand{\converttype}[2][\convertypehoffset]
+{ & \multicolumn{1}{l}{\makebox[#1][c]{\textsf{\small \bfseries #2}}} & \\ }
+
+
+% DANGER WITH SOME OF THESE CONVERSIONS. For clean support for
+% dropping a leading 0 in a <1 value for other than first row
+% entries in the conversion table, several of these commands have
+% an optional first argument that defaults to 0. It causes the 
+% code to LOOK a little weird.  The ft-->m conversion is 0.3048, but
+% the leading #1 looks really strange (#1.3048)
+% To drop the leading zero:  \convertinch[] will do the trick.
+% To keep the leading zero:  \convertinch   will do the trick.
+% INCH POUND UNITS
+\newcommand{\convertinch}
+{inch (in.) & 25.4 & millimeter (mm) \\ }
+
+\newcommand{\convertfoot}[1][0]
+{foot (ft) & #1.3048 & meter (m) \\ }
+
+\newcommand{\convertmile}
+{mile (mi) & 1.609 & kilometer (km) \\ }
+
+\newcommand{\convertftmi}[1][0]
+{foot per mile (ft/mi) & #1.1894 & meter per kilometer (m/km) \\ }
+
+
+\newcommand{\convertsqmi}
+{square mile (mi\textsuperscript{2}) & 2.590 &
+square kilometer (km\textsuperscript{2}) \\ }
+
+\newcommand{\convertacre}[1][0]
+{acre (acre) & #1.001563 & square mile (mi\textsuperscript{2}) \\ }
+
+\newcommand{\convertcfs}[1][0]
+{cubic foot per second (ft\textsuperscript{3}/s) & #1.02832 &
+ cubic meter per second (m\textsuperscript{3}/s) \\ }
+
+\newcommand{\convertgpm}
+{gallon per minute (gal/min) & 0.06309 & liter per second (L/s) \\ }
+
+\newcommand{\convertpsi}
+{pound-force per square inch (lbf/in\textsuperscript{2}) & 6.895 &
+ kilopascal (kPa) \\}
+
+\newcommand{\convertacrefoot}
+{acre-foot (acre-ft) & 1,233 & cubic meter (m\textsuperscript{3}) \\}
+
+\newcommand{\convertacresqkm}[1][0]
+{acre (acre) & #1.004047 & square kilometer (km\textsuperscript{2}) \\}
+
+
+% SI UNITS
+\newcommand{\convertinchSI}[1][0]
+{millimeter (mm) & #1.03937 & inch (in.)  \\ }
+
+\newcommand{\convertfootSI}
+{meter (m) & 3.281 & foot (ft) \\ }
+
+\newcommand{\convertmileSI}[1][0]
+{kilometer (km) & #1.6214 & mile (mi) \\ }
+
+\newcommand{\convertftmiSI}
+{meter per kilometer (m/km) & 5.28 & foot per mile (ft/mi) \\ }
+
+
+\newcommand{\convertsqmiSI}[1][0]
+{square kilometer (km\textsuperscript{2}) & #1.3861 &
+ square mile (mi\textsuperscript{2}) \\ }
+
+\newcommand{\convertcfsSI}
+{cubic meter per second (m\textsuperscript{3}/s) & 35.31 &
+ cubic foot per second (ft\textsuperscript{3}/s) \\ }
+
+\newcommand{\convertpsiSI}[1][0]
+{kilopascal (kPa) & #1.1450 &
+ pound-force per square inch (lbf/in\textsuperscript{2}) \\}
+
+\newcommand{\convertacrefootSI}[1][0]
+{cubic meter (m\textsuperscript{3}) & #1.0008107 & acre-foot (acre-ft) \\}
+
+\newcommand{\convertsqkmacreSI}
+{square kilometer (km\textsuperscript{2}) & 247.10 & acre (acre)\\}
+
+
+\endinput

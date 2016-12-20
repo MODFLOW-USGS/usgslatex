@@ -1,0 +1,196 @@
+% Auxillary package for usgs reports by William H. Asquith
+%------------------------ indentifcation ------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{usgsattr}[2009/03/05]
+%------------------------ initial code --------------------
+\RequirePackage{ragged2e}
+%------------------------ declaration of options ----------
+%------------------------ execution of options
+\ProcessOptions \relax
+%------------------------ package loading -----------------
+%------------------------ main code -----------------------
+%============== GENERAL COMMANDS HOLD STRINGS ==================
+\typeout{COMMANDS CONTAINING COMMON STRINGS OR OTHER PHRASES USED IN USGS REPORTS}
+
+\newcommand{\reporttitle}{} % title useful for \reportcitation
+
+\newcommand{\pagereporttitle}{\reporttitle} % for the title page and
+% other frontmatter like pages the \pagereporttitle might need have
+% strategically placed \newline commands because
+% the pagereporttitle is set in \raggedright on titlepage, and first
+% page of report
+
+\newcommand{\citereporttitle}{} % for the citation
+% this should be in general lower case as done by USGS
+
+\newcommand{\coverreporttitle}{\pagereporttitle} % for the cover page
+
+\newcommand{\headerreporttitle}{\reporttitle} % for header(even pages)
+
+\newcommand{\shortreporttitle}{} % useful for abbreviations of 
+% section headings etc and running headers of the section
+
+\newcommand{\cooperator}{} % the Texas Blah, and Wisconsin Blah
+
+\newcommand{\cooperationwith}{In cooperation with \cooperator}
+
+\newcommand{\cooperatorreportseries}{} % Some cooperators might
+% require their report number. This command is typeset, but if empty
+% nothing is seen.
+
+\newcommand{\cooperatordisclaimer}{} % Some cooperators might 
+% require their own disclaimer. This command is typeset, but if 
+% empty nothing is seen.
+
+\newcommand{\reportseries}{Scientific Investigations Report}
+
+\newcommand{\reportnumber}{YYYY--XXXX} % the offical USGS number
+
+\newcommand{\reportyear}{YYYY} % note that the year might not be '
+% the same as that in the report number.
+
+\newcommand{\reportbodypages}{XXX}
+
+
+%\newcommand{\ReportWebSite}
+%{\textsl{\usgsalsoavail} \\
+%\reportwebsiteroot\reportwebsiteremainder}
+
+\newcommand{\ReportCitation}
+{\textsl{Suggested citation:} \\
+        \reportcitation}
+
+\newcommand{\reportwebsiteroot}{http://pubs.usgs.gov/}
+
+\newcommand{\reportwebsiteremainder}{INSERT PATH HERE}
+
+\newcommand{\reportcitation}
+{{\RaggedRight \theauthorslastfirst, \reportyear, \citereporttitle: \textusgs\ \reportseries\ \reportnumber, \reportbodypages~p. \mbox{[\thinspace}\reportwebsiteroot\reportwebsiteremainder \mbox{\thinspace]}}}
+
+\newcommand{\reportcitingtheauthors}{} % such as Williams or
+% Asquith and others.  This command is used in the \backcoverlabel
+% generation
+
+\newcommand{\theauthors}{} % list of author(s), 1st MI last
+\newcommand{\thetitlepageauthors}{} % for use on the title page
+% one wants this separate so that footnotes if needed can be
+% built.
+
+\newcommand{\theauthorslastfirst}{} % suitable for citations
+
+\newcommand{\doi}{U.S.~Department of the Interior}
+
+\newcommand{\doisecretary}{Ken Salazar}
+
+\newcommand{\usgsdirector}{Marcia K. McNutt}
+
+\newcommand{\usgsforsale}
+{For sale by \textusgs, Information Services \\
+Box 25286, Denver Federal Center \\
+Denver, Colorado 80225}
+
+% command used for typesetting the content
+\newcommand{\ReportForSale}
+{\flyfontfamilyB \usgsforsale}
+
+\newcommand{\usgsinfoproduct}
+{For product and ordering information: \\
+World Wide Web: http://www.usgs.gov/pubprod \\
+Telephone: 1-888-ASK-USGS}
+
+
+\newcommand{\usgsinfo}
+{For more information on the \USGS---the Federal source for science about the Earth, its natural and living resources, natural hazards, and the environment:\\
+World Wide Web: http://www.usgs.gov \\
+Telephone: 1-888-ASK-USGS}
+
+%\newcommand{\usgsinfo}
+%{For product and ordering information: \\
+%Telephone: 1-888-ASK-USGS \\
+%World Wide Web: http://www.usgs.gov/ \\}
+
+
+\newcommand{\usgsdisclaimer}
+{Any use of trade, product, or firm names in this publication 
+is for descriptive purposes only and does not imply endorsement
+by the U.S.~Government. \cooperatordisclaimer \\}
+
+\newcommand{\usgscopyright}
+{Although this report is in the public domain, permission must be secured from the individual copyright owners to reproduce any copyrighted materials contained within this report.\\}
+
+\newcommand{\usgsalsoavail}
+{Also available at: }
+
+
+\newcommand{\dateoftypeset}
+{     \begin{picture}(0,0)
+       \put(0,-75){\sffamily
+                     \fontsize{6pt}{6pt}\selectfont
+                     \fontseries{l}\selectfont
+                     \hspace*{\textwidth}
+                     \makebox[0pt][r]{\textsl{Typeset on \today}}}
+     \end{picture}
+}
+
+
+
+\newcommand{\GSphotocredit}{}
+% the text inserted on the back of cover page
+
+\newcommand{\coverphoto}{}
+
+\newcommand{\backcoverlabel}
+{\reportcitingtheauthors---
+\textbf{\reporttitle}---
+\reportseries\ \reportnumber}
+% This is the label that runs along the spine and is shown on
+% the back page of an online report.
+
+\newcommand{\thePSC}{} % production facility
+
+\newcommand{\theeditor}{} % editor credits
+
+\newcommand{\theillustrator}{} % illustration credits
+
+\newcommand{\thefirsttypesetter}{}
+% who did the layout and design
+
+\newcommand{\thesecondtypesetter}{}
+% who did the final PDF work (508 compliance etc)
+
+\newcommand{\colophonmoreinfo}
+{and water resources in Texas}
+% content to be added in the \colophoninfo command
+% such as 'or water resources in Texas'
+
+\newcommand{\colophoninfo}
+{For information regarding this report \colophonmoreinfo, contact:}
+% introduction to the \theoffice on the colophon
+
+\newcommand{\theoffice}{}
+% address of the local USGS office making the report
+
+\newcommand{\theofficewebsite}{}
+% web site of the local USGS office making the report
+
+
+\newcommand{\productionstaff}
+{Prepared by \thePSC \\ 
+Edited by \theeditor \\
+Illustrations by \theillustrator \\
+Layout and typesetting by \thefirsttypesetter \\
+Final portable document format preparation by \thesecondtypesetter \\}
+
+\newcommand{\ProvisionalMessage}
+{ { \scriptsize \setlength{\fboxrule}{0.0pt}
+\fbox{\parbox[c]{2.5in}{\centering ---PROVISIONAL--- \\
+This should not be referenced, cited, or \\ 
+released without \USGS\ Bureau approval.}} }
+}
+
+\newcommand{\CoreDraftMessage}{DRAFT:\ }
+
+\newcommand{\DraftMessage}
+{\CoreDraftMessage \today \ProvisionalMessage}
+
+\endinput

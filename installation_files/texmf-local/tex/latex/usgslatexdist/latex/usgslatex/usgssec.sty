@@ -1,0 +1,304 @@
+% Auxillary package for usgs reports by William H. Asquith
+%------------------------ indentifcation ------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{usgssec}[2009/06/09]
+%------------------------ initial code --------------------
+\RequirePackage{ifthen}
+\RequirePackage[sf,bf]{titlesec} % for redefinition of section and
+% subsection headings, toggling the san sarif (sf) and bold face (bf)
+% series is generally sufficient, the number of sections is reset by
+% the usgstoc.sty package.
+\RequirePackage[fit]{truncate} % This is Donald Arseneau package
+% that he has released into the public domain, some LaTeX
+% distributions apparently might not have this. This is such a
+% small package that I've decided to redistribute it here.
+\RequirePackage{ragged2e}
+%------------------------ declaration of options ----------
+%------------------------ execution of options
+\ProcessOptions \relax
+%------------------------ package loading -----------------
+%------------------------ main code -----------------------
+\typeout{COMMANDS CONTROLLING SECTION HEADINGS IN USGS REPORTS}
+
+\setcounter{secnumdepth}{-2}
+% no numbering of sections, but want to continue
+% to use the regular (nonstarred forms)
+
+\newlength{\rightmarkwidth}
+\setlength{\rightmarkwidth}{0.9\textwidth}
+
+\newcommand{\usgsLarge}
+{\fontsize{16}{16.6399}\selectfont}
+\newcommand{\usgslarge}
+{\fontsize{13}{14.5200}\selectfont}
+\newcommand{\usgsnormalsize}
+{\normalsize}
+
+% What font weights will each of the sectional
+% headings take on?
+\newcommand{\sectionseries}
+{\bfseries}
+\newcommand{\subsectionseries}
+{\bfseries}
+\newcommand{\subsubsectionseries}
+{\mdseries}
+\newcommand{\paragraphseries}
+{\mdseries}
+\newcommand{\subparagraphseries}
+{\mdseries}
+
+% Font family for the sections of the report
+\newcommand{\sectionalfamily}{\sffamily}
+
+% Define an alternative section command to get the rightmark
+% to charge automatically without SERIOUS header hacking of the
+% titlesec interface--I would rather use fancyhdr for the running
+% head/foots anyway
+\newcommand{\SECTION}[1]%
+{\renewcommand{\rightmark}{\truncate{\rightmarkwidth}{#1}}
+ \section{#1}}
+% further, having a distinctively different "section" command means
+% that the far far far more complex "appendix" sectioning command
+% is in all caps---we have parallelism.
+
+% The following three ensembles have space matching USGS style
+% and my rubber attempts to provide flexibility.
+\newlength{\secbeforesep}
+\setlength{\secbeforesep}{24pt plus 2pt minus 2pt}
+\newlength{\secaftersep}
+\setlength{\secaftersep}{12pt plus 2pt minus 2pt}
+
+\newlength{\subbeforesep}
+\setlength{\subbeforesep}{17pt plus 2pt minus 2pt}
+\newlength{\subaftersep}
+\setlength{\subaftersep}{10pt plus 2pt minus 2pt}
+
+\newlength{\subsubbeforesep}
+\setlength{\subsubbeforesep}{17pt plus 2pt minus 2pt}
+\newlength{\subsubaftersep}
+\setlength{\subsubaftersep}{8pt plus 2pt minus 2pt}
+
+\newlength{\paragraphbeforesep}
+\setlength{\paragraphbeforesep}{13pt plus 2pt minus 2pt}
+\newlength{\paragraphaftersep}
+\setlength{\paragraphaftersep}{6pt plus 2pt minus 2pt}
+\newlength{\paragraphsectionindentation}
+\setlength{\paragraphsectionindentation}{\parindent}
+
+
+
+\newlength{\subparagraphbeforesep}
+\setlength{\subparagraphbeforesep}{.5ex plus .25ex}
+\newlength{\subparagraphaftersep}
+\setlength{\subparagraphaftersep}{1em} % this is an indent for a runin
+
+
+\titlespacing*{\section}{0em}
+{\secbeforesep}{\secaftersep}[0em]
+
+\titlespacing*{\subsection}{0em}
+{\subbeforesep}{\subaftersep}[0em]
+
+\titlespacing*{\subsubsection}{0em}
+{\subsubbeforesep}{\subsubaftersep}[0em]
+
+\titlespacing*{\paragraph}{0em}
+{\paragraphbeforesep}{\paragraphaftersep}[0em]
+
+\titlespacing*{\subparagraph}{0em}
+{\subparagraphbeforesep}{\subparagraphaftersep}[0em]
+
+
+
+
+\titleformat{\section}[block]
+{\RaggedRight \usgsLarge \sectionseries \sectionalfamily}
+{}{}{}[]
+
+\titleformat{\subsection}[block]
+{\RaggedRight \usgslarge \subsectionseries \sectionalfamily}
+{}{}{}[]
+
+\titleformat{\subsubsection}[block]
+{\RaggedRight \usgslarge \subsubsectionseries \sectionalfamily}
+{}{}{}[]
+
+\titleformat{\paragraph}[block]
+{\RaggedRight \usgsnormalsize \paragraphseries \sectionalfamily
+\hspace*{\paragraphsectionindentation}}
+{}{}{}[]
+
+\titleformat{\subparagraph}[runin]
+{\small \subparagraphseries \sectionalfamily}
+{}{}{\hspace*{\paragraphsectionindentation}}[\quad]
+
+% ======================================================
+% SETUP THE HANDLING FOR APPENDIX SECTIONS
+% ======================================================
+
+
+\renewcommand{\appendixname}{Appendix}
+\newcommand{\appendixnametocsep}{---}
+
+% A preamble to the \rightmark on the upper left of odd pages
+\newcommand{\appendixmark}{\appendixname\ \theappendix---}
+
+% A postamble to the \rightmark setting on the \myappendixpage
+% in the usgsnullpages.sty file.
+\newcommand{\myappendixpagemarkaddition}
+{for \textusgs\ \reportseries\ \reportnumber}
+
+\newcommand{\myappendixpagename}{Appendixes}
+% See the myappendixpage in the usgsnullpages.sty file
+
+\newlength{\appendixbeforelen} % for any vspace before label setting
+\setlength{\appendixbeforelen}{0.0\textheight}
+\newlength{\appendixafterlen} % for any vspace after label setting
+\setlength{\appendixafterlen}{\baselineskip}
+
+% how wide to typeset the appendix title
+\newlength{\appendixtitlewidth}
+\setlength{\appendixtitlewidth}{0.75\textwidth}
+
+% In the placement of the page containing the Appendix title 
+% set the font size for it and the second argument (Appendix subtitle)
+% of the \APPENDIX command
+\newcommand{\appendixtitlefontsize}{\LARGE}
+\newcommand{\appendixsubtitlefontsize}{\Large}
+
+
+% execute these commands before and after the appendix label
+% the default is of course to use simple vertical space
+\newcommand{\appendixbefore}{\vspace*{\appendixbeforelen}}
+\newcommand{\appendixafter}{\clearpage}
+
+\newcommand{\appendixcounterseparator}{.}
+
+\newcommand{\AppendixSectionJustification}
+{\raggedright}
+
+\newcounter{appendix}
+\renewcommand{\theappendix}{\arabic{appendix}}
+
+\newlength{\appendixtocvsep}
+\setlength{\appendixtocvsep}{1.5ex}
+
+\newlength{\appendixtocsecvsep}
+\setlength{\appendixtocsecvsep}{1ex}
+
+\newcommand{\AtAppendixEnvBegin}{}
+%\newcommand{\AtAppendixEnvBegin}{\myappendixpage}
+% defined in usgsnullpages.sty---Use the above or renew to the
+% above command if you need a transition
+
+\newcommand{\AtAppendixEnvEnd}{\clearpage} % what action to perform as the 
+% appendix environment closes
+\newcommand{\AtAnAppendixSecBegin}{\myemptypage} 
+\newcommand{\AtAnAppendixSecEnd}{\myemptypage}
+
+\renewenvironment{appendix}
+{\AtAppendixEnvBegin
+ \addtocontents{toc}{\protect\addvspace{\appendixtocsecvsep}}
+ \setcounter{section}{1}  % appendix is used for referencing
+ % but since we use section commands for internal building
+ % of the appendix sections, then reset for safety?
+ \setcounter{appendix}{0} % don't think these zero sets
+ \setcounter{figure}{0}   % are needed but it is good
+ \setcounter{table}{0}    % programming practice
+ \setcounter{equation}{0}
+ \renewcommand{\thefigure}
+ {\theappendix\appendixcounterseparator\arabic{figure}}
+ \renewcommand{\thetable}
+ {\theappendix\appendixcounterseparator\arabic{table}}
+ \renewcommand{\theequation}
+ {\theappendix\appendixcounterseparator\arabic{equation}}
+}
+{\AtAppendixEnvEnd
+ \addtocontents{toc}{\protect\addvspace{\appendixtocsecvsep}}
+}
+% add the additional separation space to the toc at the conclusion
+% of the appendix so that we have symmetrical separation around
+% the appendix sectioning. This will be seen if a glossary or 
+% index is typeset following the appendices.
+
+\newcommand{\AppendixTOCcontent}{} % this is a hook to contain
+% the material to set in the TOC. \APPENDIX supports an optional
+% argument and the contents are tested---if empty then the second
+% argument is set in the TOC otherwise the first one (the optional)
+% is set in the TOC.
+
+
+% this length will be used to record how wide the Appendix #1---
+% (the default) is
+\newlength{\@appendixhang}
+\newcommand{\appendixhangfraction}{1}
+% the hang fraction is a muliplier on the \@appendixhang term
+
+\newcommand{\appendixrightmark}[1]{\appendixmark #1}
+
+\newcommand{\APPENDIX}[3][]
+{\ifthenelse{\boolean{@twocolumn}}{\onecolumn}{\clearpage}
+ \pagestyle{appendix}
+ 
+ \refstepcounter{appendix} % thus must be a \refstepcounter
+ % so that we can place a \label{appendix:something} command
+ % following the \APPENDIX command so that one can refer to the
+ % appendix number in the report body.
+ \setcounter{figure}{0}
+ \setcounter{table}{0}
+ \setcounter{equation}{0}
+  
+ \addtocontents{lof}{\protect\addvspace{\appendixtocvsep}}
+ \addtocontents{lot}{\protect\addvspace{\appendixtocvsep}}
+ 
+  % the \suppressfloats in the \section command prevents
+  % floats from being place before the beginning of the appendix
+  % the command is placed internal to the \section call to insure
+  % that it is called on the current page at the \section is placed
+ 
+ \AtAnAppendixSecBegin 
+
+ \thispagestyle{plain}
+ \fancypagestyle{plain}{\pagestyle{bodyplain}}
+ \appendixbefore
+
+ \ifthenelse{\equal{#1}{}}% Does optional argument contain something?
+            {\renewcommand{\AppendixTOCcontent}{#2}}%
+            {\renewcommand{\AppendixTOCcontent}{#1}}
+ 
+ \settowidth{\@appendixhang}{{\appendixtitlefontsize \AppendixSectionJustification
+	              \appendixname\ \theappendix---}}
+ \setlength{\@appendixhang}{\appendixhangfraction\@appendixhang}
+            
+ \section[\appendixname\ \theappendix
+          \appendixnametocsep\AppendixTOCcontent]%
+         {\suppressfloats
+          \parbox{\appendixtitlewidth}%
+                 {\hangpara{\@appendixhang}{1}
+                  \appendixtitlefontsize \AppendixSectionJustification
+	              \appendixname\ \theappendix---#2
+                 }\linebreak
+          \rule{\appendixtitlewidth}{1pt}
+         }
+ 
+ {\appendixsubtitlefontsize \bfseries \sffamily #3}
+ 
+ \renewcommand{\rightmark}{\truncate{\rightmarkwidth}{\appendixrightmark{#2}}}
+ 
+ \appendixafter
+ 
+ \AtAnAppendixSecEnd 
+
+ 
+ \pagestyle{appendix}
+}
+
+\endinput
+
+%\titleformat{\section}[block]{\Large \bfseries \sffamily}
+%{}{}{\color{blue} \hrule \vspace*{\topskip} \hrule \vspace*{\baselineskip} \hrule \vspace*{\parskip} \hrule \color{black}}[\color{red} \hrule \vspace*{\topskip} \hrule \vspace*{\baselineskip}\hrule \vspace*{\parskip} \hrule \color{black}]
+
+
+%\titleformat{\subsection}[block]{\normalsize \bfseries \sffamily}
+%{}{}{\color{blue} \hrule \vspace*{\topskip} \hrule \vspace*{\baselineskip} \hrule \vspace*{\parskip} \hrule \color{black}}[\color{red} \hrule \vspace*{\topskip} \hrule \vspace*{\baselineskip}\hrule \vspace*{\parskip} \hrule \color{black}]
+

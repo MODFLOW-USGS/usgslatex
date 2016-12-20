@@ -1,0 +1,23 @@
+\documentclass[11pt]{article}
+\begin{document}
+\section*{USING THE USGS VISUAL ID GRAPHICS}
+This directory contains two PDF files of the USGS visual id in normal (black on transparent) and inverted (white on transparent) representations (\texttt{visid.pdf} and \texttt{visid\_invert.pdf}). The USGS motto is present in both. The \LaTeX\ commands described here can be used for importation of the visual id into a document. The instructions here use the inverted graphic, but the usage shown is general. See the differences in the clipping dimensions; a practice used to remove the motto.
+
+To input the inverted USGS visual id for a front cover or other upright position with the motto intact, the following commands trims the PDF file accordingly. You might need to play with the height option of \verb=\includegraphics= for the desired layout.
+
+\begin{verbatim}
+\includegraphics[height=0.5in,
+                 trim=1.37in 4.535in 1.437in 4.323in,
+                 clip]{visid_invert}}
+\end{verbatim}
+
+To input the inverted USGS visual id for a back cover or spine of a report, the motto is clipped off, the following command trims the PDF file accordingly and then rotates. You might need to play with the \texttt{y} option or \verb=\rotatebox= or the width option of \verb=includegraphics= for the desired layout.
+
+\begin{verbatim}
+\rotatebox[y=.3825in]{270}{
+           \includegraphics[width=.5in,
+           trim=1.37in 5.05in 1.437in 4.323in,
+           clip]{visid_invert}}
+\end{verbatim}
+
+\end{document}

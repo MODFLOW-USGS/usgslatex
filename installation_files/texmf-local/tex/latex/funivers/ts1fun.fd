@@ -1,0 +1,43 @@
+%Filename: ts1fun.fd
+%Created by: tex fun-drv
+%Created using fontinst v1.929
+
+%THIS FILE SHOULD BE PUT IN A TEX INPUTS DIRECTORY
+
+\ProvidesFile{ts1fun.fd}
+   [2006/11/15 Fontinst v1.929 font definitions for TS1/fun.]
+
+\DeclareFontFamily{TS1}{fun}{}
+
+\DeclareFontShape{TS1}{fun}{m}{n}{
+   <-> funr8c
+}{}
+
+\DeclareFontShape{TS1}{fun}{m}{sl}{
+   <-> funro8c
+}{}
+
+\DeclareFontShape{TS1}{fun}{b}{n}{
+   <-> funb8c
+}{}
+
+\DeclareFontShape{TS1}{fun}{b}{sl}{
+   <-> funbo8c
+}{}
+
+\DeclareFontShape{TS1}{fun}{l}{n}{
+   <-> funl8c
+}{}
+
+\DeclareFontShape{TS1}{fun}{l}{sl}{
+   <-> funlo8c
+}{}
+
+\DeclareFontShape{TS1}{fun}{m}{it}{<->ssub * fun/m/sl}{}
+\DeclareFontShape{TS1}{fun}{bx}{n}{<->ssub * fun/b/n}{}
+\DeclareFontShape{TS1}{fun}{bx}{sl}{<->ssub * fun/b/sl}{}
+\DeclareFontShape{TS1}{fun}{b}{it}{<->ssub * fun/b/sl}{}
+\DeclareFontShape{TS1}{fun}{bx}{it}{<->ssub * fun/b/it}{}
+\DeclareFontShape{TS1}{fun}{l}{it}{<->ssub * fun/l/sl}{}
+
+\endinput

@@ -1,0 +1,42 @@
+\documentclass[11pt,twoside,twocolumn]{usgslatex/usgsreport}
+\usepackage{usgslatex/usgsfonts}
+\usepackage{usgslatex/usgsgeo}
+\usepackage{usgslatex/usgsreporta}
+\graphicspath{{./Figures/}}
+
+\renewcommand{\cooperator}
+{Deltares}
+\renewcommand{\reporttitle}
+{Parallel Krylov Solver for the \textusgs\ Modular Groundwater Flow Model (MODFLOW-2005)}
+\renewcommand{\coverphoto}{Cover.jpg}
+\renewcommand{\reportseries}{Techniques and Methods}
+\renewcommand{\reportnumber}{6-AXX}
+\renewcommand{\reportyear}{2014}
+
+
+\begin{document}
+\makefrontcover
+\makefrontmatter
+\pagestyle{body}
+\SECTION{Abstract}
+The U.S. Geological Survey
+\SECTION{Introduction}
+L-scale ($\lambda_2$) is $\sigma = \sqrt{\pi}\lambda_2$.
+Recently, Mr. LaTeX has summarized it.
+\SECTION{Major Section}
+\subsection{General Discussion}
+The number of stations summarized 
+\SECTION{Summary}
+Insert paragraphs here.
+\REFSECTION
+\begin{thebibliography}{9}
+\bibitem[Asquith(2006)]{AsquithGLD2006}
+Asquith, W.H., 2006, L- and TL-moments of the generalized lambda 
+distribution: Computational Statistics and Data Analysis, in
+press.
+\end{thebibliography}
+\vspace*{\fill}
+\clearpage
+\pagestyle{backofreport}
+\makebackcover
+\end{document}
