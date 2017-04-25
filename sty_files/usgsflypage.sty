@@ -36,6 +36,9 @@
 \newcommand{\flyfontsmall}
 {\fontsize{9pt}{11pt}\selectfont}
 
+\newcommand{\flyfonttiny}
+{\fontsize{5pt}{6pt}\selectfont}
+
 \newcommand{\makefly}{
 
    \setlength{\unitlength}{0.001in} % sets the unit lengths for the
@@ -53,7 +56,7 @@
                      \flyfontLARGE \MakeUppercase{\doisecretary},
                       Secretary \\[\baselineskip]
                      \flyfontLARGE \textbf{\textusgs} \\
-                     \flyfontLARGE \usgsdirector, Director}}
+                     \flyfontLARGE \usgsdirector, \usgsdirectortitle}}
    \end{picture}
           
    \noindent \begin{picture}(0,0)
@@ -71,29 +74,32 @@
     \noindent \begin{picture}(0,0)
       \put(0,-3060){\noindent \hspace*{\flyhspace}
          \parbox[t]{\flywidth}{\raggedright \flyfontsmall
-                               \usgsinfoproduct
-                               
-                               \medskip
-                               
                                \usgsinfo}}
-    \end{picture}
-
-
- \noindent \begin{picture}(0,0)
-      \put(0,-5000){\noindent \hspace*{\flyhspace} 
-        \parbox[t]{\flywidth}{\flyfontsmall \ReportCitation}}
     \end{picture}
 
 
 
     \noindent \begin{picture}(0,0)
-      \put(0,-5750){\noindent \hspace*{\flyhspace}
+      \put(0,-4600){\noindent \hspace*{\flyhspace}
          \parbox[t]{\flywidth}{\raggedright \flyfontsmall
                                \usgsdisclaimer
 
                                \medskip
           
                                \usgscopyright}}
+    \end{picture}
+
+
+ \noindent \begin{picture}(0,0)
+      \put(0,-5400){\noindent \hspace*{\flyhspace} 
+        \parbox[t]{\flywidth}{\flyfontsmall 
+                              \ReportCitation
+                              
+                              \medskip
+                              \medskip
+                              
+                              \flyfonttiny
+                              \usgsissncite}}
     \end{picture}
 
 
@@ -109,7 +115,7 @@
      
      \vfill
      
-     \dateoftypeset
+     %\dateoftypeset
      
      % this reversion back to medium is for safety. The
      % light declaration (\fontseries{l}\selectfont) placed

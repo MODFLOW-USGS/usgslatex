@@ -51,6 +51,8 @@
 
 \newcommand{\reportbodypages}{XXX}
 
+\newcommand{\reportversion}{}
+
 
 %\newcommand{\ReportWebSite}
 %{\textsl{\usgsalsoavail} \\
@@ -60,12 +62,12 @@
 {\textsl{Suggested citation:} \\
         \reportcitation}
 
-\newcommand{\reportwebsiteroot}{http://pubs.usgs.gov/}
+\newcommand{\reportwebsiteroot}{https://doi.org/10.3133/}
 
 \newcommand{\reportwebsiteremainder}{INSERT PATH HERE}
 
 \newcommand{\reportcitation}
-{{\RaggedRight \theauthorslastfirst, \reportyear, \citereporttitle: \textusgs\ \reportseries\ \reportnumber, \reportbodypages~p. \mbox{[\thinspace}\reportwebsiteroot\reportwebsiteremainder \mbox{\thinspace]}}}
+{{\RaggedRight \theauthorslastfirst, \reportyear, \citereporttitle: \textusgs\ \reportseries\ \reportnumber, \reportbodypages~p., \href{\reportwebsiteroot \reportwebsiteremainder}{\reportwebsiteroot \reportwebsiteremainder}.}}
 
 \newcommand{\reportcitingtheauthors}{} % such as Williams or
 % Asquith and others.  This command is used in the \backcoverlabel
@@ -84,6 +86,8 @@
 
 \newcommand{\usgsdirector}{Marcia K. McNutt}
 
+\newcommand{\usgsdirectortitle}{Director}
+
 \newcommand{\usgsforsale}
 {For sale by \textusgs, Information Services \\
 Box 25286, Denver Federal Center \\
@@ -100,9 +104,14 @@ Telephone: 1-888-ASK-USGS}
 
 
 \newcommand{\usgsinfo}
-{For more information on the \USGS---the Federal source for science about the Earth, its natural and living resources, natural hazards, and the environment:\\
-World Wide Web: http://www.usgs.gov \\
-Telephone: 1-888-ASK-USGS}
+{For more information on the USGS---the Federal source for science about the Earth, its natural and living 
+resources, natural hazards, and the environment---visit \href{https://www.usgs.gov}{https://www.usgs.gov} or call 1--888--ASK--USGS. \\
+
+\medspace
+\medspace
+
+For an overview of USGS information products, including maps, imagery, and publications, \\
+visit \href{https://store.usgs.gov/}{https://store.usgs.gov/}.}
 
 %\newcommand{\usgsinfo}
 %{For product and ordering information: \\
@@ -116,7 +125,10 @@ is for descriptive purposes only and does not imply endorsement
 by the U.S.~Government. \cooperatordisclaimer \\}
 
 \newcommand{\usgscopyright}
-{Although this report is in the public domain, permission must be secured from the individual copyright owners to reproduce any copyrighted materials contained within this report.\\}
+{Although this information product, for the most part, is in the public domain, it also may contain copyrighted materials as noted in the text. Permission to reproduce copyrighted items must be secured from the copyright owner.\\}
+
+\newcommand{\usgsissn}{ENTER ISSN NUMBER}
+\newcommand{\usgsissncite}{ISSN \usgsissn ~(online)}
 
 \newcommand{\usgsalsoavail}
 {Also available at: }
