@@ -555,14 +555,14 @@
    %\covercolor % set color of the cover page--typically not white
    
    %\AddToShipoutPictureBG*{\BackgroundPic}
-   \ThisTileWallPaper{\paperwidth}{\paperheight}{\coverphoto}
+   \ThisTileWallPaper{\paperwidth}{1.25\paperheight}{\coverphoto}
     
    \noindent
    \begin{picture}(0,0)
       %\put(0,0){\pictureorigin} % the origin
       \coverruleoddpage % banner across the top
       \visidcolor
-      \put(-25,37){ 
+      \put(-25,43){ 
          \fbox{\includegraphics[height=0.5in,
                 trim=1.37in 4.535in 1.437in 4.323in,
                 clip]{\USGSvisidname}}
@@ -703,7 +703,7 @@
          \coverruleevenpage
          \visidcolor
          \put(-118,25){\rule{\paperwidth}{0in} 
-            \fbox{\rotatebox[y=.3825in]{270}{
+            \fbox{\rotatebox[y=.4825in]{270}{
                \includegraphics[width=.5in,
                   trim=1.37in 5.05in 1.437in 4.323in,
                   clip]{\USGSvisidname}}
