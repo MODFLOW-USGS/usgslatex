@@ -128,7 +128,9 @@ by the U.S.~Government. \cooperatordisclaimer \\}
 {Although this information product, for the most part, is in the public domain, it also may contain copyrighted materials as noted in the text. Permission to reproduce copyrighted items must be secured from the copyright owner.\\}
 
 \newcommand{\usgsissn}{0000-0000}
-\newcommand{\usgsissncite}{ISSN \usgsissn ~(online)}
+\newcommand{\usgsissncite}{
+  \ifthenelse{\equal{\usgsissn}{}}{}{ISSN \usgsissn ~(online)}
+}
 
 \newcommand{\usgsalsoavail}
 {Also available at: }
