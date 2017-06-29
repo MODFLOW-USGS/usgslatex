@@ -2,6 +2,7 @@
 % to be used as part of a twosided, twocolumn Article document class
 % Author: William H. Asquith, Austin, Texas
 % Modified by: Joseph D. Hughes, Reston, Virginia
+% Modified by: Christian D. Langevin, Reston, Virginia
 %
 %
 %
@@ -573,11 +574,12 @@
 
    \rule[0in]{0in}{0.125in}
 
+   % Prepared in cooperation with ...
    \noindent
    \begin{picture}(0,0)
       \put(-25,13){\noindent 
          \parbox[b]{\textwidth}
-         {\normalsize \bfseries \sffamily
+         {\titlefontlarge \bfseries \sffamily
            \cooperationwith
          } \hspace*{\fill} % end the parbox
       } % end of the put
@@ -585,6 +587,7 @@
    
    \rule[0in]{0in}{0.25in}
 
+   % Title
    \noindent
    \begin{picture}(0,0)
       \put(-25,-75){\noindent
@@ -597,6 +600,27 @@
          } % end of the outer parbox
       } % end of the put
    \end{picture}
+
+   \rule[0in]{0in}{0.25in}
+
+
+   %add T&M chapter, section, and book info
+   \noindent
+   \begin{picture}(0,0)
+      \put(-25,-140){\noindent
+         \parbox[t]{\textwidth}
+            {\noindent
+             \parbox{\textwidth}
+                {\raggedright
+                 \Large \textsf{\tandmchap} \\
+                 \Large \textsf{\tandmsec} \\
+                 \titlefontLarge \bfseries \textsf{\tandmbook}
+                 \hspace*{\fill}
+                } % end the inner parbox
+         } % end of the outer parbox
+      } % end of the put
+   \end{picture}
+
         
    \color{white}
    \vspace*{\fill} % rubber space to fill in the setup
@@ -607,7 +631,7 @@
          \parbox[b]{\textwidth}
             {\noindent
              \parbox{\textwidth}
-                {\LARGE
+                {\huge
                  \textsf{\reportseries\ \reportnumber 
                          \cooperatorreportseries \\ \reportversion} \hspace*{\fill}
                 }
