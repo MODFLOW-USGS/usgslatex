@@ -688,10 +688,14 @@
       \put(-25,0){\noindent
          \parbox[b]{0.9\textwidth}
             {\colophontextsize \sffamily
+            
+             \ifdef{\customcolophon}{\customcolophon}{
              \productionstaff \\
              \colophoninfo    \\ \\ 
              \theoffice       \\
-             \theofficewebsite
+             \theofficewebsite}
+             
+             
             } % end of the parbox
       } % end of the put
    \end{picture}
