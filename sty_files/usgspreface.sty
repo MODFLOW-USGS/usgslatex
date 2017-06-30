@@ -27,11 +27,11 @@
   
   \ifthenelse{\equal{\preface}{}}{}{
     \section*{\prefacetitle}
-    {\prefacefontsize \textsf{\preface}}
+    {\RaggedRight \prefacefontsize \fontseries{l}\selectfont \textsf{\preface}}
     }
   \ifthenelse{\equal{\tocack}{}}{}{
     \section*{\tocacktitle}
-    {\prefacefontsize \textsf{\tocack}}
+    {\RaggedRight \prefacefontsize \fontseries{l}\selectfont \textsf{\tocack}}
     }
 
   \iftoggle{pora}{\newpage}{}

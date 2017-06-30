@@ -301,7 +301,6 @@
 \newcommand{\makefirstpagetop}
 { \twocolumn[\topfirstpage] % begin the mainmatter with 
    % the column spanning title of report and the authors
-
    \thispagestyle{plain}
    \fancypagestyle{plain}{\pagestyle{bodyplain}}
    \setcounter{page}{1} % ensure that page numbering begins
@@ -350,7 +349,7 @@
 % and \byauthors commands
 \newcommand{\makefrontmatter}{
    % the title page and the fly are hardwired for single line
-   % spacing even though the doucment might be built as double
+   % spacing even though the document might be built as double
    % spaced for review purposes
    \begin{spacing}{1} % begin single spacing environment
       \onecolumn % initiate one column production
@@ -632,6 +631,7 @@
             {\noindent
              \parbox{\textwidth}
                 {\huge
+                 \fontseries{l}\selectfont
                  \textsf{\reportseries\ \reportnumber 
                          \cooperatorreportseries \\ \reportversion} \hspace*{\fill}
                 }
