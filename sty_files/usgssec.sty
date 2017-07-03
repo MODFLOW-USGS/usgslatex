@@ -85,12 +85,14 @@
 \newlength{\paragraphsectionindentation}
 \setlength{\paragraphsectionindentation}{\parindent}
 
-
-
+%\newlength{\subparagraphbeforesep}
+%\setlength{\subparagraphbeforesep}{.5ex plus .25ex}
+%\newlength{\subparagraphaftersep}
+%\setlength{\subparagraphaftersep}{1em} % this is an indent for a runin
 \newlength{\subparagraphbeforesep}
-\setlength{\subparagraphbeforesep}{.5ex plus .25ex}
+\setlength{\subparagraphbeforesep}{13pt plus 2pt minus 2pt}
 \newlength{\subparagraphaftersep}
-\setlength{\subparagraphaftersep}{1em} % this is an indent for a runin
+\setlength{\subparagraphaftersep}{6pt plus 2pt minus 2pt}
 
 
 \titlespacing*{\section}{0em}
@@ -124,13 +126,14 @@
 {}{}{}[]
 
 \titleformat{\paragraph}[block]
-{\RaggedRight \usgsnormalsize \paragraphseries \sectionalfamily
-\hspace*{\paragraphsectionindentation}}
+{\RaggedRight \usgsnormalsize \paragraphseries \sectionalfamily}
+%\hspace*{\paragraphsectionindentation}}
 {}{}{}[]
 
-\titleformat{\subparagraph}[runin]
-{\small \subparagraphseries \sectionalfamily}
-{}{}{\hspace*{\paragraphsectionindentation}}[\quad]
+\titleformat{\subparagraph}[block]
+{\RaggedRight \usgsnormalsize \subparagraphseries \ltsffamily}
+{}{}{}[]
+%{}{}{\hspace*{\paragraphsectionindentation}}[\quad]
 
 % ======================================================
 % SETUP THE HANDLING FOR APPENDIX SECTIONS
