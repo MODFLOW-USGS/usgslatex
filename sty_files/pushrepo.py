@@ -1,4 +1,5 @@
 import os
+import sys
 import shutil
 
 def find_path():
@@ -31,7 +32,7 @@ def find_path():
     
     return distpth
     
-def update_files(distpth):
+def update_files(distpth, dryrun=False):
     success = False
     
     valid_ext = ['.sty', '.cls']
@@ -52,14 +53,21 @@ def update_files(distpth):
                     cpy = True    
             else:
                 cpy = True
-            if cpy:
-                shutil.copy(fpth, distpth)
+            if not dryrun:
+                if cpy:
+                    shutil.copy(fpth, distpth)
             
             
 
 
 if __name__ == "__main__":
+    dryrun = False
+    for idx, arg in enumerate(sys.argv):
+        if arg.lower() == '--dryrun':
+            if len(sys.argv) > idx + 1:
+                dryrun = True
+                print('will perform dryrun')
     distpth = find_path()
     if distpth is not None:
         print('moving updated files to...\n  {}'.format(distpth))
-        success = update_files(distpth)
+        success = update_files(distpth, dryrun=dryrun)
