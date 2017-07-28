@@ -34,6 +34,9 @@ def find_path():
     
 def update_files(distpth, dryrun=False):
     success = False
+    dstint = os.path.join('..', 'installation_files', 'texmf-local', 
+                          'tex', 'latex', 'usgslatexdist', 'latex', 
+                          'usgslatex')
     
     valid_ext = ['.sty', '.cls']
     files = [f for f in os.listdir('.') if os.path.isfile(f)]
@@ -56,6 +59,8 @@ def update_files(distpth, dryrun=False):
             if not dryrun:
                 if cpy:
                     shutil.copy(fpth, distpth)
+                    shutil.copy(fpth, dstint)
+                    
             
             
 

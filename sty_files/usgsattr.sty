@@ -71,8 +71,14 @@
 
 \newcommand{\reportwebsiteremainder}{INSERT PATH HERE}
 
+\newcommand{\reportcitationnumber}{}
+
 \newcommand{\reportcitation}
+%{{\RaggedRight \theauthorslastfirst, \reportyear, \citereporttitle: \textusgs\ \reportseries\ \reportcitationnumber, \reportbodypages~p., \href{\reportwebsiteroot \reportwebsiteremainder}{\reportwebsiteroot \reportwebsiteremainder}.}}
+{\ifthenelse{\equal{\reportcitationnumber}{}}
 {{\RaggedRight \theauthorslastfirst, \reportyear, \citereporttitle: \textusgs\ \reportseries\ \reportnumber, \reportbodypages~p., \href{\reportwebsiteroot \reportwebsiteremainder}{\reportwebsiteroot \reportwebsiteremainder}.}}
+{{\RaggedRight \theauthorslastfirst, \reportyear, \citereporttitle: \textusgs\ \reportseries, \reportcitationnumber, \reportbodypages~p., \href{\reportwebsiteroot \reportwebsiteremainder}{\reportwebsiteroot \reportwebsiteremainder}.}}
+}
 
 \newcommand{\reportcitingtheauthors}{} % such as Williams or
 % Asquith and others.  This command is used in the \backcoverlabel
@@ -87,9 +93,9 @@
 
 \newcommand{\doi}{U.S.~Department of the Interior}
 
-\newcommand{\doisecretary}{Ken Salazar}
+\newcommand{\doisecretary}{Ryan K. Zinke}
 
-\newcommand{\usgsdirector}{Marcia K. McNutt}
+\newcommand{\usgsdirector}{William H. Werkheiser}
 
 \newcommand{\usgsdirectortitle}{Director}
 
