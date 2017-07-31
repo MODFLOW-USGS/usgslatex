@@ -164,12 +164,18 @@ by the U.S.~Government. \cooperatordisclaimer \\}
 
 \newcommand{\coverphoto}{}
 
+% This is the label that runs along the spine and is shown on
+% the back page of an online report.
 \newcommand{\backcoverlabel}
+{\ifthenelse{\equal{\reportnumber}{}}
+{
+\reportcitingtheauthors---
+\textbf{\reporttitle}
+}
 {\reportcitingtheauthors---
 \textbf{\reporttitle}---
 \reportseries\ \reportnumber}
-% This is the label that runs along the spine and is shown on
-% the back page of an online report.
+}
 
 \newcommand{\thePSC}{} % production facility
 
