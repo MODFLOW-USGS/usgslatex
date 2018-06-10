@@ -19,13 +19,27 @@ William H. Asquith in the Texas Water Science Center developed the USGS Style fi
 
 \section*{\textsf{Installation Location}}
 
-If you installed \TeX/\LaTeX \hspace{1pt} using a standard installation of the \TeX Live distribution your local \TeX \hspace{1pt} tree is located at:
+If you installed \TeX/\LaTeX \hspace{1pt} using a standard installation of the \TeX Live distribution your local \TeX \hspace{1pt} tree can be determined using:
+
+\begin{verbatim}
+  kpsewhich -var-value TEXMFHOME
+\end{verbatim}
+
+\noindent which will return something like the following:
+
+\begin{verbatim}
+  /Users/jdhughes/Library/texmf
+\end{verbatim}
+
+\noindent Typical locations of the local \TeX \hspace{1pt} tree are:
 
 \begin{verbatim}
   Windows
     $TEXROOT=C:/texlive/texmf-local
 
-  MacOSX - may vary slightly
+  MacOSX
+    $TEXROOT=/Users/userid/Library/textmf
+                OR
     $TEXROOT=/sw/share/tex-local
                 OR
     $TEXROOT=/usr/local/texlive/tex-local
@@ -64,7 +78,7 @@ Otherwise type the following command:
   xcopy dvips /t /e $TEXROOT/
 \end{verbatim}
 
-Basically, the map file is copied to some sort of \texttt{dvips} directory. The exact location is not critical since you will tell \TeX\ how to find it. Finally, rebuild the hash tables for the file locations using the following program as \texttt{ROOT} (on MacOSX and Linux).
+Basically, the map file is copied to some sort of \texttt{dvips} directory. The exact location is not critical since you will tell \TeX\ how to find it. Finally, rebuild the hash tables for the file locations using the following \TeX Live utilities as \texttt{ROOT/sudo} (on MacOSX and Linux).
 
 Open another terminal in \texttt{\$TEXROOT/dvips/funivers/} and type:
 
@@ -74,7 +88,7 @@ Open another terminal in \texttt{\$TEXROOT/dvips/funivers/} and type:
 
 \noindent and then enable \texttt{dvips} to see the \texttt{funivers.map} file by typing:
 \begin{verbatim}
-  updmap --enable Map=funivers.map
+  updmap -sys --enable Map=funivers.map
 \end{verbatim}
 
 and then type:
@@ -85,6 +99,20 @@ and then type:
 
 
 \section*{\textsf{Testing}}
+
+Make sure the USGS Style files are available using:
+
+\begin{verbatim}
+  kpsewhich usgsreporta.sty
+\end{verbatim}
+
+\noindent which should return something like the following:
+
+\begin{verbatim}
+  /Users/jdhughes/Library/texmf/tex/latex/usgslatexdist/latex/usgslatex/usgsreporta.sty
+\end{verbatim}
+
+\noindent If nothing is returned the USGS Style files have not been correctly installed.
 
 The directory \texttt{test} contains \texttt{testunivers.tex} and \texttt{USGSLaTex.tex} test \TeX \hspace{1pt} files. 
 
@@ -99,7 +127,7 @@ A simple example for using the \LaTeX\ \hspace{1pt} USGS style files is included
 On \texttt{MacOSX}, an existing installation can be updated by:
 
 \begin{enumerate}
-	\item Moving the existing installation (for example, texttt{/usr/local/texlive/2014/}) to the trash.
+	\item Moving the existing installation (for example, \texttt{/usr/local/texlive/2014/}) to the trash.
 	\item Move all existing \LaTeX\ software (for example, \texttt{TeXShop}) to the trash.
 	\item Empty trash
 	\item Install the new distribution
@@ -109,10 +137,10 @@ On \texttt{MacOSX}, an existing installation can be updated by:
 		\item Install the \texttt{graphics-def} package if it is not installed
 		\item Update all installed packages
 	\end{enumerate}
-	\item Open a terminal in \texttt{\$TEXROOT/dvips/funivers/} and type the following with \texttt{ROOT} privileges to allow the new version of \LaTeX\ to access the Univers Condensed Font library
+	\item Open a terminal in \texttt{\$TEXROOT/dvips/funivers/} and type the following with \texttt{ROOT/sudo} privileges to allow the new version of \LaTeX\ to access the Univers Condensed Font library
 	\begin{enumerate}
 		\item \texttt{texhash}
-		\item \texttt{updmap --enable Map=funivers.map}
+		\item \texttt{updmap -sys --enable Map=funivers.map}
 		\item \texttt{updmap-sys}
 	\end{enumerate}
 	
