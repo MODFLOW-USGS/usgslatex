@@ -97,6 +97,39 @@ and then type:
   updmap-sys
 \end{verbatim}
 
+UPDATE FOR MAC INSTALL (11/15/2018): I had issues with the previous installation instructions due to permissions problems but was able to get everything installed using the following procedure.  These instructions worked with the 2018 version of Mactex.
+
+\begin{itemize}
+
+\item Install the Mactex version of \LaTeX\ using all of the default settings.  I did the installation as myself, without privileged access, but during the installation I was prompted for an account and password with installation privileges.  This is needed because on a mac, many of the files go into \texttt{/usr/local/texlive} and into the \texttt{Applications} directory.
+
+\item Open a terminal window in the following location: \texttt{usgslatex/installation\_files/texmf-local}.
+
+\item From within \texttt{usgslatex/installation\_files/texmf-local}, issue the following commands, which copy the font and \LaTeX\ files into a user folder.  Obviously, you'll need to adjust the path below to use your user id.
+\begin{verbatim}
+  TEXROOT=/Users/langevin/Library/texmf
+  cp -R fonts $TEXROOT/.
+  cp -R tex $TEXROOT/.
+  cp -R dvips $TEXROOT/.
+\end{verbatim}
+
+\item The next step is to change the permissions of the \texttt{usr/local/texlive} folder so that the USGS fonts installed in TEXROOT can be installed.  I did this by logging into a terminal window with a privileged account and then changing directories to \texttt{/usr/local}.  From there I issued the command:
+\begin{verbatim}
+   sudo chmod -R 777 texlive
+\end{verbatim}
+This gives all users full read-write access to this folder.  I couldn't find any other way for the rest of the installation to proceed without doing this step.
+
+\item Finally, with your user account, open a terminal window in \texttt{\$TEXROOT/dvips/funivers}.  From here issues the following two commands.
+
+\begin{verbatim}
+  updmap -sys --enable Map=funivers.map
+  kpsewhich usgsreporta.sty
+\end{verbatim}
+
+\item At this point, the USGS style files were correctly installed and the Universe font was available. 
+
+\end{itemize}
+
 
 \section*{\textsf{Testing}}
 
