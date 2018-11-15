@@ -23,7 +23,7 @@
 \addtolength{\titlepagewidth}{-\titlepagehspace}
 
 \newlength{\titlepageskipTOauthors}
-\setlength{\titlepageskipTOauthors}{0.2775in}
+\setlength{\titlepageskipTOauthors}{0.3775in}
 
 \newcommand{\titlefontfamilyA}
 {\sffamily}
@@ -59,8 +59,14 @@
          \parbox[t]{\titlepagewidth}
                    {\raggedright \titlefonthuge \bfseries
                     \pagereporttitle \\[\titlepageskipTOauthors]
-                   {\mdseries \titlefontlarge By \theauthors}}}
+                   {\mdseries \titlefontlarge \byauthors}}}
 
+      \put(0,-2200){\noindent \hspace*{\titlepagehspace}
+         \parbox[t]{\titlepagewidth}
+                   {\titlefontlarge \textsf{\tandmchap} \\
+                    \large \textsf{\tandmsec} \\
+                    \titlefontLarge \bfseries \textsf{\tandmbook} }}
+              
       \put(0,-6345){\noindent \hspace*{\titlepagehspace}
          \parbox[t]{\titlepagewidth}
                    {\titlefontlarge \cooperationwith}}

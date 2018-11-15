@@ -14,7 +14,7 @@
 \newcommand{\prefacetitle}{Preface}
 \newcommand{\preface}{}
 
-\newcommand{\tocacktitle}{Acknowledgements}
+\newcommand{\tocacktitle}{Acknowledgments}
 \newcommand{\tocack}{}
 
 \newcommand{\makepreface}
@@ -27,11 +27,11 @@
   
   \ifthenelse{\equal{\preface}{}}{}{
     \section*{\prefacetitle}
-    {\prefacefontsize \preface}
+    {\RaggedRight \prefacefontsize \fontseries{l}\selectfont \textsf{\preface}}
     }
   \ifthenelse{\equal{\tocack}{}}{}{
     \section*{\tocacktitle}
-    {\prefacefontsize \tocack}
+    {\RaggedRight \prefacefontsize \fontseries{l}\selectfont \textsf{\tocack}}
     }
 
   \iftoggle{pora}{\newpage}{}
