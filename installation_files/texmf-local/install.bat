@@ -1,3 +1,5 @@
+# Install script must be run from same drive
+# as TEXROOT.  I learned this the hard way...
 set TEXROOT=C:\texlive\texmf-local
 echo TEXROOT=%TEXROOT%
 
