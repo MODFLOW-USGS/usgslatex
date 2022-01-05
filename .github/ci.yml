@@ -7,6 +7,9 @@ on:
     branches:
       - main
       - develop
+  pull_request:
+    branches:
+      - develop
 
 jobs:
   build_for_os:
@@ -60,7 +63,7 @@ jobs:
                    print("\n\nError condition occurred:\n")
                    stderr = stderr.decode()
                    print(stderr)
-   
+
    - name: Upload additional Build Artifacts
      uses: actions/upload-artifact@v2
      with:
