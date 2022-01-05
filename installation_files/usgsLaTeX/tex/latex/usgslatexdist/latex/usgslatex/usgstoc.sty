@@ -19,8 +19,8 @@
 \newcommand{\usgstocLarge}{\fontsize{20}{20.8000}\selectfont}
 \newcommand{\usgstoclarge}{\fontsize{16}{16.6399}\selectfont}
 % Declare the names of the table of contents section headings
-% See p. 441 of Guide to LaTeX 
-% The trailing comments show the default names for these 
+% See p. 441 of Guide to LaTeX
+% The trailing comments show the default names for these
 \renewcommand{\contentsname}{\usgstocLarge Contents} % 'Contents' in English already
 \renewcommand{\listfigurename}{\usgstoclarge Figures} % 'List of Figures'
 \renewcommand{\listtablename}{\usgstoclarge Tables} % 'List of Tables'
@@ -29,7 +29,7 @@
 % of settings of the larger document
 
 
-% this command can be used to "insert" a line break into a 
+% this command can be used to "insert" a line break into a
 % toc entry and be compatible with the hyperref package
 % One can not pass a \protect\linebreak as this does not work
 % with hyperref, but one can place alot of optional space followed
@@ -48,15 +48,15 @@
 % indent from, actually space added to end of each line of an entry
 % except the last one.  This backs the text away from the page number
 % on multiline entry. However, some quicks then require the hack
-% of the \secentryformat command to help. A ragged right edge 
-% seems to work fine, users might have to tweak 
+% of the \secentryformat command to help. A ragged right edge
+% seems to work fine, users might have to tweak
 % \contentsmargincorrection or add strategic \newline commands to
 % the entries. Problem entries typeset like this
-% 15. My figure caption My figure caption My figure caption 
-%     My figure caption My figure caption My figure caption 
+% 15. My figure caption My figure caption My figure caption
+%     My figure caption My figure caption My figure caption
 %     89
 % where 89 is the page number, the correct appearance should be
-% 15. My figure caption My figure caption My figure caption 
+% 15. My figure caption My figure caption My figure caption
 %     My figure caption My figure caption My figure caption .... 89
 \setlength{\contentsmarginrightsep}{4ex} % space for page number
 % setup the contents margin
@@ -238,7 +238,7 @@
 \newcommand{\titlerulechar}{.} % use a dot for the \titlerule
 % add a space before first character in the rule
 
-% Sections and subsections in USGS reports generally don't 
+% Sections and subsections in USGS reports generally don't
 % have a label. So the \contentslabel portion of the \titlecontents
 % for these is not triggered.  See the {} argument--nothing
 % happens.
@@ -282,7 +282,7 @@
   \titlerule*[\titleruledotspace]{\titlerulechar}\contentspage}
   [\addvspace{\subparagraphpostvspace}]
 
-     
+
 \titlecontents{figure}[\figureindent]
 {\addvspace{\figurepriorvspace}}
   {\thefigurelabelformat}
@@ -303,9 +303,9 @@
 % BROKEN QUITE EASILY.
 % Do not add extra spaces or take them away for readability of code.
 %
-% The following provides handling of variable indentation of 
+% The following provides handling of variable indentation of
 % figure or table as per the USGS style like the following
- 
+
 \newlength{\insertlofbeforesep}
 \setlength{\insertlofbeforesep}{1ex}
 \newlength{\insertlofaftersep}
@@ -318,7 +318,7 @@
 
 % INSERTION FORMAT A
 % Begin by rescaling the \figureindent by \InsertLOFindentfactor.
-% Then insert extra vertical space. A blank line in the code is 
+% Then insert extra vertical space. A blank line in the code is
 % then needed.  Ideally the original \figureindent is preserved in
 % the \figureindentDefault. Next, we add to the lof a nonindented
 % hspace of \InsertLOFnoteindentfactor * default figureindent.
@@ -344,8 +344,8 @@
 
 \newcommand{\BEGINinsertlofcontentsformatB}[3]%
 {\addtocontents{lof}{\protect\setlength\figureindent{\InsertLOFindentfactor\figureindentDefault}}
- \addtocontents{lof}{\protect\addvspace{\insertlofbeforesep}}  
- 
+ \addtocontents{lof}{\protect\addvspace{\insertlofbeforesep}}
+
  \addtocontents{lof}
  {\noindent\hspace{\InsertLOFnoteindentfactor\figureindentDefault}\protect\makebox[0pt]
  [r]{{\protect\makebox[\figurelabelspace]
@@ -365,4 +365,3 @@
 }
 
 \endinput
-

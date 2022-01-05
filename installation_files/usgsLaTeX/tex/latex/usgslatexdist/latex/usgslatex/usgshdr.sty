@@ -32,7 +32,7 @@
 \setlength{\firstpagerulewidth}{0pt}
 
 % The following commands can be useful if you need to impose
-% exact font sizes. I am a little unsure in handling of 
+% exact font sizes. I am a little unsure in handling of
 % display font sizes as the body could be in 10pt or 11pt.
 %
 %
@@ -55,6 +55,22 @@
 \fancypagestyle{fly}{
    \fancyhead{} % clear header fields
    \fancyfoot{} % clear footer fields
+   \renewcommand\headrulewidth{0pt}
+   \renewcommand\footrulewidth{0pt}
+}
+\fancypagestyle{preface}{
+   \fancyhead{} % clear header fields
+   \fancyfoot{} % clear footer fields
+   \fancyhead[RO]{\textbf{\textsf{\headerfontsize \rightmark \quad \thepage}}}
+   \fancyhead[LE]{\textbf{\textsf{\headerfontsize \thepage}}}
+   \renewcommand\headrulewidth{0pt}
+   \renewcommand\footrulewidth{0pt}
+}
+\fancypagestyle{tocpages}{
+   \fancyhead{} % clear header fields
+   \fancyfoot{} % clear footer fields
+   \fancyhead[RO]{\textbf{\textsf{\headerfontsize \rightmark \quad \thepage}}}
+   \fancyhead[LE]{\textbf{\textsf{\headerfontsize \thepage}}}
    \renewcommand\headrulewidth{0pt}
    \renewcommand\footrulewidth{0pt}
 }

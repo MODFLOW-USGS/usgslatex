@@ -19,12 +19,13 @@
 
 \newcommand{\makepreface}
 {
+  \pagestyle{preface}
   \newtoggle{pora}
   \togglefalse{pora}
   \ifthenelse{\equal{\preface}{}}{}{\toggletrue{pora}}
   \ifthenelse{\equal{\tocack}{}}{\toggletrue{pora}}{}
   \iftoggle{pora}{\newpage}{}
-  
+
   \ifthenelse{\equal{\preface}{}}{}{
     \section*{\prefacetitle}
     {\RaggedRight \prefacefontsize \fontseries{l}\selectfont \textsf{\preface}}
@@ -36,7 +37,7 @@
 
   \iftoggle{pora}{\newpage}{}
 
-  %\newpage 
+  %\newpage
   %\section*{\prefacetitle}
   %{\prefacefontsize \preface}
   %\newpage
