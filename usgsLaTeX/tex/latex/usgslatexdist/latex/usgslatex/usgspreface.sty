@@ -1,0 +1,52 @@
+% Auxillary package for usgs reports by William H. Asquith
+%------------------------ indentifcation ------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{usgspreface}[2016/12/15]
+%------------------------ initial code --------------------
+%------------------------ declaration of options ----------
+%------------------------ execution of options
+\ProcessOptions \relax
+%------------------------ package loading -----------------
+%------------------------ main code -----------------------
+\typeout{COMMANDS CONTROLLING THE PREFACE SECTION IN USGS REPORTS}
+
+\newcommand{\prefacefontsize}{\normalsize}
+\newcommand{\prefacetitle}{Preface}
+\newcommand{\preface}{}
+
+\newcommand{\tocacktitle}{Acknowledgments}
+\newcommand{\tocack}{}
+
+\newcommand{\makepreface}
+{
+  \pagestyle{preface}
+  \newtoggle{pora}
+  \togglefalse{pora}
+  \ifthenelse{\equal{\preface}{}}{}{\toggletrue{pora}}
+  \ifthenelse{\equal{\tocack}{}}{\toggletrue{pora}}{}
+  \iftoggle{pora}{\newpage}{}
+
+  \ifthenelse{\equal{\preface}{}}{}{
+    \section*{\prefacetitle}
+    {\RaggedRight \prefacefontsize \fontseries{l}\selectfont \textsf{\preface}}
+    }
+  \ifthenelse{\equal{\tocack}{}}{}{
+    \section*{\tocacktitle}
+    {\RaggedRight \prefacefontsize \fontseries{l}\selectfont \textsf{\tocack}}
+    }
+
+  \iftoggle{pora}{\newpage}{}
+
+  %\newpage
+  %\section*{\prefacetitle}
+  %{\prefacefontsize \preface}
+  %\newpage
+}
+
+
+\endinput
+
+%\renewcommand{\preface}{Here is some discussion of
+% those involved.
+%
+%And an second paragraph is needed to discuss the rest of the team.}
