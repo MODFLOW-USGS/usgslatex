@@ -33,9 +33,9 @@ jobs:
       - name: Install USGS LaTeX style files and Univers font
         working-directory: ./usgsLaTeX
         run: |
-          install.sh
+          ./install.sh
 
-      - name: List files in /root/texmf/tex/latex/usgslatex/
+      - name: List files in local LaTeX directory
         working-directory: /root/texmf/tex/latex/usgslatex/
         run: |
           ls -la
