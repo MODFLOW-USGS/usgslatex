@@ -44,36 +44,40 @@ jobs:
       - name: Build test LaTeX document
         shell: python
         run: |
+          import os
           import sys
           import subprocess
 
           ws = "./test/"
-          bibnam = "USGSLaTeX"
-          texnam = bibnam + ".tex"
-          cmds = [
-                  ["pdflatex", texnam],
-                  ["bibtex", bibnam],
-                  ["pdflatex", texnam],
-                  ["pdflatex", texnam],
-                 ]
-          for cmd in cmds:
-              print("running command...'{}'".format(" ".join(cmd)))
-              with subprocess.Popen(cmd,
-                                    stdout=subprocess.PIPE,
-                                    stderr=subprocess.STDOUT,
-                                    cwd=ws) as process:
-                  stdout, stderr = process.communicate(timeout=10)
-                  if stdout:
-                      stdout = stdout.decode()
-                      print(stdout)
-                  if stderr:
-                      print("\n\nError condition occurred:\n")
-                      stderr = stderr.decode()
-                      print(stderr)
+          for bibnam in ("USGSLaTeX", "testunivers",):
+              texnam = bibnam + ".tex"
+              cmds = [
+                      ["pdflatex", texnam],
+                      ["bibtex", bibnam],
+                      ["pdflatex", texnam],
+                      ["pdflatex", texnam],
+                     ]
+              for cmd in cmds:
+                  print(f"running command...'{" ".join(cmd)}'")
+                  with subprocess.Popen(cmd,
+                                        stdout=subprocess.PIPE,
+                                        stderr=subprocess.STDOUT,
+                                        cwd=ws) as process:
+                      stdout, stderr = process.communicate(timeout=10)
+                      if stdout:
+                          stdout = stdout.decode()
+                          print(stdout)
+                      if stderr:
+                          print("\n\nError condition occurred:\n")
+                          stderr = stderr.decode()
+                          print(stderr)
+              file_name = f"{bibnam}.pdf"
+              assert os.path.isfile(file_name), f"{file_name}...does not exist"
 
-      - name: Upload additional Build Artifacts
+      - name: Upload Build Artifacts
         uses: actions/upload-artifact@v2
         with:
           name: test
           path: |
-            ./test/USGSLaTex.pdf
+            ./test/USGSLaTeX.pdf
+            ./test/testunivers.pdf
