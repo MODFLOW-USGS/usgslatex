@@ -18,8 +18,6 @@ fi
 
 echo "LaTeX home directory:  " $TEXLOCAL
 
-exit 1
-
 echo "Making a few directories if they do not exist..."
 mkdir -p $TEXLOCAL/fonts
 mkdir -p $TEXLOCAL/tex

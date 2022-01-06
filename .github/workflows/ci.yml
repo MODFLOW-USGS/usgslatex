@@ -34,12 +34,12 @@ jobs:
         working-directory: ./usgsLaTeX
         run: |
           sudo ./install.sh --all-users
-#
-#      - name: List files in local LaTeX directory
-#        run: |
-#          sudo ls -la /root/texmf/tex/latex/usgslatexdist/
-#          sudo ls -la /root/texmf/tex/latex/usgslatexdist/visid_graphics/
-#          sudo ls -la /root/texmf/tex/latex/usgslatexdist/latex/usgslatex/
+
+      - name: List files in local LaTeX directory
+        run: |
+          sudo ls -la /usr/local/share/texmf/tex/latex/usgslatexdist/
+          sudo ls -la /usr/local/share/texmf/tex/latex/usgslatexdist/visid_graphics/
+          sudo ls -la /usr/local/share/texmf/tex/latex/usgslatexdist/latex/usgslatex/
 
       - name: Build test LaTeX document
         shell: python
