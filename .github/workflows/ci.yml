@@ -58,7 +58,7 @@ jobs:
                       ["pdflatex", texnam],
                      ]
               for cmd in cmds:
-                  print(f"running command...'{" ".join(cmd)}'")
+                  print("running command...'{}'".format(" ".join(cmd)))
                   with subprocess.Popen(cmd,
                                         stdout=subprocess.PIPE,
                                         stderr=subprocess.STDOUT,
