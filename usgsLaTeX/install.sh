@@ -3,29 +3,29 @@
 # run as sudo
 
 CURRENT=`pwd`
-echo "\nCurrent directory:\n  " $CURRENT
+echo "Current directory:  " $CURRENT
 
 TEXROOT=`kpsewhich -var-value TEXMFHOME`
-echo "\nLaTeX home directory:\n  " $TEXROOT
+echo "LaTeX home directory:  " $TEXROOT
 
-echo "\nmaking a few directories if they do not exist..."
+echo "making a few directories if they do not exist..."
 mkdir -p $TEXROOT/fonts
 mkdir -p $TEXROOT/tex
 mkdir -p $TEXROOT/dvips
 
-echo "\ncopying USGS LaTeX style files..."
+echo "copying USGS LaTeX style files..."
 cp -R fonts $TEXROOT/.
 cp -R tex $TEXROOT/.
 cp -R dvips $TEXROOT/.
 
-echo "\ninstalling Univers font..."
+echo "installing Univers font..."
 cd $TEXROOT/dvips/funivers
 texhash
 updmap -sys --enable Map=funivers.map
 updmap-sys
 
-echo "\nreturning to the starting directory:\n  " $CURRENT
+echo "returning to the starting directory:  " $CURRENT
 cd $CURRENT
 
 LOCATION=`kpsewhich usgsreporta.sty`
-echo "\nLocation of USGS LaTeX style files:\n  " $LOCATION
+echo "Location of USGS LaTeX style files:  " $LOCATION
