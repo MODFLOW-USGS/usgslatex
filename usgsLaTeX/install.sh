@@ -2,25 +2,23 @@
 
 # run as sudo
 
+LOCAL=${1:-local}
+echo "Installation option:  " $LOCAL
+
 CURRENT=`pwd`
 echo "Current directory:  " $CURRENT
 
-CI=${CI:-default}
-echo "CI:  " $CI
-
-if [[ $CI == "default" ]]; then
-    echo "Installing for current user"
-    TEXLOCAL=`kpsewhich -var-value TEXMFHOME`
-else
+if [[ $LOCAL == "--all-users" ]]; then
     echo "Installing for all users"
     TEXLOCAL=`kpsewhich -var-value TEXMFLOCAL`
+else
+    echo "Installing for current user"
+    TEXLOCAL=`kpsewhich -var-value TEXMFHOME`
 fi
-#echo "Installing for all users"
-#TEXLOCAL=`kpsewhich -var-value TEXMFLOCAL`
-#echo "Installing for current user"
-#TEXLOCAL=`kpsewhich -var-value TEXMFHOME`
 
 echo "LaTeX home directory:  " $TEXLOCAL
+
+exit 1
 
 echo "Making a few directories if they do not exist..."
 mkdir -p $TEXLOCAL/fonts
