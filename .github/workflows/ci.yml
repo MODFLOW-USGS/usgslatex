@@ -37,7 +37,7 @@ jobs:
 
       - name: List files in local LaTeX directory
         run: |
-          ls -la /home/runner/texmf/tex/latex/usgslatex/
+          ls -la /root/texmf/tex/latex/usgslatexdist/latex/usgslatex/
 
       - name: Build mf6io latex document
         shell: python
