@@ -5,26 +5,34 @@
 CURRENT=`pwd`
 echo "Current directory:  " $CURRENT
 
-TEXROOT=`kpsewhich -var-value TEXMFHOME`
-echo "LaTeX home directory:  " $TEXROOT
+if [ "$CI" == "true" ]
+then
+    echo "Installing for all users"
+    TEXLOCAL=`kpsewhich -var-value TEXMFLOCAL`
+else
+    echo "Installing for current user"
+    TEXLOCAL=`kpsewhich -var-value TEXMFHOME`
+fi
+
+echo "LaTeX home directory:  " $TEXLOCAL
 
 echo "Making a few directories if they do not exist..."
-mkdir -p $TEXROOT/fonts
-mkdir -p $TEXROOT/tex
-mkdir -p $TEXROOT/dvips
+mkdir -p $TEXLOCAL/fonts
+mkdir -p $TEXLOCAL/tex
+mkdir -p $TEXLOCAL/dvips
 
 echo "Copying USGS LaTeX style files..."
-cp -R fonts $TEXROOT/.
-cp -R tex $TEXROOT/.
-cp -R dvips $TEXROOT/.
+cp -R fonts $TEXLOCAL/.
+cp -R tex $TEXLOCAL/.
+cp -R dvips $TEXLOCAL/.
 
 echo "Installing Univers font..."
-cd $TEXROOT/dvips/funivers
+cd $TEXLOCAL/dvips/funivers
 updmap --sys --enable Map=funivers.map
 updmap-sys
 
 echo "Rebuild ls-R filename databases used by TeX..."
-texhash --verbose $TEXROOT
+texhash --verbose $TEXLOCAL
 
 echo "Returning to the starting directory:  " $CURRENT
 cd $CURRENT

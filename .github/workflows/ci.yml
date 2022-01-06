@@ -34,50 +34,42 @@ jobs:
         working-directory: ./usgsLaTeX
         run: |
           sudo ./install.sh
-
-      - name: List files in local LaTeX directory
-        run: |
-          sudo ls -la /root/texmf/tex/latex/usgslatexdist/
-          sudo ls -la /root/texmf/tex/latex/usgslatexdist/visid_graphics/
-          sudo ls -la /root/texmf/tex/latex/usgslatexdist/latex/usgslatex/
-
-      - name: Build test latex document
-        working-directory: ./test
-        run: |
-          sudo pdflatex USGSLaTeX.tex
-          sudo bibtex USGSLaTeX
-          sudo pdflatex USGSLaTeX.tex
-          sudo pdflatex USGSLaTeX.tex
-
-#      - name: Build mf6io latex document
-#        shell: python
-#        run: |
-#          import sys
-#          import subprocess
 #
-#          ws = "./test/"
-#          bibnam = "USGSLaTeX"
-#          texnam = bibnam + ".tex"
-#          cmds = [
-#                  ["pdflatex", texnam],
-#                  ["bibtex", bibnam],
-#                  ["pdflatex", texnam],
-#                  ["pdflatex", texnam],
-#                 ]
-#          for cmd in cmds:
-#              print("running command...'{}'".format(" ".join(cmd)))
-#              with subprocess.Popen(cmd,
-#                                    stdout=subprocess.PIPE,
-#                                    stderr=subprocess.STDOUT,
-#                                    cwd=ws) as process:
-#                  stdout, stderr = process.communicate(timeout=10)
-#                  if stdout:
-#                      stdout = stdout.decode()
-#                      print(stdout)
-#                  if stderr:
-#                      print("\n\nError condition occurred:\n")
-#                      stderr = stderr.decode()
-#                      print(stderr)
+#      - name: List files in local LaTeX directory
+#        run: |
+#          sudo ls -la /root/texmf/tex/latex/usgslatexdist/
+#          sudo ls -la /root/texmf/tex/latex/usgslatexdist/visid_graphics/
+#          sudo ls -la /root/texmf/tex/latex/usgslatexdist/latex/usgslatex/
+
+      - name: Build test LaTeX document
+        shell: python
+        run: |
+          import sys
+          import subprocess
+
+          ws = "./test/"
+          bibnam = "USGSLaTeX"
+          texnam = bibnam + ".tex"
+          cmds = [
+                  ["pdflatex", texnam],
+                  ["bibtex", bibnam],
+                  ["pdflatex", texnam],
+                  ["pdflatex", texnam],
+                 ]
+          for cmd in cmds:
+              print("running command...'{}'".format(" ".join(cmd)))
+              with subprocess.Popen(cmd,
+                                    stdout=subprocess.PIPE,
+                                    stderr=subprocess.STDOUT,
+                                    cwd=ws) as process:
+                  stdout, stderr = process.communicate(timeout=10)
+                  if stdout:
+                      stdout = stdout.decode()
+                      print(stdout)
+                  if stderr:
+                      print("\n\nError condition occurred:\n")
+                      stderr = stderr.decode()
+                      print(stderr)
 
       - name: Upload additional Build Artifacts
         uses: actions/upload-artifact@v2
