@@ -71,7 +71,7 @@ jobs:
                           print("\n\nError condition occurred:\n")
                           stderr = stderr.decode()
                           print(stderr)
-              file_name = f"{bibnam}.pdf"
+              file_name = os.path.join(ws, f"{bibnam}.pdf")
               assert os.path.isfile(file_name), f"{file_name}...does not exist"
 
       - name: Upload Build Artifacts
