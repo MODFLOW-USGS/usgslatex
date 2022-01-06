@@ -5,13 +5,13 @@
 CURRENT=`pwd`
 echo "Current directory:  " $CURRENT
 
-if [ "$CI" == "true" ]
+if [ -z "$CI" ]
 then
-    echo "Installing for all users"
-    TEXLOCAL=`kpsewhich -var-value TEXMFLOCAL`
-else
     echo "Installing for current user"
     TEXLOCAL=`kpsewhich -var-value TEXMFHOME`
+else
+    echo "Installing for all users"
+    TEXLOCAL=`kpsewhich -var-value TEXMFLOCAL`
 fi
 
 echo "LaTeX home directory:  " $TEXLOCAL
