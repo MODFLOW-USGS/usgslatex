@@ -5,8 +5,7 @@
 CURRENT=`pwd`
 echo "Current directory:  " $CURRENT
 
-if [ -z "$CI" ]
-then
+if [[ -z "$CI" ]]; then
     echo "Installing for current user"
     TEXLOCAL=`kpsewhich -var-value TEXMFHOME`
 else
