@@ -20,7 +20,7 @@ cp -R dvips $TEXROOT/.
 
 echo "Installing Univers font..."
 cd $TEXROOT/dvips/funivers
-texhash
+texhash ~/texmf
 updmap -sys --enable Map=funivers.map
 updmap-sys
 
