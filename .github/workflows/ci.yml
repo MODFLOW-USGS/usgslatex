@@ -41,13 +41,13 @@ jobs:
           sudo ls -la /root/texmf/tex/latex/usgslatexdist/visid_graphics/
           sudo ls -la /root/texmf/tex/latex/usgslatexdist/latex/usgslatex/
 
-      - name: Build mf6io latex document
+      - name: Build test latex document
         working-directory: ./test
         run: |
-          pdflatex USGSLaTeX.tex
-          bibtex USGSLaTeX
-          pdflatex USGSLaTeX.tex
-          pdflatex USGSLaTeX.tex
+          sudo pdflatex USGSLaTeX.tex
+          sudo bibtex USGSLaTeX
+          sudo pdflatex USGSLaTeX.tex
+          sudo pdflatex USGSLaTeX.tex
 
 #      - name: Build mf6io latex document
 #        shell: python
