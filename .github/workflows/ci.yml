@@ -29,6 +29,7 @@ jobs:
       - name: Install TeX Live
         run: |
           sudo apt install texlive-latex-extra texlive-science
+          tlmgr paper letter
 
       - name: Install USGS LaTeX style files and Univers font
         working-directory: ./usgsLaTeX
@@ -37,7 +38,7 @@ jobs:
 
       - name: List files in local LaTeX directory
         run: |
-          ls -la /root/texmf/tex/latex/usgslatexdist/latex/usgslatex/
+          sudo ls -la /root/texmf/tex/latex/usgslatexdist/latex/usgslatex/
 
       - name: Build mf6io latex document
         shell: python
