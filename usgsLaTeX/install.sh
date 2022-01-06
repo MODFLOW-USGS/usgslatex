@@ -20,9 +20,11 @@ cp -R dvips $TEXROOT/.
 
 echo "Installing Univers font..."
 cd $TEXROOT/dvips/funivers
-texhash ~/texmf
-updmap -sys --enable Map=funivers.map
+updmap --sys --enable Map=funivers.map
 updmap-sys
+
+echo "Rebuild ls-R filename databases used by TeX..."
+texhash --verbose $TEXROOT
 
 echo "Returning to the starting directory:  " $CURRENT
 cd $CURRENT
