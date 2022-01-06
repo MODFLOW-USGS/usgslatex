@@ -29,8 +29,6 @@ jobs:
       - name: Install TeX Live
         run: |
           sudo apt install texlive-latex-extra texlive-science
-          sudo tlmgr init-usertree
-          sudo tlmgr paper letter
 
       - name: Install USGS LaTeX style files and Univers font
         working-directory: ./usgsLaTeX
