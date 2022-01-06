@@ -49,7 +49,7 @@ jobs:
           import subprocess
 
           ws = "./test/"
-          for bibnam in ("USGSLaTeX", "testunivers",):
+          for bibnam in ("USGSLaTeXReport", "testunivers",):
               texnam = bibnam + ".tex"
               cmds = [
                       ["pdflatex", texnam],
