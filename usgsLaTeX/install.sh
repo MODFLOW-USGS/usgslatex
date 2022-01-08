@@ -25,21 +25,30 @@ mkdir -p $TEXLOCAL/dvips
 mkdir -p $TEXLOCAL/bibtex
 
 echo "Copying USGS LaTeX style files..."
-cp -R fonts $TEXLOCAL/.
-cp -R tex $TEXLOCAL/.
-cp -R dvips $TEXLOCAL/.
-cp -R bibtex $TEXLOCAL/.
+
+echo "Copy fonts -> " $TEXLOCAL/.
+cp -v -R fonts $TEXLOCAL/.
+
+echo "Copy tex -> " $TEXLOCAL/.
+cp -v -R tex $TEXLOCAL/.
+
+echo "Copy dvips -> " $TEXLOCAL/.
+cp -v -R dvips $TEXLOCAL/.
+
+echo "Copy bibtex -> " $TEXLOCAL/.
+cp -v -R bibtex $TEXLOCAL/.
 
 echo "Installing Univers font..."
-cd $TEXLOCAL/dvips/funivers
-updmap --sys --enable Map=funivers.map
+cd $TEXLOCAL/dvips
+updmap -sys --enable Map=funivers.map
 updmap-sys
 
 echo "Rebuild ls-R filename databases used by TeX..."
-texhash --verbose $TEXLOCAL
+mktexlsr --verbose
 
 echo "Returning to the starting directory:  " $CURRENT
 cd $CURRENT
 
+echo "Evaluate if USGS style files are available"
 LOCATION=`kpsewhich usgsreporta.sty`
 echo "Location of USGS LaTeX style files:  " $LOCATION

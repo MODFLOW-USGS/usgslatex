@@ -79,5 +79,5 @@ jobs:
         with:
           name: test
           path: |
-            ./test/USGSLaTeX.pdf
+            ./test/USGSLaTeXReport.pdf
             ./test/testunivers.pdf
