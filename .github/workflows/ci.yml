@@ -35,11 +35,18 @@ jobs:
         run: |
           sudo ./install.sh --all-users
 
-      - name: List files in local LaTeX directory
+      - name: List files in local latex directory
         run: |
-          sudo ls -la /usr/local/share/texmf/tex/latex/usgslatexdist/
-          sudo ls -la /usr/local/share/texmf/tex/latex/usgslatexdist/visid_graphics/
-          sudo ls -la /usr/local/share/texmf/tex/latex/usgslatexdist/latex/usgslatex/
+          sudo ls -la /usr/local/share/texmf/tex/latex/usgs/
+          sudo ls -la /usr/local/share/texmf/tex/latex/usgs/visid_graphics/
+
+      - name: List files in local fonts directory
+        run: |
+          sudo ls -la /usr/local/share/texmf/fonts/
+          sudo ls -la /usr/local/share/texmf/fonts/afm/
+          sudo ls -la /usr/local/share/texmf/fonts/tfm/
+          sudo ls -la /usr/local/share/texmf/fonts/type1/
+          sudo ls -la /usr/local/share/texmf/fonts/vf/
 
       - name: Build test LaTeX document
         shell: python
