@@ -1,29 +1,51 @@
-rem Install script must be run from same drive
-rem as TEXROOT.  I learned this the hard way...
+cls
+echo off
 
 cd > result.txt
-set /p CURRENT=<result.txt
+set CURRENT=%~dp0
+echo Current drive=%CURRENT:~0,3%
 echo Current directory=%CURRENT%
 
-rem kpsewhich -var-value TEXMFHOME > result.txt
-rem set /p TEXROOT=<result.txt
-rem echo TEXROOT=%TEXROOT%
+kpsewhich -var-value TEXMFLOCAL > result.txt
+set /p TEXLOCAL=<result.txt
+set "TEXLOCAL=%TEXLOCAL:/=\%"
+echo TEXLOCAL Drive=%TEXLOCAL:~0,3%
+echo TEXLOCAL=%TEXLOCAL%
 
-rem set TEXROOT=C:\texlive\texmf-local
-rem echo TEXROOT=%TEXROOT%
+echo Making a few directories if they do not exist..."
+mkdir %TEXLOCAL%
+mkdir %TEXLOCAL%\tex\
+mkdir %TEXLOCAL%\bibtex\
+mkdir %TEXLOCAL%\fonts\
+mkdir %TEXLOCAL%\dvips\
 
-rem xcopy fonts /E /F %TEXROOT%\fonts\
-rem xcopy tex /E /F %TEXROOT%\tex\
-rem xcopy dvips /E /F %TEXROOT%\dvips\
+echo "Copying USGS LaTeX style files...
 
-rem cd %TEXROOT%\dvips\funivers
-rem texhash
-rem updmap -sys --enable Map=funivers.map
-rem updmap-sys
+echo Copy %CURRENT%\tex to %TEXLOCAL%\tex
+Xcopy %CURRENT%\tex %TEXLOCAL%\tex /E /F /Y
+
+echo Copy %CURRENT%\bibtex to %TEXLOCAL%\bibtex
+Xcopy %CURRENT%\bibtex %TEXLOCAL%\bibtex /E /F /Y
+
+echo Copy %CURRENT%\fonts to %TEXLOCAL%\fonts
+Xcopy %CURRENT%\fonts %TEXLOCAL%\fonts /E /F /Y
+
+echo Copy %CURRENT%\dvips to %TEXLOCAL%\dvips
+Xcopy %CURRENT%\dvips %TEXLOCAL%\dvips /E /F /Y
+
+echo Installing Univers font...
+cd %TEXLOCAL%\dvips
+updmap-sys --enable Map=funivers.map
+updmap-sys
+
+echo Rebuild ls-R filename databases used by TeX...
+mktexlsr --verbose
 
 echo Return to %CURRENT%
 cd %CURRENT%
 
-rem kpsewhich usgsreporta.sty
+echo Evaluate if USGS style files are available
+echo Location of USGS LaTeX style files:
+kpsewhich usgsreporta.sty
 
 pause

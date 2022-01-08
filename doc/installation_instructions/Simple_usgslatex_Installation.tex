@@ -1,9 +1,24 @@
 \documentclass[11pt]{article}
 \usepackage[margin=0.75in]{geometry}
+\usepackage{graphicx}
 \usepackage{parskip}
-\parskip=0.75\baselineskip \advance\parskip by 0pt plus 2pt
+\usepackage{hyperref}
+\usepackage{breakurl}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={USGS \LaTeX Installation Instructions},
+    pdfpagemode=FullScreen,
+    }
+\parskip=1.00\baselineskip \advance\parskip by 0pt plus 2pt
 \newcommand{\MacOSX}{\mbox{MacOSX}}
 \usepackage[OT1]{fontenc}
+
+\graphicspath{{./figures/}}
+
+
 \begin{document}
 \renewcommand\sfdefault{fun}
 
@@ -15,149 +30,96 @@
 
 \addvspace{\baselineskip}
 
-William H. Asquith in the Texas Water Science Center developed the USGS Style files and instructions for install the Univers Condensed Font library. These instructions are boiled down to a barebones description. Refer to Bill's original documents for more details on the Univers Condensed Font Library (\texttt{doc/README\_FontLibraryInstallation.pdf}).
+\section*{\textsf{Installation Instructions}}
 
-\section*{\textsf{Installation Location}}
+\begin{enumerate}
 
-If you installed \TeX/\LaTeX \hspace{1pt} using a standard installation of the \TeX Live distribution your local \TeX \hspace{1pt} tree can be determined using:
+	\item The installation instructions assume that you have already installed the \TeX~Live distribution available from \url{https://www.tug.org/texlive/} for \texttt{Linux} and \texttt{Windows} or the Mac\TeX~distribution available from \url{https://www.tug.org/mactex/} for \texttt{MacOS}. A minimal \TeX~Live distribution, sufficient for the Univers Condensed font library and USGS style files, can also be installed for many \texttt{Linux} distros using
+	
+	\begin{verbatim}
+	  sudo apt install texlive-latex-extra texlive-science
+	\end{verbatim}
+	 
+	These installation installation instructions may work for other \TeX~distributions but this has not been tested.
+	
+	\item Clone the \href{https://github.com/MODFLOW-USGS/usgslatex}{\texttt{usgslatex}} repository to a location of your choice on your computer. On \texttt{Windows}, the \texttt{usgslatex} repository should be cloned to your \texttt{C:} drive for the installation file to work correctly.
+	
+	\item Install the Univers Condensed font library and USGS style files
+	
+	\begin{enumerate}
+	
+		\item To install the Univers Condensed font library and USGS style files on \texttt{MacOS} or \texttt{Linux} open a terminal in the \texttt{usgsLaTeX} subdirectory in your local clone of the \texttt{usgslatex} repository and type
+		
+		\begin{verbatim}
+		  sudo ./install.sh
+		\end{verbatim}
+		
+		\texttt{sudo} is required to modified system files (for example, \texttt{/usr/local/texlive/2021/texmf-var/fonts/}) for a specific \TeX~Live distribution.
+		
+		
+		\item To install the Univers Condensed font library and USGS style files on \texttt{Windows}, run \texttt{install.bat} in the \texttt{usgsLaTeX} subdirectory in your local clone of the \texttt{usgslatex} repository as an Adminstrator by right-clicking on the file and selecting ``Run as administration'', as shown in figure~\ref{fig:windows-install}.
+		
+		
+		\begin{figure}[!htbp]
+		\begin{center}
+			\includegraphics[scale=0.25]{windows_admin_install}
+		\caption{Installation of the Univers Condensed Font Library and USGS Style Files for \TeX/\LaTeX~on \texttt{Windows} using the \texttt{install.bat} batch file.}
+		\label{fig:windows-install}
+		\end{center}
+		\end{figure}
+			
+		Similar to installing the Univers Condensed font library and USGS style files on \texttt{MacOS} and \texttt{Linux}, \texttt{install.bat} is run as an Administrator so that system files can be modified.
+	
+	\end{enumerate}
+	
+	\item If the USGS style files have been correctly installed you should see something like the following on the last three lines of the output from \texttt{install.sh} and \texttt{install.bat}.
+	
+	\begin{enumerate}
+	
+		\item On \texttt{MacOS} and \texttt{Linux} you should see something like
+		
+		\begin{verbatim}
+		  
+		  Evaluate if USGS style files are available
+		  Location of USGS LaTeX style files:  
+		  /Users/jdhughes/Library/texmf/tex/latex/usgs/usgsreporta.sty
+		\end{verbatim}
+		
+		\item On \texttt{Windows} you should see something like
+		
+		\begin{verbatim}
+		
+		  Evaluate if USGS style files are available
+		  Location of USGS LaTeX style files:  
+		  c:/texlive/texmf-local/tex/latex/usgs/usgsreporta.sty
+		\end{verbatim}
+	
+	\end{enumerate}
+	
+	\item Test the Installation of the Univers Condensed font library installation can be tested using the \texttt{testunivers.tex} \TeX file in the \texttt{test} subdirectory. The file \texttt{testunivers.tex} is self contained in its definition of the Univers family, and does not use a separate package file. Try running \texttt{testunivers.tex} file through \LaTeX\ by typing \texttt{pdflatex testunivers.tex} in a terminal open in the \texttt{test} subdirectory (or your preferred method of compiling  \TeX~files). Inspect the \texttt{testunivers.pdf} file. Compare the content of the generated \textsf{pdf} file to \texttt{testuniversPROOF.pdf}. If these two \textsf{pdf} files appear different the Univers font family was not installed correctly. 
+	
+	Refer to William Asquith's original font installation document (\texttt{README\_FontLibraryInstallation.pdf}) in the \texttt{doc} subdirectory  for more details on installing the Univers Condensed Font Library if it was not successfully installed by \texttt{install.sh} and \texttt{install.bat}.
+	
+	\item The file \texttt{USGSLaTeXReport.tex} is a more complicated test of successful installation of the USGS Style files. Try running \texttt{USGSLaTeXReport.tex} file through \LaTeX\ using your preferred method of compiling  \TeX~files. Inspect the \texttt{USGSLaTeXReport.pdf} file. Compare the content of the generated \textsf{pdf} file to \texttt{USGSLaTeXReportPROOF.pdf}. If these two \textsf{pdf} files appear different then there is a problem with your installation. Confirm that the USGS style files (in the \texttt{\$TEXROOT/tex/latex/usgs}) subdirectory. \texttt{\$TEXROOT} can be determined on \texttt{MacOS} and \texttt{linux} by typing the following in a terminal:
+	
+	\begin{verbatim}
+		kpsewhich -var-value TEXMFHOME
+	\end{verbatim}
+	
+	\texttt{\$TEXROOT} can be determined on \texttt{Windows} by typing the following in a terminal:
 
-\begin{verbatim}
-  kpsewhich -var-value TEXMFHOME
-\end{verbatim}
-
-\noindent which will return something like the following:
-
-\begin{verbatim}
-  /Users/jdhughes/Library/texmf
-\end{verbatim}
-
-\noindent Typical locations of the local \TeX \hspace{1pt} tree are:
-
-\begin{verbatim}
-  Windows
-    $TEXROOT=C:/texlive/texmf-local
-
-  MacOSX
-    $TEXROOT=/Users/userid/Library/textmf
-                OR
-    $TEXROOT=/sw/share/tex-local
-                OR
-    $TEXROOT=/usr/local/texlive/tex-local
-
-  Redhat and openSUSE Linux                          
-    $TEXROOT=/usr/share/texmf
-\end{verbatim}
-
-\section*{\textsf{Installation Process}}
-
-Unzip the \texttt{usgslatex.zip} archive file to a location of your choice. You will copy the subdirectories in the unzipped \texttt{texmf-local} directory to the directories with the same name in \texttt{\$TEXROOT}. To start the process open a terminal in the unzipped \texttt{texmf-local} directory and type the following commands (use \texttt{xcopy} on Windows if you do not have access to UNIX command line tools):
-
-\begin{verbatim}
-  cp -R fonts $TEXROOT/. 
-         OR 
-  xcopy fonts /t /e $TEXROOT/fonts/
-
-  cp -R tex $TEXROOT/.
-         OR 
-  xcopy tex /t /e $TEXROOT/tex/
-\end{verbatim}
-
-If the \texttt{\$TEXROOT/dvips} directory exists type the following command: 
-
-\begin{verbatim}
-  cp -R dvips $TEXROOT/dvips/.  
-         OR
-  xcopy dvips /t /e $TEXROOT/dvips/
-\end{verbatim}
-
-Otherwise type the following command:
-
-\begin{verbatim}
-  cp -R dvips $TEXROOT/.
-         OR
-  xcopy dvips /t /e $TEXROOT/
-\end{verbatim}
-
-Basically, the map file is copied to some sort of \texttt{dvips} directory. The exact location is not critical since you will tell \TeX\ how to find it. Finally, rebuild the hash tables for the file locations using the following \TeX Live utilities as \texttt{ROOT/sudo} (on MacOSX and Linux).
-
-Open another terminal in \texttt{\$TEXROOT/dvips/funivers/} and type:
-
-\begin{verbatim}
-  texhash
-\end{verbatim}
-
-\noindent and then enable \texttt{dvips} to see the \texttt{funivers.map} file by typing:
-\begin{verbatim}
-  updmap -sys --enable Map=funivers.map
-\end{verbatim}
-
-and then type:
-
-\begin{verbatim}
-  updmap-sys
-\end{verbatim}
-
-UPDATE FOR MAC INSTALL (11/15/2018): I had issues with the previous installation instructions due to permissions problems but was able to get everything installed using the following procedure.  These instructions worked with the 2018 version of Mactex.
-
-\begin{itemize}
-
-\item Install the Mactex version of \LaTeX\ using all of the default settings.  I did the installation as myself, without privileged access, but during the installation I was prompted for an account and password with installation privileges.  This is needed because on a mac, many of the files go into \texttt{/usr/local/texlive} and into the \texttt{Applications} directory.
-
-\item Open a terminal window in the following location: \texttt{usgslatex/installation\_files/texmf-local}.
-
-\item From within \texttt{usgslatex/installation\_files/texmf-local}, issue the following commands, which copy the font and \LaTeX\ files into a user folder.  Obviously, you'll need to adjust the path below to use your user id.
-\begin{verbatim}
-  TEXROOT=/Users/langevin/Library/texmf
-  cp -R fonts $TEXROOT/.
-  cp -R tex $TEXROOT/.
-  cp -R dvips $TEXROOT/.
-\end{verbatim}
-
-\item The next step is to change the permissions of the \texttt{usr/local/texlive} folder so that the USGS fonts installed in TEXROOT can be installed.  I did this by logging into a terminal window with a privileged account and then changing directories to \texttt{/usr/local}.  From there I issued the command:
-\begin{verbatim}
-   sudo chmod -R 777 texlive
-\end{verbatim}
-This gives all users full read-write access to this folder.  I couldn't find any other way for the rest of the installation to proceed without doing this step.
-
-\item Finally, with your user account, open a terminal window in \texttt{\$TEXROOT/dvips/funivers}.  From here issues the following two commands.
-
-\begin{verbatim}
-  updmap -sys --enable Map=funivers.map
-  kpsewhich usgsreporta.sty
-\end{verbatim}
-
-\item At this point, the USGS style files were correctly installed and the Universe font was available. 
-
-\end{itemize}
+	\begin{verbatim}
+		kpsewhich -var-value TEXMFLOCAL
+	\end{verbatim}
 
 
-\section*{\textsf{Testing}}
-
-Make sure the USGS Style files are available using:
-
-\begin{verbatim}
-  kpsewhich usgsreporta.sty
-\end{verbatim}
-
-\noindent which should return something like the following:
-
-\begin{verbatim}
-  /Users/jdhughes/Library/texmf/tex/latex/usgslatexdist/latex/usgslatex/usgsreporta.sty
-\end{verbatim}
-
-\noindent If nothing is returned the USGS Style files have not been correctly installed.
-
-The directory \texttt{test} contains \texttt{testunivers.tex} and \texttt{USGSLaTex.tex} test \TeX \hspace{1pt} files. 
-
-The file \texttt{testunivers.tex} is self contained in its definition of the Univers family, and does not use a separate package file. Try running \texttt{testunivers.tex} file through \LaTeX\ by typing \texttt{pdflatex testunivers.tex} in a terminal (or your preferred method of compiling  \TeX \hspace{1pt} files). Inspect the \texttt{testunivers.pdf} file. Compare the content of the generated \textsf{pdf} file to \texttt{testuniversPROOF.pdf}. If these two \textsf{pdf} files appear different the Univers font family was not installed correctly. You might have forgotten to copy some of the file types or \LaTeX\ otherwise does not know how to file them. Confirm that you completed the installation process again. If you forgot a step, you will have to rerun \texttt{texhash} before things will work.
-
-The file \texttt{USGSLaTex.tex} is a test of successful installation of the USGS Style files. Try running \texttt{USGSLaTex.tex} file through \LaTeX\ using your preferred method of compiling  \TeX \hspace{1pt} files. Inspect the \texttt{USGSLaTex.pdf} file. Compare the content of the generated \textsf{pdf} file to \texttt{USGSLaTexPROOF.pdf}. If these two \textsf{pdf} files then there is a problem with your installation. Confirm that the USGS style files (in the \texttt{\$TEXROOT/tex/latex/usgslatexdist}) subdirectory. The \texttt{\$TEXROOT/tex/latex/usgslatexdist} subdirectory should include a \texttt{latex} and \texttt{visid\_graphics} subdirectories. You will have to rerun \texttt{texhash} if you modify the location of the USGS style files.
+\end{enumerate}
 
 \section*{\textsf{Using the USGS Style Files}}
-A simple example for using the \LaTeX\ \hspace{1pt} USGS style files is included in \texttt{doc/README\_USGSstyFILES.pdf}. Individual style files in the package are also listed and described in \texttt{doc/README\_USGSstyFILES.pdf}.
+A simple example for using the \LaTeX~USGS style files is included in \texttt{doc/README\_USGSstyFILES.pdf}. Individual style files in the package are also listed and described in \texttt{doc/README\_USGSstyFILES.pdf}.
 
 \section*{\textsf{Updating an existing installation}}
-On \texttt{MacOSX}, an existing installation can be updated by:
+On \texttt{MacOS}, an existing installation can be updated by:
 
 \begin{enumerate}
 	\item Moving the existing installation (for example, \texttt{/usr/local/texlive/2014/}) to the trash.
@@ -170,14 +132,17 @@ On \texttt{MacOSX}, an existing installation can be updated by:
 		\item Install the \texttt{graphics-def} package if it is not installed
 		\item Update all installed packages
 	\end{enumerate}
-	\item Open a terminal in \texttt{\$TEXROOT/dvips/funivers/} and type the following with \texttt{ROOT/sudo} privileges to allow the new version of \LaTeX\ to access the Univers Condensed Font library
+	\item Open a terminal in \texttt{\$TEXROOT/dvips/funivers/} directory and type the following with \texttt{sudo} privileges to allow the new version of \LaTeX\ to access the Univers Condensed Font library
 	\begin{enumerate}
 		\item \texttt{texhash}
 		\item \texttt{updmap -sys --enable Map=funivers.map}
 		\item \texttt{updmap-sys}
 	\end{enumerate}
-	
-	
 \end{enumerate}
+
+
+\section*{\textsf{Acknowledgements}}
+
+The USGS Style files and instructions for installing the Univers Condensed Font library were originally developed by William H. Asquith in the Texas Water Science Center. The USGS style files have been subsequently modified by Michael N. Fienen (Wisconsin Water Science Center), Christian D. Langevin (Water Resources Mission Area), and Joseph D. Hughes (Water Resources Mission Area) to add additional functionality and maintain consistency with SPN guidelines. 
 
 \end{document}

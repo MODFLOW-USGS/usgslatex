@@ -1,0 +1,90 @@
+name: USGS LaTeX
+
+on:
+  # schedule:
+  #   - cron: '0 2 * * *' # run at 2 AM UTC
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+
+  usgsLaTeX_CI:
+    name: USGS LaTeX installation
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Checkout this github repo
+        uses: actions/checkout@v2.3.4
+
+      - name: Install TeX Live
+        run: |
+          sudo apt install texlive-latex-extra texlive-science
+
+      - name: Install USGS LaTeX style files and Univers font
+        working-directory: ./usgsLaTeX
+        run: |
+          sudo ./install.sh --all-users
+
+      - name: List files in local latex directory
+        run: |
+          sudo ls -la /usr/local/share/texmf/tex/latex/usgs/
+          sudo ls -la /usr/local/share/texmf/tex/latex/usgs/visid_graphics/
+
+      - name: List files in local fonts directory
+        run: |
+          sudo ls -la /usr/local/share/texmf/fonts/
+          sudo ls -la /usr/local/share/texmf/fonts/afm/
+          sudo ls -la /usr/local/share/texmf/fonts/tfm/
+          sudo ls -la /usr/local/share/texmf/fonts/type1/
+          sudo ls -la /usr/local/share/texmf/fonts/vf/
+
+      - name: Build test LaTeX document
+        shell: python
+        run: |
+          import os
+          import sys
+          import subprocess
+
+          ws = "./test/"
+          for bibnam in ("USGSLaTeXReport", "testunivers",):
+              texnam = bibnam + ".tex"
+              cmds = [
+                      ["pdflatex", texnam],
+                      ["bibtex", bibnam],
+                      ["pdflatex", texnam],
+                      ["pdflatex", texnam],
+                     ]
+              for cmd in cmds:
+                  print("running command...'{}'".format(" ".join(cmd)))
+                  with subprocess.Popen(cmd,
+                                        stdout=subprocess.PIPE,
+                                        stderr=subprocess.STDOUT,
+                                        cwd=ws) as process:
+                      stdout, stderr = process.communicate(timeout=10)
+                      if stdout:
+                          stdout = stdout.decode()
+                          print(stdout)
+                      if stderr:
+                          print("\n\nError condition occurred:\n")
+                          stderr = stderr.decode()
+                          print(stderr)
+              file_name = os.path.join(ws, f"{bibnam}.pdf")
+              assert os.path.isfile(file_name), f"{file_name}...does not exist"
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: test
+          path: |
+            ./test/USGSLaTeXReport.pdf
+            ./test/testunivers.pdf

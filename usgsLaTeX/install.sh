@@ -2,25 +2,53 @@
 
 # run as sudo
 
+LOCAL=${1:-local}
+echo "Installation option:  " $LOCAL
+
 CURRENT=`pwd`
-echo "\nCurrent directory:\n  " $CURRENT
+echo "Current directory:  " $CURRENT
 
-TEXROOT=`kpsewhich -var-value TEXMFHOME`
-echo "\nLaTeX home directory:\n  " $TEXROOT
+if [[ $LOCAL == "--all-users" ]]; then
+    echo "Installing for all users"
+    TEXLOCAL=`kpsewhich -var-value TEXMFLOCAL`
+else
+    echo "Installing for current user"
+    TEXLOCAL=`kpsewhich -var-value TEXMFHOME`
+fi
 
-echo "\rcopying USGS LaTeX style files..."
-cp -R fonts $TEXROOT/.
-cp -R tex $TEXROOT/.
-cp -R dvips $TEXROOT/.
+echo "LaTeX home directory:  " $TEXLOCAL
 
-echo "\ninstalling Univers font..."
-cd $TEXROOT/dvips/funivers
-texhash
+echo "Making a few directories if they do not exist..."
+mkdir -p $TEXLOCAL/fonts
+mkdir -p $TEXLOCAL/tex
+mkdir -p $TEXLOCAL/dvips
+mkdir -p $TEXLOCAL/bibtex
+
+echo "Copying USGS LaTeX style files..."
+
+echo "Copy fonts -> " $TEXLOCAL/.
+cp -v -R fonts $TEXLOCAL/.
+
+echo "Copy tex -> " $TEXLOCAL/.
+cp -v -R tex $TEXLOCAL/.
+
+echo "Copy dvips -> " $TEXLOCAL/.
+cp -v -R dvips $TEXLOCAL/.
+
+echo "Copy bibtex -> " $TEXLOCAL/.
+cp -v -R bibtex $TEXLOCAL/.
+
+echo "Installing Univers font..."
+cd $TEXLOCAL/dvips
 updmap -sys --enable Map=funivers.map
 updmap-sys
 
-echo "\nreturning to the starting directory:\n  " $CURRENT
+echo "Rebuild ls-R filename databases used by TeX..."
+mktexlsr --verbose
+
+echo "Returning to the starting directory:  " $CURRENT
 cd $CURRENT
 
+echo "Evaluate if USGS style files are available"
 LOCATION=`kpsewhich usgsreporta.sty`
-echo "\nLocation of USGS LaTeX style files:\n  " $LOCATION
+echo "Location of USGS LaTeX style files:  " $LOCATION
