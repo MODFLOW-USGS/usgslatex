@@ -50,8 +50,8 @@
 %% ***  notes added with first word lowercase (bug in 2.1 fixed)
 %% ***  and journal `number' never output
 %% ***  abbreviation for grl corrected)
-%% *** 
-%% 
+%% ***
+%%
 %% Copyright 1994-2008 Patrick W Daly
  % ===============================================================
  % IMPORTANT NOTICE:
@@ -174,6 +174,7 @@ FUNCTION {outputc.nonnull}
   if$
   s
 }
+
 FUNCTION {output}
 { duplicate$ empty$
     'pop$
@@ -310,10 +311,13 @@ FUNCTION {bbl.volume}
 { "v." }
 
 FUNCTION {bbl.of}
-{ "of" }
+{ "\emph{of}" }
 
 FUNCTION {bbl.number}
 { "no." }
+
+FUNCTION {bbl.numbers}
+{ "nos." }
 
 FUNCTION {bbl.nr}
 { "no." }
@@ -328,7 +332,7 @@ FUNCTION {bbl.page}
 { "p." }
 
 FUNCTION {bbl.chapter}
-{ "Chap." }
+{ "chap." }
 
 FUNCTION {bbl.techrep}
 %{ "Tech. Rep." } REMOVE THE TECH REPORT WORDS FOR USGS
@@ -707,20 +711,28 @@ FUNCTION {format.onlyfirst}
     fm empty$ {
        % If empty (no first name), use the standard formatting
        ss #1 "{vv~}{ll}{, f{.}.}{, jj}" format.name$
-    }{ % Otherwise, attempt the trick
+    }{
+        %% Otherwise, attempt the trick
         %% Now the trick. Interpret "First Medium"
         %% as if "Medium" were a last name, and abbreviate it
-        fm #1 "{f.}{l}" format.name$ 'tt :=   %% And store the result in tt
-        %% Consider the particular case in which no Medium name is present
-        %% In this case, "First" will be interpreted as a last name, and
-        %% thus abbreviated. This can be detected because the resulting
-        %% string has length 1
-        tt text.length$ #1 > { %% If there was a medium name
-            fm #1 "{f.}{l.}" format.name$ 'tt :=
-            tt  %% Store the abbreviated version
-            }{  %% Else store the original version of the name
-            fm
-            } if$
+        fm #1 "{f.}{l.}" format.name$ 'tt :=   %% And store the result in tt
+        tt  %% Store the abbreviated version
+
+        %%
+        %% Retain this code in the event that the USGS reverts to using the full
+        %% first name for authors without a middle name
+        %%
+        %% %% Consider the particular case in which no Medium name is present
+        %% %% In this case, "First" will be interpreted as a last name, and
+        %% %% thus abbreviated. This can be detected because the resulting
+        %% %% string has length 1
+        %% tt text.length$ #1 > { %% If there was a medium name
+        %%     fm #1 "{f.}{l.}" format.name$ 'tt :=
+        %%     tt  %% Store the abbreviated version
+        %%     }{ %% just initial for first name
+        %%     %% Else store the original version of the name
+        %%     fm
+        %%     } if$
 
         %% After the above, the top of the stack will contain
         %% either "First" unabbreviated (if the author has not middle name)
@@ -853,10 +865,10 @@ FUNCTION {get.bbl.editor}
 FUNCTION {format.editors}
 { editor "editor" format.names duplicate$ empty$ 'skip$
     {
-      " " *
+      ", " *
       get.bbl.editor
-      capitalize
-   "(" swap$ * ")" *
+%      capitalize
+%   "(" swap$ * ")" *
       *
     }
   if$
@@ -870,13 +882,13 @@ FUNCTION {format.book.pages}
 FUNCTION {format.doi}
 { doi empty$
     { "" }
-    { 
+    {
       urldate empty$
       {
-        "\url{https://doi.org/" doi * "}" *
+        "\doi{https://doi.org/" doi * "}" *
       }
       {
-        "at \url{https://doi.org/" doi * "}" *
+        "at \doi{https://doi.org/" doi * "}" *
       }
       if$
     }
@@ -885,9 +897,9 @@ FUNCTION {format.doi}
 FUNCTION {format.urldate}
 { urldate empty$
     { "" }
-    { 
+    {
       url empty$
-      { 
+      {
          doi empty$
          { "" }
          {
@@ -905,9 +917,9 @@ FUNCTION {format.urldate}
 FUNCTION {format.url}
 { url empty$
     { "" }
-    { 
+    {
       urldate empty$
-      { 
+      {
         "\url{" url * "}" *
       }
       {
@@ -920,7 +932,7 @@ FUNCTION {format.url}
 FUNCTION {format.urllink}
 { urllink empty$
     { "" }
-    { 
+    {
       " (Available online at \url{" urllink * "})" *
     }
   if$
@@ -1126,8 +1138,13 @@ FUNCTION {n.dashify}
 }
 
 FUNCTION {word.in}
-{ bbl.in 
+{ bbl.in
   " " * }
+
+FUNCTION {word.of}
+{ bbl.of
+  " " * }
+
 
 FUNCTION {format.date}
 { year "year" bibinfo.check duplicate$ empty$
@@ -1139,56 +1156,6 @@ FUNCTION {format.date}
   before.all 'output.state :=
   ", " swap$ * "" *
 }
-FUNCTION {format.btitle}
-{ title "title" bibinfo.check
-  duplicate$ empty$ 'skip$
-    {
-      %emphasize
-    }
-  if$
-}
-FUNCTION {either.or.check}
-{ empty$
-    'pop$
-    { "can't use both " swap$ * " fields in " * cite$ * warning$ }
-  if$
-}
-FUNCTION {format.bvolume}
-{ volume empty$
-    { "" }
-    { bbl.volume volume tie.or.space.prefix
-      "volume" bibinfo.check * *
-      series "series" bibinfo.check
-      duplicate$ empty$ 'pop$
-      
-      %  { emphasize ", " * swap$ * } % REMOVE ITALICS FOR USGS
-        {  ", " * swap$ * }
-      if$
-      "volume and number" number either.or.check
-    }
-  if$
-}
-FUNCTION {format.number.series}
-{ volume empty$
-    { number empty$
-        { series field.or.null }
-        { series empty$
-            { number "number" bibinfo.check }
-            { output.state mid.sentence =
-                { bbl.number }
-                { bbl.number capitalize }
-              if$
-              number tie.or.space.prefix "number" bibinfo.check * *
-              bbl.in space.word *
-              series "series" bibinfo.check *
-            }
-          if$
-        }
-      if$
-    }
-    { "" }
-  if$
-}
 
 FUNCTION {format.edition}
 { edition duplicate$ empty$ 'skip$
@@ -1198,10 +1165,51 @@ FUNCTION {format.edition}
         { "t" }
       if$ change.case$
       "edition" bibinfo.check
-      " " * bbl.edition *
+      space.word
+      bbl.edition
     }
   if$
 }
+
+FUNCTION {format.btitle}
+{
+  title "title" bibinfo.check
+  duplicate$ empty$ 'skip$
+    {
+      %emphasize
+    }
+  if$
+  edition empty$ 'skip$
+    {
+      " (" * edition * " " * bbl.edition  * ")" *
+    }
+  if$
+}
+
+FUNCTION {either.or.check}
+{ empty$
+    'pop$
+    { "can't use both " swap$ * " fields in " * cite$ * warning$ }
+  if$
+}
+
+FUNCTION {format.bvolume}
+{ volume empty$
+    { "" }
+    {
+      bbl.volume volume tie.or.space.prefix
+      "volume" bibinfo.check * *
+      series "series" bibinfo.check
+      duplicate$ empty$ 'pop$
+
+      %  { emphasize ", " * swap$ * } % REMOVE ITALICS FOR USGS
+        {  ", " * swap$ * }
+      if$
+      "volume and number" number either.or.check
+    }
+  if$
+}
+
 INTEGERS { multiresult }
 FUNCTION {multi.page.check}
 { 't :=
@@ -1222,6 +1230,49 @@ FUNCTION {multi.page.check}
   while$
   multiresult
 }
+
+FUNCTION {format.numbers}
+{ number duplicate$ empty$ 'skip$
+    { duplicate$ multi.page.check
+        {
+          bbl.numbers swap$
+          n.dashify
+        }
+        {
+          bbl.number swap$
+        }
+      if$
+      tie.or.space.prefix
+      "number" bibinfo.check
+      * *
+    }
+  if$
+}
+
+FUNCTION {format.number.series}
+{ volume empty$
+    { number empty$
+        { series field.or.null }
+        { series empty$
+            { number "number" bibinfo.check }
+            { output.state mid.sentence =
+                % { bbl.number }
+                % { bbl.number capitalize }
+                { number format.numbers }
+                { number format.numbers capitalize }
+              if$
+              number tie.or.space.prefix "number" bibinfo.check * *
+              bbl.in space.word *
+              series "series" bibinfo.check *
+            }
+          if$
+        }
+      if$
+    }
+    { "" }
+  if$
+}
+
 FUNCTION {format.pages}
 { pages duplicate$ empty$ 'skip$
     { duplicate$ multi.page.check
@@ -1239,6 +1290,7 @@ FUNCTION {format.pages}
     }
   if$
 }
+
 FUNCTION {format.journal.pages}
 { pages duplicate$ empty$ 'pop$
     { swap$ duplicate$ empty$
@@ -1259,13 +1311,14 @@ FUNCTION {format.journal.eid}
   duplicate$ empty$ 'pop$
     { swap$ duplicate$ empty$ 'skip$
       {
-          ", " *
+          ", article " *
       }
       if$
       swap$ *
     }
   if$
 }
+
 FUNCTION {format.vol.num.pages}
 { volume field.or.null
   duplicate$ empty$ 'skip$
@@ -1275,21 +1328,63 @@ FUNCTION {format.vol.num.pages}
       * *
     }
   if$
-  number "number" bibinfo.check duplicate$ empty$ 'skip$
-    {
-      swap$ duplicate$ empty$
-        { "there's a number but no volume in " cite$ * warning$ }
-        'skip$
-      if$
-      swap$
-      ", " bbl.nr * number tie.or.space.prefix pop$ * swap$ *
-    }
-  if$ *
+  number empty$
+    { }
+    { ", " format.numbers * * }
+  if$
+%  number "number" bibinfo.check duplicate$ empty$ 'skip$
+%    {
+%      swap$ duplicate$ empty$
+%        { "there's a number but no volume in " cite$ * warning$ }
+%        'skip$
+%      if$
+%      swap$
+%      ", " bbl.number * number tie.or.space.prefix pop$ * swap$ *
+%    }
+%  if$ *
   eid empty$
     { format.journal.pages }
     { format.journal.eid }
   if$
 }
+
+FUNCTION {format.chapter}
+{
+  chapter empty$
+    {
+      bbl.in " " *
+    }
+    {
+      bbl.chapter " " *
+      chapter "chapter" bibinfo.check *
+      " " *
+      bbl.of *
+      " " *
+    }
+  if$
+}
+
+% { volume empty$
+%     { number empty$
+%         { series field.or.null }
+%         { series empty$
+%             { number "number" bibinfo.check }
+%             { output.state mid.sentence =
+%                 { bbl.number }
+%                 { bbl.number capitalize }
+%               if$
+%               number tie.or.space.prefix "number" bibinfo.check * *
+%               bbl.in space.word *
+%               series "series" bibinfo.check *
+%             }
+%           if$
+%         }
+%       if$
+%     }
+%     { "" }
+%   if$
+% }
+
 
 FUNCTION {format.chapter.pages}
 { chapter empty$
@@ -1319,7 +1414,7 @@ FUNCTION {format.booktitle}
 
 FUNCTION {format.editor}
 {
-  editor "editor" format.names 
+  editor "editor" format.names
   duplicate$ empty$ 'pop$
     {
       %emphasize
@@ -1348,7 +1443,7 @@ FUNCTION {format.in.ed.booktitle}
 }
 
 FUNCTION {formatc.in.ed.booktitle}
-{ format.editor duplicate$ empty$ 'skip$
+{ format.editors duplicate$ empty$ 'skip$
     {
       format.bvolume duplicate$ empty$ 'pop$
         { ", " swap$ * * }
@@ -1360,7 +1455,8 @@ FUNCTION {formatc.in.ed.booktitle}
           " " * swap$
           * }
       if$
-      word.in swap$ *
+%      word.in swap$ *
+      format.chapter swap$ *
     }
   if$
 }
@@ -1445,10 +1541,10 @@ FUNCTION {formatc.org.or.pub}
   if$
 }
 FUNCTION {format.publisher.address}
-{ format.org.or.pub publisher "publisher" bibinfo.warn 
+{ format.org.or.pub publisher "publisher" bibinfo.warn
 }
 FUNCTION {formatc.publisher.address}
-{ formatc.org.or.pub publisher "publisher" bibinfo.warn 
+{ formatc.org.or.pub publisher "publisher" bibinfo.warn
 }
 
 FUNCTION {format.organization.address}
@@ -1534,21 +1630,25 @@ FUNCTION {inbook}
     { format.editors "author and editor" output.check
       editor format.key output
     }
-    { format.authors output.nonnull
-      crossref missing$
-        { "author and editor" editor either.or.check }
-        'skip$
-      if$
+    {
+      format.authors "author" output.check
+      author format.key output
     }
   if$
   format.date "year" output.check
   date.block
   format.btitle "title" output.check
   publisher empty$
-    { format.number.series outputc.nonnull }
-    { formatc.publisher.address output
-      format.book.pages output
-    }
+  {
+    formatc.in.ed.booktitle "booktitle" output.check
+    format.number.series outputc.nonnull
+    format.pages output
+  }
+  {
+    formatc.in.ed.booktitle "booktitle" output.check
+    formatc.publisher.address output
+    format.pages output
+  }
 %  crossref missing$
 %    {
 %      format.bvolume output
@@ -1578,11 +1678,13 @@ FUNCTION {incollection}
   date.block
   format.title "title" output.check
   publisher empty$
-    { formatc.in.ed.booktitle "booktitle" output.check
+    {
+      formatc.in.ed.booktitle "booktitle" output.check
       format.number.series outputc.nonnull }
-    { formatc.in.ed.booktitle "booktitle" output.check
+    {
+      formatc.in.ed.booktitle "booktitle" output.check
       formatc.publisher.address output
-      format.book.pages output
+      format.pages output
     }
 %  crossref missing$
 %    { format.in.ed.booktitle "booktitle" output.check
@@ -1752,7 +1854,7 @@ FUNCTION {online}
   format.title
   "title" output.check
  % format.tr.number emphasize output.nonnull
-	
+
   fin.entry
 }
 
@@ -2062,9 +2164,9 @@ FUNCTION {begin.bib}
   write$ newline$
   "\expandafter\ifx\csname urlstyle\endcsname\relax"
   write$ newline$
-  "  \providecommand{\doi}[1]{doi:\discretionary{}{}{}#1}\else"
+  "  \providecommand{\doiagency}[1]{doi:\discretionary{}{}{}#1}\else"
   write$ newline$
-  "  \providecommand{\doi}{doi:\discretionary{}{}{}\begingroup \urlstyle{rm}\Url}\fi"
+  "  \providecommand{\doiagency}{doi:\discretionary{}{}{}\begingroup \urlstyle{rm}\Url}\fi"
   write$ newline$
 }
 EXECUTE {begin.bib}

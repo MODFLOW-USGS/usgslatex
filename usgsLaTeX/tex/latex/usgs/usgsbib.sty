@@ -7,6 +7,7 @@
 \RequirePackage{natbib}
 \RequirePackage{color}
 \RequirePackage{url}
+\RequirePackage{doi}
 %------------------------ declaration of options ----------
 %------------------------ execution of options
 \ProcessOptions \relax
@@ -28,11 +29,13 @@
 % the heading. This might be useful in some circumstances.
 \newcommand{\refpreamble}{}
 
+\renewcommand{\doitext}{} % use empty string instead of doi: prior to doi
+
 \newcommand{\REFSECTION}
 {\SECTION{\reportrefname}
  \refpreamble}
 % Often USGS reports have 'Selected References'
-% Therefore, redefinition of \reportrefname in the preamble 
+% Therefore, redefinition of \reportrefname in the preamble
 % to 'Selected References' would be required.
 
 \setlength\bibsep{2pt} % separation space between each reference,
@@ -66,8 +69,8 @@
 % command is redefined. If on the other hand, this package is loaded
 % after hyperref the \providecommand does not renew the \href out from
 % underneath us.
-\providecommand{\href}[2]{\refnotetext}    
-\newcommand{\hyperrefmarlabel}{} % perhaps $\Leftarrow$ ???            
+\providecommand{\href}[2]{\refnotetext}
+\newcommand{\hyperrefmarlabel}{} % perhaps $\Leftarrow$ ???
 \newcommand{\hyperrefnote}[1]
 {\hfill \makebox[\refnotewidth][\refnotejustify]%
                 {{\refnotefont \refnotecolor
@@ -77,7 +80,7 @@
 
 % Perhaps you want the actual url address? Use the \hyperrefnoteurl
 % command. The same color is used by the \refnotecolor and the
-% bounding [  ] provide the USGS style of extra information in a 
+% bounding [  ] provide the USGS style of extra information in a
 % reference. The user is responsible for adding a \linebreak at the tail
 % of the reference (see the example below)
 
@@ -102,8 +105,8 @@
                            \url{#1}}\nolinebreak[4]\hspace{.25ex}]}}
  \usebox{\@refnoteurl}
 }
-                
-   
+
+
 \newcommand{\refnotejustify}{l} % will have no visible effect
 % unless width is other than \width
 \newcommand{\refnotewidth}{\width} % \width is the width of the text

@@ -18,7 +18,7 @@
 % the usgsreporta.sty package
 
 \RequirePackage{indentfirst} % indent first line of regular
-% paragraphs, which is against American typographic tradition and 
+% paragraphs, which is against American typographic tradition and
 % default LaTeX.
 
 \RequirePackage{epic} % for the picture environ. for the cover work
@@ -40,9 +40,9 @@
 
 
 \RequirePackage{fancybox} % for the \fancyput as part of the draft
-% option of the usgsreporta package. This command places the 
+% option of the usgsreporta package. This command places the
 % 'watermark' like text at bottom of cover and report body containing
-% the Date of the typesetting and the USGS provisional message     
+% the Date of the typesetting and the USGS provisional message
 
 \RequirePackage{eso-pic}
 \RequirePackage{wallpaper}
@@ -165,7 +165,7 @@
 % take effect. LaTeX2e provides the \linespread declaration
 % \linespread{1.5}\selectfont (see TLC p. 107)
 % \stretchbaseline returns use to regular line spacing
-% \stretchbaseline[1.07] might stretch the text two lines in a 
+% \stretchbaseline[1.07] might stretch the text two lines in a
 % single column--don't forget to switch back to \stretchbaseline
 % AS SOON AS YOU DON'T NEED THE INCREASED SPACING
 % Because the \doublespacing command provided by the setspace package
@@ -207,11 +207,11 @@
   \setlength{\@coresecaftersep}{\secaftersep}
   \setlength{\secbeforesep}{0pt}
   \setlength{\secaftersep}{\contentsaftersep}
-  
+
   \vspace*{\contentsbeforesep}
-  
+
   \tableofcontents
-  %\rule{1pt}{0.3125in} used to page measure the 
+  %\rule{1pt}{0.3125in} used to page measure the
   %needed offset between Contents and Abstract
   %as actually controlled by the \contentsaftersep
 
@@ -219,14 +219,14 @@
   \setlength{\secaftersep}{\@coresecaftersep}
 
   \pagestyle{toc}
-  %\tolerance=700 % diverage the interword spacing to 
+  %\tolerance=700 % diverage the interword spacing to
   % higher for loose typesetting--this helps to get
   % the dots after the contents to fill correctly
   % when the contents fully fits the justified paragraph
   \ifthenelse{\boolean{figuretoc}}{\listoffigures}{}
   \ifthenelse{\boolean{tabletoc}}{\listoftables}{}
   %\tolerance=200
-  % The conversion page would follow say with a 
+  % The conversion page would follow say with a
   % \conversionpage command, but that page is distinctly
   % different from the list like pages of shown here.
   % See the \makefrontmatter command for the conversions and
@@ -253,7 +253,7 @@
 \setlength{\GSphotogap}{0.4in}
 
 
-% define a horizontal separation distance on the left of the 
+% define a horizontal separation distance on the left of the
 % cover photograph
 \newlength{\GSphotohsep}
 \setlength{\GSphotohsep}{0in}
@@ -301,7 +301,7 @@
 }
 
 \newcommand{\makefirstpagetop}
-{ \twocolumn[\topfirstpage] % begin the mainmatter with 
+{ \twocolumn[\topfirstpage] % begin the mainmatter with
    % the column spanning title of report and the authors
    \thispagestyle{plain}
    \fancypagestyle{plain}{\pagestyle{bodyplain}}
@@ -312,8 +312,8 @@
 
    \normalsize % ensure that we are in normal size text
    \rmfamily   % and the we are setting in roman
-   
-   % Finally if in draft mode toggle remainder of the 
+
+   % Finally if in draft mode toggle remainder of the
    % body of the manuscript
    \ifthenelse{\boolean{draft}}{\DoDraftElementsMainMatter}{}
 }
@@ -328,8 +328,8 @@
 
    \normalsize % ensure that we are in normal size text
    \rmfamily   % and the we are setting in roman
-   
-   % Finally if in draft mode toggle remainder of the 
+
+   % Finally if in draft mode toggle remainder of the
    % body of the manuscript
    \ifthenelse{\boolean{draft}}{\DoDraftElementsMainMatter}{}
 }
@@ -364,13 +364,13 @@
       \maketitle % make the title page from usgstitlepage.sty
       \makefly   % make the inside fly page usgstitlepage.sty
    \end{spacing}
-   
+
    \makepreface  % make preface
    \maketoc      % make the table of contents for the report
-   
+
    \conversionpage % make the request for setting the conversionpage
    % this command might produce nothing
-   
+
    \myblankpage % insert a potential blank page before body begins.
 
    \makefirstpagetop % finally initate main body startup sequence
@@ -391,14 +391,14 @@
       %\maketitle % make the title page from usgstitlepage.sty
       %\makefly   % make the inside fly page usgstitlepage.sty
    \end{spacing}
-   
+
    \makepreface
-        
+
    \maketoc % make the table of contents for the report
-   
+
    %\conversionpage % make the request for setting the conversionpage
    % this command might produce nothing
-   
+
    \myblankpage % insert a potential blank page before body begins.
 
    \makefirstpagetopalt % finally initate main body startup sequence
@@ -414,7 +414,7 @@
 \setlength\fboxrule{0pt} % but want to hide the rules, desire fboxes to help in layout
 \setlength{\unitlength}{0.01in} % sets the unit lengths for the
 % picture environment
-\newcommand{\pictureorigin}{\makebox(0,0){\tiny $\bullet$}} % a dot if 
+\newcommand{\pictureorigin}{\makebox(0,0){\tiny $\bullet$}} % a dot if
 % origin needs to be seen, this is not a command for final production,
 % but is a helpful tool when working with the picture environment
 
@@ -435,13 +435,13 @@
    \bannercolor % set color of the banner that is drawn by
    % the command \coverruleevenpage
    \covercolor % set color of the cover page--typically not white
-    
+
    \noindent
    \begin{picture}(0,0)
       %\put(0,0){\pictureorigin} % the origin
       \coverruleoddpage % banner across the top
       \visidcolor
-      \put(-25,37){ 
+      \put(-25,37){
          \fbox{\includegraphics[height=0.5in,
                 trim=1.37in 4.535in 1.437in 4.323in,
                 clip]{\USGSvisidname}}
@@ -454,14 +454,14 @@
 
    \noindent
    \begin{picture}(0,0)
-      \put(-25,13){\noindent 
+      \put(-25,13){\noindent
          \parbox[b]{\textwidth}
          {\normalsize \bfseries \sffamily
            \cooperationwith
          } \hspace*{\fill} % end the parbox
       } % end of the put
    \end{picture}
-   
+
    \rule[0in]{0in}{0.25in}
 
    \noindent
@@ -476,7 +476,7 @@
          } % end of the outer parbox
       } % end of the put
    \end{picture}
-        
+
    \vspace*{\GSphotogap}
 
    {\setlength\fboxrule{\GSphotorule} \setlength\fboxsep{\GSphotosep}
@@ -489,10 +489,10 @@
        }
     \end{picture}
     \color{black}
-   }  
+   }
    \color{black}
    \vspace*{\fill} % rubber space to fill in the setup
-     
+
    \noindent
    \begin{picture}(0,0)
       \put(-25,0){\noindent
@@ -500,22 +500,22 @@
             {\noindent
              \parbox{\textwidth}
                 {\LARGE
-                 \textsf{\reportseries\ \reportnumber 
+                 \textsf{\reportseries\ \reportnumber
                          \cooperatorreportseries } \hspace*{\fill}
                 }
-                
+
              %\fbox{\rule[0in]{0cm}{\coopTOseries}}
              \rule[0in]{0cm}{2\seriesTOdoi}
 
              \noindent
              \parbox{\textwidth}
-                {\large \bfseries \textsf{\doi \\ \textusgs} }
-                
+                {\large \bfseries \textsf{\doiagency \\ \textusgs} }
+
          } % end the parbox
       } % end of the put
    \end{picture}
    \clearpage
-    
+
    % now typeset the back of the front cover page
    \pagestyle{title}
    \onecolumn
@@ -524,7 +524,7 @@
    \noindent
    \begin{picture}(0,0)
       \put(0,0){\noindent
-         \mbox{\sffamily \footnotesize \textbf{Cover.}}\ 
+         \mbox{\sffamily \footnotesize \textbf{Cover.}}\
          \parbox[t]{0.6\textwidth}
             {\raggedright \sffamily \footnotesize \GSphotocredit}
       } % end of the put
@@ -555,16 +555,16 @@
    \bannercolor % set color of the banner that is drawn by
    % the command \coverruleevenpage
    %\covercolor % set color of the cover page--typically not white
-   
+
    %\AddToShipoutPictureBG*{\BackgroundPic}
    \ThisTileWallPaper{\paperwidth}{1.25\paperheight}{\coverphoto}
-    
+
    \noindent
    \begin{picture}(0,0)
       %\put(0,0){\pictureorigin} % the origin
       \coverruleoddpage % banner across the top
       \visidcolor
-      \put(-25,43){ 
+      \put(-25,43){
          \fbox{\includegraphics[height=0.5in,
                 trim=1.37in 4.535in 1.437in 4.323in,
                 clip]{\USGSvisidname}}
@@ -578,14 +578,14 @@
    % Prepared in cooperation with ...
    \noindent
    \begin{picture}(0,0)
-      \put(-25,13){\noindent 
+      \put(-25,13){\noindent
          \parbox[b]{\textwidth}
          {\titlefontlarge \bfseries \sffamily
            \cooperationwith
          } \hspace*{\fill} % end the parbox
       } % end of the put
    \end{picture}
-   
+
    \rule[0in]{0in}{0.25in}
 
    % Title
@@ -622,10 +622,10 @@
       } % end of the put
    \end{picture}
 
-        
+
    \color{white}
    \vspace*{\fill} % rubber space to fill in the setup
-     
+
    \noindent
    \begin{picture}(0,0)
       \put(-25,0){\noindent
@@ -634,24 +634,24 @@
              \parbox{\textwidth}
                 {\huge
                  \fontseries{l}\selectfont
-                 \textsf{\reportseries\ \reportnumber 
+                 \textsf{\reportseries\ \reportnumber
                          \cooperatorreportseries \\ \reportversion} \hspace*{\fill}
                 }
-                
+
              %\fbox{\rule[0in]{0cm}{\coopTOseries}}
              \rule[0in]{0cm}{2\seriesTOdoi}
 
              \noindent
              \parbox{\textwidth}
-                {\large \bfseries \textsf{\doi \\ \textusgs} }
-                
+                {\large \bfseries \textsf{\doiagency \\ \textusgs} }
+
          } % end the parbox
       } % end of the put
    \end{picture}
-   
+
    \color{black}
    \clearpage
-    
+
    % now typeset the back of the front cover page
    \pagestyle{title}
    \onecolumn
@@ -660,7 +660,7 @@
    \noindent
    \begin{picture}(0,0)
       \put(0,0){\noindent
-         \mbox{\sffamily \footnotesize \textbf{Cover.}}\ 
+         \mbox{\sffamily \footnotesize \textbf{Cover.}}\
          \parbox[t]{0.6\textwidth}
             {\raggedright \sffamily \footnotesize \GSphotocredit}
       } % end of the put
@@ -690,14 +690,14 @@
       \put(-25,0){\noindent
          \parbox[b]{0.9\textwidth}
             {\colophontextsize \sffamily
-            
+
              \ifdef{\customcolophon}{\customcolophon}{
              \productionstaff \\
-             \colophoninfo    \\ \\ 
+             \colophoninfo    \\ \\
              \theoffice       \\
              \theofficewebsite}
-             
-             
+
+
             } % end of the parbox
       } % end of the put
    \end{picture}
@@ -732,7 +732,7 @@
          %\put(0,0){\pictureorigin} % the origin
          \coverruleevenpage
          \visidcolor
-         \put(-118,25){\rule{\paperwidth}{0in} 
+         \put(-118,25){\rule{\paperwidth}{0in}
             \fbox{\rotatebox[y=.4825in]{270}{
                \includegraphics[width=.5in,
                   trim=1.37in 5.05in 1.437in 4.323in,
@@ -757,12 +757,12 @@
         \put(0,-870){\noindent \hspace{5.6in}
           \parbox[t]{\textwidth}
                     {\tiny
-                     \href{\reportwebsiteroot \reportwebsiteremainder}{\reportwebsiteroot \reportwebsiteremainder} 
+                     \href{\reportwebsiteroot \reportwebsiteremainder}{\reportwebsiteroot \reportwebsiteremainder}
                      }}
       \end{picture}
-    
+
       \vspace{0.5in}
-    
+
       \noindent
       \makebox[\backcoveroffset][r]{\noindent
          \rotatebox[origin=c]{270}{\noindent
@@ -772,7 +772,7 @@
             } % end of the fbox
          } % end of the rotatebox
       } % end of the makebox
-    
+
       \vspace*{\fill}
       \clearpage
    \end{spacing}
@@ -781,4 +781,3 @@
 
 
 \endinput
-
