@@ -88,6 +88,8 @@
    \fancyfoot{} % clear footer fields
    \renewcommand\headrulewidth{\firstpagerulewidth}
    \renewcommand\footrulewidth{\firstpagerulewidth}
+   \fancyhead[RO]{\textbf{\textsf{\headerfontsize \rightmark \quad \thepage}}}
+   \fancyhead[LE]{\textbf{\textsf{\headerfontsize \thepage}}}
 }
 \fancypagestyle{appendix}{
    \fancyhead{} % clear header fields
@@ -111,7 +113,8 @@
    \fancyfoot{} % clear footer fields
    \renewcommand\headrulewidth{\rulewidth}
    %\renewcommand\footrulewidth{\rulewidth}
-   \fancyhead[RO,LE]{\textbf{\textsf{\headerfontsize \thepage}}}
+   \fancyhead[RO]{\textbf{\textsf{\headerfontsize \rightmark \quad \thepage}}}
+   \fancyhead[LE]{\textbf{\textsf{\headerfontsize \thepage}}}
 }
 \fancypagestyle{backofreport}{
    \fancyhead{} % clear header fields
