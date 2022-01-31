@@ -885,10 +885,10 @@ FUNCTION {format.doi}
     {
       urldate empty$
       {
-        "\doi{https://doi.org/" doi * "}" *
+        "\url{https://doi.org/" doi * "}" *
       }
       {
-        "at \doi{https://doi.org/" doi * "}" *
+        "at \url{https://doi.org/" doi * "}" *
       }
       if$
     }
