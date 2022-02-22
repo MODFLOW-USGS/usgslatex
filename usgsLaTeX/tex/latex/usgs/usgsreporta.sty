@@ -291,12 +291,35 @@
    \end{sloppypar}
 }
 
+% Author affiliations are often listed in the list
+% of authors on the abstract page.  Affiliations are
+% shown on the bottom of this abstract page as footnotes.
+% An author list with affiliations can be provided from the
+% user document by renewing the command \theabstractpageauthors.
+% If this command is not renewed, then \thetitlepageauthors is used.
+% The \footnotemark[num] command can be used to number the
+% affiliations.  Then, the \footnotetext[num]{text} can be used
+% to force the affiliation footnote.  Example:
+% to define from main latex doc:
+% \renewcommand{\theabstractpageauthors}{Mary C. Doe,footnotemark[1] and John B. Unknown\footnotemark[2]}
+% to be put near abstract:
+% \footnotetext[1]{U.S. Geological Survey.}
+% \footnotetext[1]{A Famous Company.}
+
+\ifdef{\theabstractpageauthors}{\theabstractpageauthors}{\newcommand{\theabstractpageauthors}{\thetitlepageauthors}}
+
+\newcommand{\byabstractpageauthors}{
+   \begin{sloppypar}
+      \noindent {\normalsize \textsf{By \theabstractpageauthors}}
+   \end{sloppypar}
+}
+
 \newcommand{\topfirstpage}
 {\rule[0in]{0in}{\firstpageskipTOtitle} \par
  \noindent \parbox{\textwidth}{
            \titleonfirstpage
            \rule[0in]{0in}{\firstpageskipTOauthors}
-           \byauthors
+           \byabstractpageauthors
            \rule[0in]{0in}{\firstpageskipTOtext}}
 }
 
