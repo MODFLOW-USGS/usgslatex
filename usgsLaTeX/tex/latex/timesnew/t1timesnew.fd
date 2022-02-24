@@ -1,0 +1,22 @@
+\ProvidesFile{t1timesnew.fd}[Font definitions for T1/timesnew.]
+
+\DeclareFontFamily{T1}{timesnew}{}
+
+\DeclareFontShape{T1}{timesnew}{m}{n}{<-> timesnewr8t}{}
+\DeclareFontShape{T1}{timesnew}{m}{sc}{<-> timesnewb8t}{}
+\DeclareFontShape{T1}{timesnew}{m}{sl}{<-> timesnewro8t}{}
+\DeclareFontShape{T1}{timesnew}{m}{it}{<-> timesnewro8t}{}
+\DeclareFontShape{T1}{timesnew}{b}{n}{<-> timesnewb8t}{}
+\DeclareFontShape{T1}{timesnew}{b}{sc}{<-> timesnewb8t}{}
+\DeclareFontShape{T1}{timesnew}{b}{sl}{<-> timesnewbo8t}{}
+\DeclareFontShape{T1}{timesnew}{b}{it}{<-> timesnewbo8t}{}
+\DeclareFontShape{T1}{timesnew}{sb}{n}{<->ssub * timesnew/b/n}{}
+\DeclareFontShape{T1}{timesnew}{sb}{sc}{<->ssub * timesnew/b/sc}{}
+\DeclareFontShape{T1}{timesnew}{sb}{sl}{<->ssub * timesnew/b/sl}{}
+\DeclareFontShape{T1}{timesnew}{sb}{it}{<->ssub * timesnew/b/it}{}
+\DeclareFontShape{T1}{timesnew}{bx}{n}{<->ssub * timesnew/b/n}{}
+\DeclareFontShape{T1}{timesnew}{bx}{sc}{<->ssub * timesnew/b/sc}{}
+\DeclareFontShape{T1}{timesnew}{bx}{sl}{<->ssub * timesnew/b/sl}{}
+\DeclareFontShape{T1}{timesnew}{bx}{it}{<->ssub * timesnew/b/it}{}
+
+\endinput

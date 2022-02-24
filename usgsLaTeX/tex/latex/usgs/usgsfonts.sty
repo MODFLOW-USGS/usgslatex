@@ -4,7 +4,7 @@
 \ProvidesPackage{usgsfonts}[2008/05/28]
 %------------------------ initial code --------------------
 \RequirePackage{ifthen} % for ifthenelse constructs
-\RequirePackage[OT1]{fontenc}
+\RequirePackage[T1]{fontenc}
 
 \newboolean{romanmath}
 \newboolean{markern}
@@ -25,12 +25,15 @@
 \renewcommand{\sfdefault}{fun}
 % the funivers family UniversCondensed
 
-% one way or another Times becomes the roman font,
-% but is Times desired for the math in lue of Computer Modern?
-% The mathptmx package sets \rmdefault to ptm.
-\ifthenelse{\boolean{romanmath}}%
-           {\RequirePackage{mathptmx}}%
-           {\renewcommand\rmdefault{ptm}}
+\renewcommand\rmdefault{timesnew}
+% the timesnew family Times New Roman
+
+% % one way or another Times becomes the roman font,
+% % but is Times desired for the math in lue of Computer Modern?
+% % The mathptmx package sets \rmdefault to ptm.
+% \ifthenelse{\boolean{romanmath}}%
+%            {\RequirePackage{mathptmx}}%
+%            {\renewcommand\rmdefault{ptm}}
 
 \renewcommand{\bfdefault}{b}
 % to make certain that we are out of bold extended (bx)
@@ -38,7 +41,7 @@
 % if rommanmath is true.
 
 % Provide easy declaration and command for setting the
-% light version of Univers Condensed. Therefore, we've 
+% light version of Univers Condensed. Therefore, we've
 % named these with sf and use the \sffamily declaration.
 \newcommand{\ltsffamily}
 {\sffamily\fontseries{l}\selectfont}
@@ -56,7 +59,7 @@
 % Micro-typographic extensions to the TeX typesetting system
 % by Han The Thanh, TUGboat, 22(3):146-148, 2001
 % One could readily use the protcode.tex file as shipped with
-% this distribution, but by having a usgsprotcode.tex then we can 
+% this distribution, but by having a usgsprotcode.tex then we can
 % portably adjust the margin kerning to suit USGS reports.
 % \pdfprotrudechars=0  (no kerning)
 % \pdfprotrudechars=1  (kerning but use the natural TeX line breaks)
@@ -82,4 +85,3 @@
 {\typeout{MARGIN KERNING NOT REQUESTED}}
 
 \endinput
-
