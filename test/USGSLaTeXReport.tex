@@ -28,7 +28,7 @@
 {Deltares}
 \renewcommand{\reporttitle}
 {Parallel Krylov Solver for the \textusgs\ Modular Groundwater Flow Model (MODFLOW-2005)}
-\renewcommand{\coverphoto}{Cover.jpg}
+\renewcommand{\coverphoto}{FullPageCover.pdf}
 \renewcommand{\reportseries}{Techniques and Methods}
 \renewcommand{\reportnumber}{6-AXX}
 \renewcommand{\reportyear}{2014}
@@ -45,7 +45,7 @@
 \renewcommand{\reportrefname}{References Cited}
 
 \begin{document}
-\makefrontcover
+\ifdef{\makefrontcoveralt}{\makefrontcoveralt}{\makefrontcover}
 \makefrontmatter
 \pagestyle{body}
 
@@ -60,9 +60,9 @@ L-scale ($\lambda_2$) is $\sigma = \sqrt{\pi}\lambda_2$. Recently, Mr. LaTeX has
 
 \begin{figure}
 \begin{center}
-	\includegraphics[width=\linewidth]{Cover}
+	\includegraphics[width=\linewidth]{figure1}
 
-\caption{May the Schwartz be with you.}
+\caption{May the Schwartz be with you}
 \label{fig-1}
 \end{center}
 \end{figure}
